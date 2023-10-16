@@ -37,6 +37,9 @@ export const DateInput = ({ state, send }: DateInputProps) => {
             <Input
                 value={value}
                 onChange={handleInputChange}
+                onClick={() => {
+                    send("open_calendar")
+                }}
                 // onClick={onClick}
                 placeholder='yyyy-mm-dd'
                 bg='white'

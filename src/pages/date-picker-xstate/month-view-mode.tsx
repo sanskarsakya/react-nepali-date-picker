@@ -7,6 +7,7 @@ interface YearViewModeProp {
 }
 export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
     return <>
+        {/* START MONTH CONTROLLER */}
         <Flex justifyContent='space-between' p={1} pt={3}>
             <Button
                 size='xs'
@@ -14,28 +15,40 @@ export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
                 _hover={{ bg: 'gray.100' }}
                 variant='link'
                 onClick={() => {
-                    send("")
+                    send("on_previous_year_click")
                 }}
-            // isDisabled={_selected - 10 <= fromCalendarEngine.minADYear}
+            // onClick={onPreviousYearClickHandler}
+            // isDisabled={_selected - 1 < fromCalendarEngine.minADYear}
             >
                 <AiOutlineDoubleLeft color='black' />
             </Button>
-            <Text p={2} fontSize='16px' fontWeight='600'>
-                {/* {state.context.grid_years[0]}  */}
-            </Text>
+
+            <Button
+                variant='unstyled'
+                onClick={() => {
+                    send("on_year_view_mode_click")
+                }}
+                _hover={{ color: '#0875e1', bg: 'gray.100' }}
+            >
+                <Text p={2} fontSize='16px' fontWeight='600'>
+                    {state.context.calendar_reference_date.split("-")[0]}
+                </Text>
+            </Button>
+
             <Button
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
                 variant='link'
                 onClick={() => {
-                    send("")
+                    send("on_next_year_click")
                 }}
-            // isDisabled={_selected + 10 > fromCalendarEngine.maxADYear}
+            // isDisabled={_selected + 1 > fromCalendarEngine.maxADYear}
             >
                 <AiOutlineDoubleRight color='black' />
             </Button>
         </Flex>
+        {/* END MONTH CONTROLLER */}
         <Flex
             style={{
                 flexWrap: 'wrap',
@@ -59,7 +72,7 @@ export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
                     onClick={() => {
                         send("on_month_selection", {
                             data: {
-                                month:index + 1
+                                month: index + 1
                             }
                         })
                         // if (isFirstButton) {

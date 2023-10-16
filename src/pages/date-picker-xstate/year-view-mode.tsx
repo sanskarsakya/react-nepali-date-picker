@@ -14,7 +14,7 @@ export const YearViewMode = ({ state, send }: YearViewModeProp) => {
                 _hover={{ bg: 'gray.100' }}
                 variant='link'
                 onClick={() => {
-                    send("")
+                    send("on_previous_decade_click")
                 }}
             // isDisabled={_selected - 10 <= fromCalendarEngine.minADYear}
             >
@@ -29,7 +29,7 @@ export const YearViewMode = ({ state, send }: YearViewModeProp) => {
                 _hover={{ bg: 'gray.100' }}
                 variant='link'
                 onClick={() => {
-                    send("")
+                    send("on_next_decade_click")
                 }}
             // isDisabled={_selected + 10 > fromCalendarEngine.maxADYear}
             >
