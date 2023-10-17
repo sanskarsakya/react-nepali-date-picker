@@ -80,9 +80,12 @@ export interface INormalizedDate {
 }
 
 export interface IDayInfo {
-  primaryDay: number;
-  primaryMonth: number;
-  primaryYear: number;
+  workingDay?: number;
+  workingMonth?: number;
+  workingYear?: number;
+  primaryDay: string | number;
+  primaryMonth: string | number;
+  primaryYear: string | number;
   secondaryDay: number;
   secondaryMonth: number;
   secondaryYear: number;

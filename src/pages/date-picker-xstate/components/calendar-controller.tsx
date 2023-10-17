@@ -1,6 +1,6 @@
 import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import { ENGLISH_MONTHS } from '../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine';
+import { ENGLISH_MONTHS } from '../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine';
 
 interface CalendarControllerProps {
   state: any,

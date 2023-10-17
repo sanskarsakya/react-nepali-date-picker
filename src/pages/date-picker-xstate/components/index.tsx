@@ -1,4 +1,4 @@
-import { Button, Code, Container, Flex } from '@chakra-ui/react';
+import { Button, Code, Container, Flex, Text } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
 import { When } from 'react-if';
 import { CalendarController } from './calendar-controller';
@@ -9,16 +9,23 @@ import { MonthViewMode } from './month-view-mode';
 import { MonthYearPanel } from './month-year-panel';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
+import React from 'react';
+import { childOf } from '../../../components/nepali-date-picker/components/nepali-date-picker copy/date-picker';
+import { nepaliMachine } from './date-picker-nepali-machine';
 
-// interface DatepickerComponentProps {
-//   date: string
-//   onChange?: any
-// }
-export const DatepickerComponent = () => {
+interface DatepickerComponentProps {
+  // date: string
+  // onChange?: any
+  isRhfBound?: boolean
+  isNepali?: boolean
+}
+export const DatepickerComponent = (props: DatepickerComponentProps) => {
+  const { isRhfBound = false, isNepali = true } = props
   const [
     state,
     send,
-  ] = useMachine(machine);
+  ] = useMachine(isNepali ? nepaliMachine : machine);
+  const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
   // React.useEffect(() => {
   //   send("sync_date", {
@@ -32,39 +39,46 @@ export const DatepickerComponent = () => {
   //   props?.onChange?.(state.context.calendar_reference_date)
   // }, [state.context.calendar_reference_date])
 
+  const handleClickOutside = React.useCallback((event: any) => {
+    if (nepaliDatePickerWrapper.current &&
+      childOf(event.target, nepaliDatePickerWrapper.current)) {
+      return;
+    }
+    send("on_outside_click")
+  }, [send]);
 
-  // const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
+  React.useLayoutEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    // if (state.matches({ "calendar_body_opened": "year_view_mode" })) {
+    // }
 
-  // React.useLayoutEffect(() => {
-  //   if (state.matches({ "calendar_body_opened": "year_view_mode" })) {
-  //     document.addEventListener('mousedown', () => { send("on_outside_click") });
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', () => { send("on_outside_click") });
-  //   };
-  // }, [state, send]);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
 
 
-  // React.useLayoutEffect(() => {
-  //   if (state.matches({ "calendar_body_opened": "year_view_mode" }) && nepaliDatePickerWrapper.current) {
-  //     const nepaliDatePicker = nepaliDatePickerWrapper.current.getBoundingClientRect();
-  //     const screenHeight = window.innerHeight;
 
-  //     const calender: HTMLDivElement | null = nepaliDatePickerWrapper.current.querySelector('.calender');
-  //     if (calender) {
-  //       setTimeout(() => {
-  //         const calenderHeight = calender.clientHeight;
 
-  //         if (calenderHeight + nepaliDatePicker.bottom > screenHeight) {
-  //           if (calenderHeight < nepaliDatePicker.top) {
-  //             calender.style.bottom = `${nepaliDatePicker.height}px`;
-  //           }
-  //         }
-  //       }, 0);
-  //     }
-  //   }
-  // }, [state]);
+  React.useLayoutEffect(() => {
+    if (state.matches({ "calendar_body_opened": "year_view_mode" }) && nepaliDatePickerWrapper.current) {
+      const nepaliDatePicker = nepaliDatePickerWrapper.current.getBoundingClientRect();
+      const screenHeight = window.innerHeight;
+
+      const calender: HTMLDivElement | null = nepaliDatePickerWrapper.current.querySelector('.calender');
+      if (calender) {
+        setTimeout(() => {
+          const calenderHeight = calender.clientHeight;
+
+          if (calenderHeight + nepaliDatePicker.bottom > screenHeight) {
+            if (calenderHeight < nepaliDatePicker.top) {
+              calender.style.bottom = `${nepaliDatePicker.height}px`;
+            }
+          }
+        }, 0);
+      }
+    }
+  }, [state]);
 
 
   return (
@@ -95,9 +109,12 @@ export const DatepickerComponent = () => {
           width: '100%',
           position: 'relative',
         }}
-        // ref={nepaliDatePickerWrapper}
+        ref={nepaliDatePickerWrapper}
       >
         <DateInput state={state} send={send} />
+        <When condition={!isRhfBound && state.context.error}>
+          <Text>{state.context.error}</Text>
+        </When>
         <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
           <YearViewMode state={state} send={send} />
         </When>
@@ -108,10 +125,9 @@ export const DatepickerComponent = () => {
           <CalendarController state={state} send={send} />
           <MonthYearPanel state={state} />
           <DatePickerBody state={state} send={send} />
-          <Today state={state} send={send} />
+          <Today send={send} />
         </When>
       </div>
-
     </Container>
   )
 }
@@ -120,12 +136,12 @@ export const DatePickerXState = () => {
   // const [date, setdate] = React.useState(dayjs().format("YYYY-MM-DD"))
   return <>
     {/* <code>{date}</code> */}
-    <DatepickerComponent 
+    <DatepickerComponent
     // date={date} 
     // onChange={(valuedate: string) => {
     //   setdate(valuedate)
     // }}
-     />
+    />
   </>
 }
 

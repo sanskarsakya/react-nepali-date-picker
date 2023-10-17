@@ -1,8 +1,6 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from "@chakra-ui/react";
-import { englishToNepaliNumber } from "nepali-number";
-import { Else, If, Then } from "react-if";
-import { IDayInfo, weeks, zero_pad } from "../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
-import { get_styles } from "../../components/nepali-date-picker/components/nepali-date-picker copy/style";
+import { IDayInfo, weeks, zero_pad } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
+import { get_styles } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/style";
 
 interface DatepickerBodyProps {
     state: any;
@@ -49,31 +47,21 @@ export const DatePickerBody = ({ state, send }: DatepickerBodyProps) => {
                                             key={`week-day-${weekDayIdx}`}
                                             sx={sx}
                                             onClick={() => {
-                                                const { primaryYear, primaryMonth, primaryDay } = dayInfo;
+                                                const { workingYear, workingMonth, workingDay } = dayInfo;
                                                 send("on_day_selection", {
                                                     data: {
-                                                        date: `${primaryYear}-${zero_pad(primaryMonth)}-${zero_pad(primaryDay)}`
+                                                        date: `${workingYear}-${zero_pad(workingMonth as number)}-${zero_pad(workingDay as number)}`
                                                     }
                                                 })
                                             }}
                                         >
                                             <Flex gap={'3px'}>
-                                                <If condition={false}>
-                                                    <Then>
-                                                        <Text fontSize={'14px'}>
-                                                            {englishToNepaliNumber(dayInfo.primaryDay)}
-                                                        </Text>
-                                                        <Text pt='1px' fontSize={'11px'}>
-                                                            {dayInfo.secondaryDay}
-                                                        </Text>
-                                                    </Then>
-                                                    <Else>
-                                                        <Text fontSize={'14px'}>{dayInfo.primaryDay}</Text>
-                                                        <Text pt='1px' fontSize={'11px'}>
-                                                            {englishToNepaliNumber(dayInfo.secondaryDay)}
-                                                        </Text>
-                                                    </Else>
-                                                </If>
+                                                <Text fontSize={'14px'}>
+                                                    {dayInfo.primaryDay}
+                                                </Text>
+                                                <Text pt='1px' fontSize={'11px'}>
+                                                    {dayInfo.secondaryDay}
+                                                </Text>
                                             </Flex>
                                         </Td>
                                     );

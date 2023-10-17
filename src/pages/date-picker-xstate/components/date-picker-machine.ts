@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { createMachine } from "xstate";
-import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, range, stitch_date } from "../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
+import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, range, stitch_date } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
 import { englishToNepaliNumber } from "nepali-number";
 import { ADToBS } from "bikram-sambat-js";
 
@@ -17,7 +17,7 @@ export const machine = createMachine(
       disable_date_before: "2023-07-29",
       disable_date_after: "2023-10-29",
       grid_years: [],
-
+      error: "",
       grid_months: ENGLISH_MONTHS,
     },
 
@@ -86,7 +86,7 @@ export const machine = createMachine(
 
               on_year_view_mode_click: {
                 target: "year_view_mode",
-              }
+              },
             },
           },
 
@@ -191,11 +191,18 @@ function setDate(context: any, event: any) {
 }
 function setCalendarReferenceDate(context: any, event: any) {
   context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
+
   const validation_result = validate(event?.data?.date, context.disable_date_before, context.disable_date_after);
-  console.log({ validation_result });
-  if (validation_result.is_valid && event?.data?.date) {
-    context.calendar_reference_date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
+
+  if (validation_result.is_valid ) {
+    if( event?.data?.date) {
+      context.calendar_reference_date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
+    }
+    context.error = "";
+  } else {
+    context.error = validation_result.message;
   }
+
 }
 function setGridDates(context: any) {
   const weeks_in_english_month = ENGLISH_DATE.get_weeks_in_month(new Date(context.calendar_reference_date));
@@ -283,7 +290,7 @@ function setNextYearForMonthView(context: any) {
 }
 
 function setYearViewModeNextDecade(context: any) {
-  const current_decade_last_year = context.grid_years[context.grid_years.length - 1] ;
+  const current_decade_last_year = context.grid_years[context.grid_years.length - 1];
   const year_grid = get_year_list_in_decade(current_decade_last_year);
   context.grid_years = [year_grid[0] - 1, ...year_grid, year_grid[year_grid.length - 1] + 1];
 }
@@ -297,7 +304,6 @@ function setYearViewModePreviousDecade(context: any) {
 export const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
 
 function validate(val: string, disableDateAfter: string, disableDateBefore: string) {
-  console.log("asd", val);
   const is_date_format_valid = dateFormat.test(val);
   if (!is_date_format_valid) {
     return {
@@ -306,7 +312,7 @@ function validate(val: string, disableDateAfter: string, disableDateBefore: stri
     };
   }
 
-  const is_date_valid = dayjs(val, "YYYY-MM-DD").isValid();
+  const is_date_valid = dayjs(val, "YYYY-MM-DD", true).isValid();
   if (!is_date_valid) {
     return {
       message: "Invalid date",

@@ -6,6 +6,7 @@ import * as from_utilities from "../../utilities";
 import { ADToBS } from "bikram-sambat-js";
 import { is_today } from "./is_today";
 import * as fromCalendarEngine from "../../index";
+import { englishToNepaliNumber } from "nepali-number";
 
 export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, input_date?: any, disable_date_before?: any, disable_date_after?: any): fromCalendarEngine.IDayInfo => {
   const formattedDate = dayjs(calendar_date).format("YYYY-MM-DD");
@@ -60,9 +61,12 @@ export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, 
   }
 
   return {
-    primaryDay,
-    primaryMonth,
-    primaryYear,
+    workingDay: parseInt(splitted_nepali_date[2]),
+    workingMonth: parseInt(splitted_nepali_date[1]),
+    workingYear: parseInt(splitted_nepali_date[0]),
+    primaryDay : englishToNepaliNumber(primaryDay),
+    primaryMonth:englishToNepaliNumber(primaryMonth),
+    primaryYear:englishToNepaliNumber(primaryYear),
     secondaryDay: parseInt(splitted_nepali_date[2]),
     secondaryMonth: parseInt(splitted_nepali_date[1]),
     secondaryYear: parseInt(splitted_nepali_date[0]),

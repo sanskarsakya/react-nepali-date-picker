@@ -1,5 +1,4 @@
 import { Box, Table } from '@chakra-ui/react';
-import * as React from 'react';
 import { Case, Default, Switch, When } from 'react-if';
 import * as fromCalendarEngine from '../calendar-engine';
 import { get_styles } from '../style';

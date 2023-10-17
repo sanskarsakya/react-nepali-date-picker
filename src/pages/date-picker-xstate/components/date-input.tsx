@@ -1,18 +1,18 @@
-import React from "react"
-import { Box, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Box, Input, InputGroup, forwardRef } from "@chakra-ui/react";
+import React from "react";
 
 interface DateInputProps {
     state: any;
     send: any;
 
 }
-export const DateInput = ({ state, send }: DateInputProps) => {
+export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send }, ref) => {
 
     const [value, setValue] = React.useState("")
 
     React.useEffect(() => {
 
-        if(state.context.date) {
+        if (state.context.date) {
             setValue(state.context.date)
         }
     }, [state.context.date])
@@ -40,6 +40,7 @@ export const DateInput = ({ state, send }: DateInputProps) => {
                 onClick={() => {
                     send("open_calendar")
                 }}
+                ref={ref}
                 // onClick={onClick}
                 placeholder='yyyy-mm-dd'
                 bg='white'
@@ -56,34 +57,8 @@ export const DateInput = ({ state, send }: DateInputProps) => {
                     fontSize: '14px',
                     textTransform: 'lowercase',
                 }}
-            // {...rest}
             />
-            <InputRightElement width='25px'>
-                <Box
-                    cursor='pointer'
-                    width='full'
-                    height='full'
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    onClick={() => {
-                        // if (inputDate.length === 0) {
-                        //     onClick();
-                        // } else {
-                        //     handleClearInput();
-                        // }
-                    }}
-                >
-                    {/* <If condition={inputDate.length === 0}>
-                        <Then>
-                            <BiCalendar size='16px' color='gray' />
-                        </Then>
-                        <Else>
-                            <RxCross2 size='16px' color='gray' />
-                        </Else>
-                    </If> */}
-                </Box>
-            </InputRightElement>
+
         </InputGroup>
     </Box>
-}
+})
