@@ -23,7 +23,6 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send }, ref
             return
         }
         setValue(inputValue)
-        console.log(inputValue)
         if (inputValue?.length >= 10) {
             send("on_date_input", {
                 data: {

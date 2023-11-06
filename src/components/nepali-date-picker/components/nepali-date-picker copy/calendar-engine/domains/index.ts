@@ -86,9 +86,9 @@ export interface IDayInfo {
   primaryDay: string | number;
   primaryMonth: string | number;
   primaryYear: string | number;
-  secondaryDay: number;
-  secondaryMonth: number;
-  secondaryYear: number;
+  secondaryDay: string | number ;
+  secondaryMonth :string |  number;
+  secondaryYear: string | number;
   isCurrentMonth: boolean; // required to enable current month dates
   isToday: boolean;
   isSelected: boolean;

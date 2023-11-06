@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react"
-import { nepaliMonthMap } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine"
 
 interface MonthYearPanelProps {
     state:any
@@ -12,6 +11,6 @@ export const MonthYearPanel = ({state}: MonthYearPanelProps) => {
       textAlign: 'center',
       my: '5px'
     }}>
-      {`${nepaliMonthMap[state.context.panel_month]} ${state.context.panel_year}`}
+      {state.context.month_year_panel_data}
     </Box>
 }

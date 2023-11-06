@@ -55,21 +55,19 @@ export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, 
   if (input_date) {
     isToday = is_today(new Date(latest_stiched_date));
     isSelected = dayjs(latest_stiched_date).isSame(dayjs(input_date), "day");
-    isDisabled = !isCurrentMonth ||
-     (disable_date_before && dayjs(latest_stiched_date).isBefore(disable_date_before))
-     || (disable_date_after && dayjs(latest_stiched_date).isAfter(disable_date_after));
+    isDisabled = !isCurrentMonth || (disable_date_before && dayjs(latest_stiched_date).isBefore(disable_date_before)) || (disable_date_after && dayjs(latest_stiched_date).isAfter(disable_date_after));
   }
 
   return {
-    workingDay: parseInt(splitted_nepali_date[2]),
-    workingMonth: parseInt(splitted_nepali_date[1]),
-    workingYear: parseInt(splitted_nepali_date[0]),
-    primaryDay : englishToNepaliNumber(primaryDay),
-    primaryMonth:englishToNepaliNumber(primaryMonth),
-    primaryYear:englishToNepaliNumber(primaryYear),
-    secondaryDay: parseInt(splitted_nepali_date[2]),
-    secondaryMonth: parseInt(splitted_nepali_date[1]),
-    secondaryYear: parseInt(splitted_nepali_date[0]),
+    workingDay: primaryDay,
+    workingMonth: primaryMonth,
+    workingYear: primaryYear,
+    primaryDay: primaryDay,
+    primaryMonth: primaryMonth,
+    primaryYear: primaryYear,
+    secondaryDay: englishToNepaliNumber(parseInt(splitted_nepali_date[2])) as string,
+    secondaryMonth: englishToNepaliNumber(parseInt(splitted_nepali_date[1])) as string,
+    secondaryYear: englishToNepaliNumber(parseInt(splitted_nepali_date[0])) as string,
     isCurrentMonth, // required to enable current month dates
     isToday,
     isSelected,

@@ -1,5 +1,6 @@
 import { Button, Code, Container, Flex, Text } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
+import React from 'react';
 import { When } from 'react-if';
 import { CalendarController } from './calendar-controller';
 import { DateInput } from './date-input';
@@ -9,35 +10,27 @@ import { MonthViewMode } from './month-view-mode';
 import { MonthYearPanel } from './month-year-panel';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
-import React from 'react';
-import { childOf } from '../../../components/nepali-date-picker/components/nepali-date-picker copy/date-picker';
-import { nepaliMachine } from './date-picker-nepali-machine';
+
+export const childOf = (childNode: any, parentNode: any): boolean =>
+  parentNode.contains(childNode);
 
 interface DatepickerComponentProps {
   // date: string
-  // onChange?: any
+  onChange?: any
   isRhfBound?: boolean
   isNepali?: boolean
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, isNepali = true } = props
+  const { isRhfBound = false, } = props
   const [
     state,
     send,
-  ] = useMachine(isNepali ? nepaliMachine : machine);
+  ] = useMachine(machine);
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
-  // React.useEffect(() => {
-  //   send("sync_date", {
-  //     data: {
-  //       date: props.date
-  //     }
-  //   })
-  // }, [props.date, send])
-
-  // React.useEffect(() => {
-  //   props?.onChange?.(state.context.calendar_reference_date)
-  // }, [state.context.calendar_reference_date])
+  React.useEffect(() => {
+    props?.onChange?.(state.context.date)
+  }, [state.context.date])
 
   const handleClickOutside = React.useCallback((event: any) => {
     if (nepaliDatePickerWrapper.current &&
@@ -132,15 +125,16 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   )
 }
 
-export const DatePickerXState = () => {
-  // const [date, setdate] = React.useState(dayjs().format("YYYY-MM-DD"))
+interface DatePickerXStateProps {
+  // isRhfBound?: boolean
+  isNepali?: boolean
+  onChange?: any
+}
+export const DatePickerXState = (props: DatePickerXStateProps) => {
   return <>
-    {/* <code>{date}</code> */}
+    <p>asdf</p>
     <DatepickerComponent
-    // date={date} 
-    // onChange={(valuedate: string) => {
-    //   setdate(valuedate)
-    // }}
+      {...props}
     />
   </>
 }

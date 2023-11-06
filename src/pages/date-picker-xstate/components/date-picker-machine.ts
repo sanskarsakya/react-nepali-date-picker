@@ -1,19 +1,18 @@
-import dayjs from "dayjs";
-import { createMachine } from "xstate";
-import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, range, stitch_date } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
-import { englishToNepaliNumber } from "nepali-number";
 import { ADToBS } from "bikram-sambat-js";
+import dayjs from "dayjs";
+import { englishToNepaliNumber } from "nepali-number";
+import { createMachine } from "xstate";
+import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
 
 export const machine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogAsAJgA0IAJ6IAHAE4AbADoAjId2rdAdmvLrAVkNWAvi81pMOfMXJU8xiQQmPRc2IxkGNi4eEKiSCASUjJyCUoIqtaqxroOyvr6uqYOAMzWhqYlhpo6CKamqoLGmSWq+sWVgoYODm4eUd6EpJTUxpFeMYwARnQQWox0YViQ9Ex0fFIQ7GTofnHySdKyWPLp5g6mxsrKDoIlutf5ljWIhQ7N1q3tFyVdPX0gTzRHzDfxjAaTGZzBZLSDGXDzABuJDAAHdGABbWZgVaMZYKFiYhgsAAWEV2lH2CUOKROaUQrRKZkMBRsykEylM+mULwQtn0OVuglUJXZv30HIBQMGvhGAXGwLw01m80W2DhCMYyLRRK2uPxhK0YHw5L2IgOkiOqVA6RKJUuDn0qiFmUEtmcvMMdzMukEfuUvxK+nuvXcgIhIL8owVg2V0LVywg8NQSJR6KxeoYjC4eDAyPWsEYRpNOzN8XEltppwZ5g+dl0VTyVlUPO0KlUJlurIcjXsukMhhKUojQyj8pHcdVsKTmu16exuJzedkPELWKwpNNlPN1Mrx2rCF+1kF+UKxTKFSqvJbAoefsEhXadsyumHE0jcvB76VUKn6pnKZammuo4lmLCzIBpbbuWiR7taiiIOclzXLc9yPIUGhtggvq6MYXp2o6bzitYb6KrKYIxpCKowv+yapjqGagUwmqwGAmBkLSVIVsk+70nUhiclcNx3A81wYZ6gjvIIDYlI61hGChr5htKMTkdGE6-jRiZ0UBDELlm66bnOIFbhQXGwTx8HpA48lXByZ5qNcuS8tY9Q5EUFjWLovpVEp-Tfmp47fpOWkaoBxmMbixZKhF2KmeZNK8TaiA2QK7JPKYjnKM5WEPEy9QNg4RQdm6JHKSOgVfoqIUJnChlkrFmZMPVjCsexnE7txVp0slCCDlJN7KAJjp+k4vJFbh7TmOKXoCaRMqgupwWabVSYtY1THZrm+arkWxpKlBZmdRZ3UHg2AqCMUl1um6jQXJ6lR4a5Fick4+SDvNqmLUF1UrdOxjrcBkVZgae0lhSR0wYlVl6PkxjtKy9QTXkra1Bcx49OY9j5D8eSfR+FEadRq3GNFunzk1YNKm1YAcccCVwT1CF1Jl7xFPkjSSd0DTVFhhFXMGLQ3JkmXKPjo6fpRJp-bRgN6ZTZMbfFx3Q0zZwPk0qimH6vzCk6zjWC5qjZENdqBlk1wiuLlVSz+xP-YrQP6UwoNbJEWzK1DjMHpU1xmDZpv3MVmUPU0rQivcvxa90hjW99VWxjL2mO-Lm1LjthZu6gHuHQzllq4hz7w16foijZLY2eNmXNMK9wNEY3llG4YZYNi8AJCpBPUBa+cHgAtLztR9yK8MFGP49j9JcdjoEwRgD3p18aYNjHrrdzdIUdiiry+hecYdoBjcpjlOdqjT5LRPxtOC9Vnxzq3nkiOlOUlSD4gg5XEKfp3lYu+x+VAV462xqv9WcTstg3ySszUUygchlFuGocUu97A7wqMYC4BRH6-AeBUc+hNlr21lsSBq4D567l7nxGwTQ7j5HKHQoaAkXLV3kucSwODbh+XDIAmewCk5whThTMhXVb69VfiYXezoRSPDdA8JhyFEE-BsDg5uLggA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogAsAJgA0IAJ6IAHAE4AbADoAjId3Ldg5QGZlAdgCszgL6vNaTDnzFyVPGMSCEx6LmxGMgxsXDwhUSQQCSkZOUSlBFUHVWNdJydBVVV9bIdTWydNHQRTQX1bYzV7J0NbWxtTB113T2ifQlJKamMo71jGACM6CC1GOnCsSHomOj4pCHYydH94+WTpWSx5DPMnU0blM8uy1TtlKsR9J11G1WbW9uVO-R6QLxjfIMAiM+uMpjM5gtIMZcLMAG4kMAAd0YAFtpmBloxFgoWGiGCwABaRbaUXaJfapI7pRC2VTnQz5QqmL5lcpvB4IBwOfS5AqCXSmXQOQRtYW-f79PxDQKjAF4SbTWbzbDQ2GMBHI-EbLE4vFaMD4Ek7ER7SQHNKgDJtc5OfS3AyCuqqXS6TmGUVmay1VrChyXUwS0GA-zDOX9RUQlWLCAw1DwxEo9E6hiMLh4MAI1awRgGo1bE0JcTmqnHWnmYxZZymVSCUydT73bQqVQmM6CQROWyM-36QStINjEMykFDhXg5VQ2PqzVJjFY9OZ2Q8HPorBE41k00UkuHMsIdoOPkFIolLLlSrNzLKXmWDsd+3ZbvlQfy6XA8NgpWQ1XT+MaxNtUxVMWGmf8Cy3Iskl3S1FEQU5zmUANrhrOxbAcTlrBeD17FaQxa1MfRLlfKUgTDYNx2-aM1X-WcgKxdVYDATAyCpclixSPcaRqQwvguK4XFQtoMKvVpznqexXXKBwPTqEjYnfcix0jSdfzjBMtWTYCmDXDc6K0zcKHY6DONgjIXF5ZRO3vWxdFbfsROqCwnGMUUhQFax0KcN55OHD8KJUn8Y3UgDNPnVM8wVfSMUM4zKS4q1EAsxprI7Wz7MMRy9ArVtLEZFxXR5ZRfIGUNZQCicguhXTiWilMdIJYkmJYtjtw4i1qUShBWhcwoChFV19HrN0rxaHJ+3cl1DFqFxDBKxTyuUyrqNjGrQrnerc0NKLAIMiCjLakyOv3Wo+0rWp6xcWsu0ud0nmMab7H9OyHHsAV5rIxb5UClbjDWurtOxMBcS2-NSQOqD4rMvQb2Me0O0cQwPSRojOWeEw7KFIV6haWpbA+srR2+5apz+xr1vo1NFyzFdQYVfa4pgzq4IQXRbF5OsCnZgpeK7Tkb0EYwRU6Kw8cZJCCZHT8jRJtTIoprSsXl5qwFYw5GdM5mThZFzBTONojDyL4m2qK6HruCxXWUXj8Ml-ylqo0n5YB3VgbxDYog2WLDqhrX4PsZQzFm6xniIr40bZxon30PJTG8u1ug8P4KIWomI1l4Lnd28KmGp5ccw91AvYZn2mZOtociMOs+2yOs3lMfnhWMCo3iyCw2lFIj3CTrAMXgRJJQUz6zU1-cAFpDE5cSiKeL4XXPAohTt4ZgkwEfju4oVrGbp5OzuPIDBNx4zkaSwkPqEpRW5ZevvTx3f3X0tuNUO1j0KYpSgvTDLPP62WjPOuN805fijKTGc2cNiPwSizAOuR0JWCMPPOoR8ED1EDplOs5gjBWWkkA6WlFQFqX+hAsAUDoasxFK5CoPo7LWH7Pod0TciLuRZJYeOgYk6Dz8kpYm99M7bQVhiMhfsajdhMGeTKPJbAsg7JeJylhjB2luIYNB2Q46J3cEAA */
     context: {
       date: "",
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
       grid_dates: [],
       show_calendar_body: "",
-      panel_year: "",
-      panel_month: "",
+      month_year_panel_data: "",
       disable_date_before: "2023-07-29",
       disable_date_after: "2023-10-29",
       grid_years: [],
@@ -34,49 +33,41 @@ export const machine = createMachine(
       },
 
       calendar_body_opened: {
-        entry: [
-          {
-            type: "setGridDates",
-          },
-          {
-            type: "setPanelMonth",
-          },
-          {
-            type: "setPanelYear",
-          },
-        ],
         initial: "day_view_mode",
+
         states: {
           day_view_mode: {
             on: {
               on_next_month_click: {
                 target: "day_view_mode",
                 internal: false,
-                actions: ["increment_month", "setGridDates", "setPanelYear", "setPanelMonth"],
+                actions: ["increment_month", "setGridDates", "setMonthYearPanelData"],
               },
 
               on_next_year_click: {
-                internal: true,
-                actions: ["increment_year", "setPanelMonth", "setPanelYear", "setGridDates"],
+                actions: ["increment_year", "setMonthYearPanelData", "setGridDates"]
               },
 
               on_previous_year_click: {
-                internal: true,
-                actions: ["decrement_year", "setPanelMonth", "setPanelYear", "setGridDates"],
+                actions: ["decrement_year", "setMonthYearPanelData", "setGridDates"]
               },
 
               on_previous_month_click: {
-                internal: true,
-                actions: ["decrement_month", "setGridDates", "setPanelYear", "setPanelMonth"],
+                actions: ["decrement_month", "setGridDates", "setMonthYearPanelData"]
               },
 
               on_today_click: {
                 target: "#Calendar Picker.idle",
-                actions: ["setToday", "setGridDates", "setPanelMonth", "setPanelYear"],
+                actions: ["setToday", "setGridDates", "setMonthYearPanelData"],
               },
 
               on_day_selection: {
-                actions: ["setDate", "setCalendarReferenceDate", "setGridDates", "setPanelMonth", "setPanelYear"],
+                actions: [
+                  "setDate",
+                  "setCalendarReferenceDate",
+                  "setGridDates",
+                  "setMonthYearPanelData"
+                ],
                 target: "#Calendar Picker.idle",
               },
 
@@ -136,11 +127,14 @@ export const machine = createMachine(
             entry: "setGridYears",
           },
         },
+
         on: {
           on_outside_click: {
             target: "idle",
           },
         },
+
+        entry: ["setGridDates", "setMonthYearPanelData"]
       },
     },
 
@@ -154,7 +148,12 @@ export const machine = createMachine(
     on: {
       on_date_input: {
         target: ".calendar_body_opened",
-        actions: ["setDate", "setCalendarReferenceDate", "setPanelMonth", "setPanelYear", "setGridDates"],
+        actions: [
+          "setDate",
+          "setCalendarReferenceDate",
+          "setMonthYearPanelData",
+          "setGridDates"
+        ],
       },
     },
   },
@@ -163,8 +162,7 @@ export const machine = createMachine(
       setDate,
       setCalendarReferenceDate,
       setGridDates,
-      setPanelMonth,
-      setPanelYear,
+      setMonthYearPanelData,
       increment_month,
       decrement_month,
       decrement_year,
@@ -186,23 +184,31 @@ export const machine = createMachine(
 
 // ACTIONS
 function setDate(context: any, event: any) {
-  console.log(event?.data?.date);
-  context.date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
+  const working_date = event?.data?.date;
+  const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
+
+  if (validation_result.is_valid) {
+    if (working_date) {
+      context.date = working_date ?? dayjs().format("YYYY-MM-DD");
+    }
+  }
 }
+
 function setCalendarReferenceDate(context: any, event: any) {
   context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
 
-  const validation_result = validate(event?.data?.date, context.disable_date_before, context.disable_date_after);
+  const working_date = event?.data?.date;
 
-  if (validation_result.is_valid ) {
-    if( event?.data?.date) {
-      context.calendar_reference_date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
+  const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
+
+  if (validation_result.is_valid) {
+    if (working_date) {
+      context.calendar_reference_date = working_date ?? dayjs().format("YYYY-MM-DD");
     }
     context.error = "";
   } else {
     context.error = validation_result.message;
   }
-
 }
 function setGridDates(context: any) {
   const weeks_in_english_month = ENGLISH_DATE.get_weeks_in_month(new Date(context.calendar_reference_date));
@@ -215,16 +221,19 @@ function setGridDates(context: any) {
 
   context.grid_dates = calendarDates;
 }
-function setPanelMonth(context: any) {
+function setMonthYearPanelData(context: any) {
   const now = new Date(context.calendar_reference_date);
-  context.panel_month = now.getMonth();
-}
-function setPanelYear(context: any) {
+  
   const panel_converted_nepali_date = ADToBS(new Date(context.calendar_reference_date));
   const panel_splited_nepali_date = panel_converted_nepali_date.split("-");
-
-  context.panel_year = englishToNepaliNumber(panel_splited_nepali_date[0]);
+  
+  const year = englishToNepaliNumber(panel_splited_nepali_date[0]);
+  
+  const mapped = `${nepaliMonthMap[now.getMonth()]} ${year}`
+  
+  context.month_year_panel_data = mapped;
 }
+
 function increment_month(context: any) {
   context.calendar_reference_date = dayjs(context.calendar_reference_date).add(1, "month").format("YYYY-MM-DD");
 }
@@ -303,7 +312,8 @@ function setYearViewModePreviousDecade(context: any) {
 // UTILITIES
 export const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
 
-function validate(val: string, disableDateAfter: string, disableDateBefore: string) {
+export function validate(val: string, disableDateAfter: string, disableDateBefore: string) {
+  
   const is_date_format_valid = dateFormat.test(val);
   if (!is_date_format_valid) {
     return {
