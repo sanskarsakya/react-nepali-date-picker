@@ -16,6 +16,8 @@ export default meta;
 export const Default = {
   args: {
     date: '2023-08-15',
+    disableDateBefore: '2023-07-29',
+    disableDateAfter: '2023-10-29',
   },
   argTypes: {
   },
@@ -27,9 +29,9 @@ export const Default = {
             console.log(JSON.stringify(data, null, 2));
           }}
           defaultValues={{
-            default: args.date,
-            empty: '',
-            disabled: '',
+            // default: args.date,
+            // empty: '',
+            // disabled: '',
             composed: args.date,
           }}
         >
@@ -48,6 +50,8 @@ export const Default = {
                 setError,
                 trigger,
                 dateType: args.dateType,
+                disableDateBefore: args.disableDateBefore,
+                disableDateAfter: args.disableDateAfter,
               };
 
               return (
@@ -59,21 +63,21 @@ export const Default = {
                   gap={3}
                 >
 
-                  <NepaliDatepickerV2.Default
+                  {/* <NepaliDatepickerV2.Default
                     name='default'
                     label='Default And RHF Controlled'
                     required
                     {...inputProps}
-                  />
+                  /> */}
 
-                  <NepaliDatepickerV2.Default
+                  {/* <NepaliDatepickerV2.Default
                     name='disabled'
                     label='Disable and enable date with RHF Controlled'
                     disableDateBefore={args.disableDateBefore}
                     disableDateAfter={args.disableDateAfter}
                     required
                     {...inputProps}
-                  />
+                  /> */}
 
                   <NepaliDatepickerV2
                     name='composed'
@@ -91,14 +95,14 @@ export const Default = {
                     </NepaliDatepickerV2.FormControl>
                   </NepaliDatepickerV2>
 
-                  <NepaliDatepickerV2.Default
+                  {/* <NepaliDatepickerV2.Default
                     name='uncontrolled'
                     label='Uncontrolled'
                     value={'2020-10-29'}
                     onChange={(name: string, value: string) => {
                       console.log({ name, value });
                     }}
-                  />
+                  /> */}
 
                   <Flex>
                     <Button type='submit'>Submit</Button>

@@ -5,54 +5,44 @@ import { Controller } from "react-hook-form";
 import { ControlledComponentProps } from "./interface";
 import { RigoUncontrolledComponent } from "./rigo-uncontrolled-component";
 import { useDatePicker } from "./use-date-picker";
+import { validate } from "./components/date-picker-machine";
 
 export const RigoRhfComponent = (props: ControlledComponentProps) => {
-  const { control,
-    // rule,
-    // required,
+  const {
+    control,
+    required,
     name,
-    disableDateAfter, disableDateBefore } = useDatePicker();
-
-  // let _rule: any = fromFormHelpers.getDefaultRules({ required });
-
-  // if (!isEmpty(rule)) {
-  //   _rule = fromFormHelpers.deepMerge(_rule, rule);
-  // }
+    disableDateAfter,
+    disableDateBefore
+  } = useDatePicker();
 
   console.log({
     disableDateBefore,
-    disableDateAfter
+    disableDateAfter,
   })
 
   return (
     <Controller
       control={control}
       name={name}
-      // rules={{
-      //   required: {
-      //     value: !!required,
-      //     message: 'Required',
-      //   },
-      //   validate: (value: string) => {
+      rules={{
+        required: {
+          value: !!required,
+          message: 'Required',
+        },
+        validate: (value: string) => {
 
-      //     if (!isCorrectlyFormatted(value)) {
-      //       return "Invalid Format";
-      //     }
-      //     if (!isDateValid(value)) {
-      //       return "Invalid Date";
-      //     }
-
-      //     const isValid = handleValidation(value, disableDateBefore as string, disableDateAfter as string)
-      //     if (!isValid) {
-      //       return "This date is out of range";
-      //     }
-      //     return true;
-      //   }
-      // }}
+          const validation_result = validate(value, disableDateBefore as string, disableDateAfter as string);
+          if (!validation_result.is_valid) {
+            return validation_result.message
+          }
+          return true;
+        }
+      }}
       render={({ field: { onChange, value } }) => (
         <RigoUncontrolledComponent
           value={value}
-          isBoundToRHF={true}
+          isRhfBound={true}
           // setError={setError}
           onChangeRHF={onChange}
           {...props}

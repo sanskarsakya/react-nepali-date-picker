@@ -2,8 +2,9 @@ import { Box, Button } from '@chakra-ui/react'
 
 interface TodayProps {
     send: any
+    onChange?: any
 }
-const Today = ({send}: TodayProps) => {
+const Today = ({send, onChange}: TodayProps) => {
     return <Box
         as={Button}
         // isDisabled={!isValid}
@@ -19,7 +20,11 @@ const Today = ({send}: TodayProps) => {
         color='#0875e1'
         borderTop='1px solid #E5E6EB'
         onClick={() => {
-            send("on_today_click")
+            send("on_today_click", {
+                data: {
+                    onChange
+                }
+            })
         }}
         _hover={{
             bg: "white"

@@ -45,15 +45,15 @@ export const machine = createMachine(
               },
 
               on_next_year_click: {
-                actions: ["increment_year", "setMonthYearPanelData", "setGridDates"]
+                actions: ["increment_year", "setMonthYearPanelData", "setGridDates"],
               },
 
               on_previous_year_click: {
-                actions: ["decrement_year", "setMonthYearPanelData", "setGridDates"]
+                actions: ["decrement_year", "setMonthYearPanelData", "setGridDates"],
               },
 
               on_previous_month_click: {
-                actions: ["decrement_month", "setGridDates", "setMonthYearPanelData"]
+                actions: ["decrement_month", "setGridDates", "setMonthYearPanelData"],
               },
 
               on_today_click: {
@@ -62,12 +62,7 @@ export const machine = createMachine(
               },
 
               on_day_selection: {
-                actions: [
-                  "setDate",
-                  "setCalendarReferenceDate",
-                  "setGridDates",
-                  "setMonthYearPanelData"
-                ],
+                actions: ["setDate", "setCalendarReferenceDate", "setGridDates", "setMonthYearPanelData"],
                 target: "#Calendar Picker.idle",
               },
 
@@ -134,7 +129,7 @@ export const machine = createMachine(
           },
         },
 
-        entry: ["setGridDates", "setMonthYearPanelData"]
+        entry: ["setGridDates", "setMonthYearPanelData"],
       },
     },
 
@@ -148,12 +143,7 @@ export const machine = createMachine(
     on: {
       on_date_input: {
         target: ".calendar_body_opened",
-        actions: [
-          "setDate",
-          "setCalendarReferenceDate",
-          "setMonthYearPanelData",
-          "setGridDates"
-        ],
+        actions: ["setDate", "setCalendarReferenceDate", "setMonthYearPanelData", "setGridDates"],
       },
     },
   },
@@ -185,13 +175,19 @@ export const machine = createMachine(
 // ACTIONS
 function setDate(context: any, event: any) {
   const working_date = event?.data?.date;
-  const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
 
-  if (validation_result.is_valid) {
-    if (working_date) {
-      context.date = working_date ?? dayjs().format("YYYY-MM-DD");
-    }
+  if (working_date) {
+    context.date = working_date ?? dayjs().format("YYYY-MM-DD");
+    event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
   }
+  // const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
+  // if (validation_result.is_valid) {
+  //   if (working_date) {
+  //     context.date = working_date ?? dayjs().format("YYYY-MM-DD");
+  //   }
+  // } else {
+  //   context.date = ""
+  // }
 }
 
 function setCalendarReferenceDate(context: any, event: any) {
@@ -223,14 +219,14 @@ function setGridDates(context: any) {
 }
 function setMonthYearPanelData(context: any) {
   const now = new Date(context.calendar_reference_date);
-  
+
   const panel_converted_nepali_date = ADToBS(new Date(context.calendar_reference_date));
   const panel_splited_nepali_date = panel_converted_nepali_date.split("-");
-  
+
   const year = englishToNepaliNumber(panel_splited_nepali_date[0]);
-  
-  const mapped = `${nepaliMonthMap[now.getMonth()]} ${year}`
-  
+
+  const mapped = `${nepaliMonthMap[now.getMonth()]} ${year}`;
+
   context.month_year_panel_data = mapped;
 }
 
@@ -246,10 +242,12 @@ function increment_year(context: any) {
 function decrement_year(context: any) {
   context.calendar_reference_date = dayjs(context.calendar_reference_date).subtract(1, "year").format("YYYY-MM-DD");
 }
-function setToday(context: any) {
+function setToday(context: any, event: any) {
   const today = dayjs().format("YYYY-MM-DD");
   context.date = today;
   context.calendar_reference_date = today;
+
+  event.data?.onChange?.(today);
 }
 
 function setGridYears(context: any) {
@@ -313,7 +311,6 @@ function setYearViewModePreviousDecade(context: any) {
 export const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
 
 export function validate(val: string, disableDateAfter: string, disableDateBefore: string) {
-  
   const is_date_format_valid = dateFormat.test(val);
   if (!is_date_format_valid) {
     return {

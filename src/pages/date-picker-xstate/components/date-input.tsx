@@ -4,9 +4,10 @@ import React from "react";
 interface DateInputProps {
     state: any;
     send: any;
+    onChange?:any;
 
 }
-export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send }, ref) => {
+export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send, onChange }, ref) => {
 
     const [value, setValue] = React.useState("")
 
@@ -26,9 +27,12 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send }, ref
         if (inputValue?.length >= 10) {
             send("on_date_input", {
                 data: {
-                    date: inputValue
+                    date: inputValue,
+                    onChange
                 }
             })
+
+            // onChange?.(inputValue)
         }
     }
     return <Box maxW={175}>

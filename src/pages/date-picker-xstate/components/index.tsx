@@ -1,4 +1,4 @@
-import { Button, Code, Container, Flex, Text } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
@@ -21,16 +21,12 @@ interface DatepickerComponentProps {
   isNepali?: boolean
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, } = props
+  const { isRhfBound = false, onChange } = props
   const [
     state,
     send,
   ] = useMachine(machine);
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    props?.onChange?.(state.context.date)
-  }, [state.context.date])
 
   const handleClickOutside = React.useCallback((event: any) => {
     if (nepaliDatePickerWrapper.current &&
@@ -75,8 +71,8 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
 
   return (
-    <Container as={Flex} direction="column" alignItems="start" minH="100vh" gap={2}>
-      <Code>State: {JSON.stringify(state.value, null, 2)}</Code>
+    <>
+      {/* <Code>State: {JSON.stringify(state.value, null, 2)}</Code>
       <Code>Date: {JSON.stringify(state.context.date, null, 2)}</Code>
       <Code>Calendar Reference Date: {JSON.stringify(state.context.calendar_reference_date, null, 2)}</Code>
       <Flex alignItems="center" gap={2}>
@@ -94,7 +90,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         >
           close calendar body
         </Button>
-      </Flex>
+      </Flex> */}
 
       <div
         id={'input-wrapper-2'}
@@ -104,7 +100,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         }}
         ref={nepaliDatePickerWrapper}
       >
-        <DateInput state={state} send={send} />
+        <DateInput state={state} send={send} onChange={onChange} />
         <When condition={!isRhfBound && state.context.error}>
           <Text>{state.context.error}</Text>
         </When>
@@ -117,26 +113,23 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         <When condition={state.matches({ "calendar_body_opened": "day_view_mode" })}>
           <CalendarController state={state} send={send} />
           <MonthYearPanel state={state} />
-          <DatePickerBody state={state} send={send} />
-          <Today send={send} />
+          <DatePickerBody state={state} send={send} onChange={onChange} />
+          <Today send={send} onChange={onChange} />
         </When>
       </div>
-    </Container>
+    </>
   )
 }
 
 interface DatePickerXStateProps {
-  // isRhfBound?: boolean
+  isRhfBound?: boolean
   isNepali?: boolean
   onChange?: any
 }
 export const DatePickerXState = (props: DatePickerXStateProps) => {
-  return <>
-    <p>asdf</p>
-    <DatepickerComponent
-      {...props}
-    />
-  </>
+  return <DatepickerComponent
+    {...props}
+  />
 }
 
 

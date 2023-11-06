@@ -5,8 +5,9 @@ import { get_styles } from "./style";
 interface DatepickerBodyProps {
     state: any;
     send: any
+    onChange?: any
 }
-export const DatePickerBody = ({ state, send }: DatepickerBodyProps) => {
+export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) => {
     const Styles = get_styles(false);
 
     return <Table>
@@ -50,7 +51,8 @@ export const DatePickerBody = ({ state, send }: DatepickerBodyProps) => {
                                                 const working_date = `${dayInfo?.workingYear}-${zero_pad(dayInfo?.workingMonth as number)}-${zero_pad(dayInfo?.workingDay as number)}`;
                                                 send("on_day_selection", {
                                                     data: {
-                                                        date:working_date
+                                                        date:working_date,
+                                                        onChange
                                                     }
                                                 })
                                             }}

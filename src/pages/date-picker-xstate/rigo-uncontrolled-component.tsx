@@ -6,7 +6,7 @@ import { DatePickerXState } from './components';
 export const RigoUncontrolledComponent = (props: any) => {
   const {
     // setError,
-    // isBoundToRHF = false,
+    isRhfBound = false,
     // trigger,
     onChangeRHF,
     // value: rhfValue,
@@ -52,7 +52,7 @@ export const RigoUncontrolledComponent = (props: any) => {
   //   ...propRest,
   // };
 
-  return <DatePickerXState isNepali={false} onChange={handleChange}
+  return <DatePickerXState isRhfBound={isRhfBound} isNepali={false} onChange={handleChange}
   // onError={(errorMessage: string) => {
   //   console.log("onError", errorMessage)
   //   setError?.(name, {
