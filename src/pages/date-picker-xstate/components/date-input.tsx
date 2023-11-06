@@ -4,7 +4,7 @@ import React from "react";
 interface DateInputProps {
     state: any;
     send: any;
-    onChange?:any;
+    onChange?: any;
 
 }
 export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send, onChange }, ref) => {
@@ -35,9 +35,10 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send, onCha
             // onChange?.(inputValue)
         }
     }
-    return <Box maxW={175}>
+    return <Box >
         <InputGroup>
             <Input
+                autoComplete="off"
                 value={value}
                 onChange={handleInputChange}
                 onClick={() => {
