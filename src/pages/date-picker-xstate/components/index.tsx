@@ -71,64 +71,42 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
 
   return (
-    <>
-      {/* <Code>State: {JSON.stringify(state.value, null, 2)}</Code>
-      <Code>Date: {JSON.stringify(state.context.date, null, 2)}</Code>
-      <Code>Calendar Reference Date: {JSON.stringify(state.context.calendar_reference_date, null, 2)}</Code>
-      <Flex alignItems="center" gap={2}>
-        <Button size="sm"
-          onClick={() => {
-            send("open_calendar")
-          }}
-        >
-          open calendar body
-        </Button>
-        <Button size="sm"
-          onClick={() => {
-            send("on_outside_click")
-          }}
-        >
-          close calendar body
-        </Button>
-      </Flex> */}
+    <div
+      id={'input-wrapper-2'}
+      style={{
+        width: '200px',
+        position: 'relative',
+      }}
+      ref={nepaliDatePickerWrapper}
+    >
 
-      <div
-        id={'input-wrapper-2'}
-        style={{
-          width: '200px',
-          position: 'relative',
-        }}
-        ref={nepaliDatePickerWrapper}
-      >
+      <DateInput state={state} send={send} onChange={onChange} />
+      <When condition={!isRhfBound && state.context.error}>
+        <Text>{state.context.error}</Text>
+      </When>
+      <div style={{
 
-        <DateInput state={state} send={send} onChange={onChange} />
-        <When condition={!isRhfBound && state.context.error}>
-          <Text>{state.context.error}</Text>
+        background: "white",
+        zIndex: 100,
+        position: "absolute",
+        top: 40,
+        left: 0,
+      }}>
+        <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
+          <YearViewMode state={state} send={send} />
         </When>
-        <div style={{
-
-          background:"white",
-          zIndex:100,
-          position: "absolute",
-          top: 40,
-          left: 0,
-        }}>
-          <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
-            <YearViewMode state={state} send={send} />
-          </When>
-          <When condition={state.matches({ "calendar_body_opened": "month_view_mode" })}>
-            <MonthViewMode state={state} send={send} />
-          </When>
-          <When condition={state.matches({ "calendar_body_opened": "day_view_mode" })}>
-            <CalendarController state={state} send={send} />
-            <MonthYearPanel state={state} />
-            <DatePickerBody state={state} send={send} onChange={onChange} />
-            <Today send={send} onChange={onChange} />
-          </When>
-        </div>
-
+        <When condition={state.matches({ "calendar_body_opened": "month_view_mode" })}>
+          <MonthViewMode state={state} send={send} />
+        </When>
+        <When condition={state.matches({ "calendar_body_opened": "day_view_mode" })}>
+          <CalendarController state={state} send={send} />
+          <MonthYearPanel state={state} />
+          <DatePickerBody state={state} send={send} onChange={onChange} />
+          <Today send={send} onChange={onChange} />
+        </When>
       </div>
-    </>
+
+    </div>
   )
 }
 
