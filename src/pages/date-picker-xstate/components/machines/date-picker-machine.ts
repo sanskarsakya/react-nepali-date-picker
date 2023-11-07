@@ -2,11 +2,10 @@ import { ADToBS } from "bikram-sambat-js";
 import dayjs from "dayjs";
 import { englishToNepaliNumber } from "nepali-number";
 import { createMachine } from "xstate";
-import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date } from "../../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
-
+import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date, weeks, zero_pad } from "..//calendar-engine";
 export const machine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogAsAJgA0IAJ6IAHAE4AbADoAjId3Ldg5QGZlAdgCszgL6vNaTDnzFyVPGMSCEx6LmxGMgxsXDwhUSQQCSkZOUSlBFUHVWNdJydBVVV9bIdTWydNHQRTQX1bYzV7J0NbWxtTB113T2ifQlJKamMo71jGACM6CC1GOnCsSHomOj4pCHYydH94+WTpWSx5DPMnU0blM8uy1TtlKsR9J11G1WbW9uVO-R6QLxjfIMAiM+uMpjM5gtIMZcLMAG4kMAAd0YAFtpmBloxFgoWGiGCwABaRbaUXaJfapI7pRC2VTnQz5QqmL5lcpvB4IBwOfS5AqCXSmXQOQRtYW-f79PxDQKjAF4SbTWbzbDQ2GMBHI-EbLE4vFaMD4Ek7ER7SQHNKgDJtc5OfS3AyCuqqXS6TmGUVmay1VrChyXUwS0GA-zDOX9RUQlWLCAw1DwxEo9E6hiMLh4MAI1awRgGo1bE0JcTmqnHWnmYxZZymVSCUydT73bQqVQmM6CQROWyM-36QStINjEMykFDhXg5VQ2PqzVJjFY9OZ2Q8HPorBE41k00UkuHMsIdoOPkFIolLLlSrNzLKXmWDsd+3ZbvlQfy6XA8NgpWQ1XT+MaxNtUxVMWGmf8Cy3Iskl3S1FEQU5zmUANrhrOxbAcTlrBeD17FaQxa1MfRLlfKUgTDYNx2-aM1X-WcgKxdVYDATAyCpclixSPcaRqQwvguK4XFQtoMKvVpznqexXXKBwPTqEjYnfcix0jSdfzjBMtWTYCmDXDc6K0zcKHY6DONgjIXF5ZRO3vWxdFbfsROqCwnGMUUhQFax0KcN55OHD8KJUn8Y3UgDNPnVM8wVfSMUM4zKS4q1EAsxprI7Wz7MMRy9ArVtLEZFxXR5ZRfIGUNZQCicguhXTiWilMdIJYkmJYtjtw4i1qUShBWhcwoChFV19HrN0rxaHJ+3cl1DFqFxDBKxTyuUyrqNjGrQrnerc0NKLAIMiCjLakyOv3Wo+0rWp6xcWsu0ud0nmMab7H9OyHHsAV5rIxb5UClbjDWurtOxMBcS2-NSQOqD4rMvQb2Me0O0cQwPSRojOWeEw7KFIV6haWpbA+srR2+5apz+xr1vo1NFyzFdQYVfa4pgzq4IQXRbF5OsCnZgpeK7Tkb0EYwRU6Kw8cZJCCZHT8jRJtTIoprSsXl5qwFYw5GdM5mThZFzBTONojDyL4m2qK6HruCxXWUXj8Ml-ylqo0n5YB3VgbxDYog2WLDqhrX4PsZQzFm6xniIr40bZxon30PJTG8u1ug8P4KIWomI1l4Lnd28KmGp5ccw91AvYZn2mZOtociMOs+2yOs3lMfnhWMCo3iyCw2lFIj3CTrAMXgRJJQUz6zU1-cAFpDE5cSiKeL4XXPAohTt4ZgkwEfju4oVrGbp5OzuPIDBNx4zkaSwkPqEpRW5ZevvTx3f3X0tuNUO1j0KYpSgvTDLPP62WjPOuN805fijKTGc2cNiPwSizAOuR0JWCMPPOoR8ED1EDplOs5gjBWWkkA6WlFQFqX+hAsAUDoasxFK5CoPo7LWH7Pod0TciLuRZJYeOgYk6Dz8kpYm99M7bQVhiMhfsajdhMGeTKPJbAsg7JeJylhjB2luIYNB2Q46J3cEAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogAsAJgA0IAJ6IAnKtUA6AIwA2AMzLTqgOy6AHMsE3VAX1ea0mHPmLkqeIYkEJj0XNiMZBjYuHhCokggElIycolKCKr2RoIArIIFtoLGug7GmjoIxsZWhqqmjro2uVm5urn27p7RPoSklNSGUd6xjABGdBBajHThWJD0THR8UhDsZOj+8fLJ0rJY8hlmpoKGpk6Cqk66xqo1yhWIxsXGdQ1OJXfKuqZdIF4xXz9AJDHqjCZTGZzSCGXDTABuJDAAHdGABbSZgRaMeYKFjohgsAAWkU2lG2iV2qQO6UQ5mMNkM9gKxTsbXZgge2kQzNyTOU+XMlkE9jZuj+AN6fgGgWGgLw40m01m2BhcMYiJRBLW2Nx+K0YHwpK2Ih2kj2aVAGXpjOZBQZ7UduUeCGsuhMzUulzUdhsxglYKB-kGct6ishKvmEFhqARSNRGJ1DEYXDwYERy1gjANRo2JoS4nN1MOdIZTJZDvZ7U5LoFRny+WczlMdkcAZGQZloI7Cohyuh0fVmoTmOxqfTsh4WYxWGJxvJpspRf2JYQNsMeRZRRKZRdtj59kspXMN2cpVMuXb8ulIND4KVUNVg9jGvj2qxyZYkxfeYXBaSy6WooTymCcZwXFcgg3F8XKVIeyiGG0h72KKuS5N8NjKFeUrAiGga9g+kZqi+w7vti6qwGAmBkNSFKFikK60lUF6nOchTXLc9wuhYrzOMhyg2KKyjKCh2GxDeeE9uG-ZPjGcZaomH5MDOc6kYp84UHRAEMUBGQdPYZwsuYbQlCUxQujY5i2jYLbGCe5jOMYuS-B4-z4RJsr4dJj5RnJr4KaOyY5gqamYhpWlUoxVqIPphkFMZNyJeZ3IIPYpjutUQonoIJzOVBYmdreXl9j5MIqSSoVJsphIkpR1G0Yu9EWjS0WuiKJgnM4dicqBsExShG7OTYOXZGhaE2AVfTBp5UklUR0blf5I5VdmhohW+6m-ppjXac1q7PKUhhOPkPyCTU9R9QgmEGQKh5+syLaqOhk0ed28refNhiLZVSk4mAeKrbmZLbf+kW6TybQmE5OWWGYaU1NxJ5nKBdj0pytwCi9uEze9c0Dl9NVLWRybjhmU6AwqW0RYBLXAalIl1M8Io5TloF3C66HmIhViHiKIkMpZWPTW9YZ47JwVE4p2IS3VYA0fs1M6bTRzPEYzy5E55gWBruRChzDhnOYh7tHcNzKMZQtdneRpi75Es-bq-34msURrOFO1g8rTzGVzxlPaY1QuFkgjmIjpiGDaArKLcQq6N8ltFbNhH4-bG2BUwpOTlmLuoG7VMezT+2WGraFORYVlOXZHNOCYTTfMYaWYQJnR-FgmLwIkkridjZpK6uAC0pguv3qhc6U48TxPLfdD2r3BJgvd7Uxpl8ulhQtro5h3PULpMwhW9xz8aiij85gJ5JuPJ0+i-Fkx9TupuhTDTu9jlClFhHd8DjCTlAqWWfrku6FQvqLK+vkhxpzWDfKKdNjIIRDlcBwp8bDDQ0ClBwjIdbFFyi4Mwl5AHuWxiLe8EZ8bfUgWAaB4NUp2DqA5GGJRvhWDfpUTCpxBItjQlrAo91z441AaQ8Wa1JaYioV7KoVlw5mGaJZVQDgrLOhSpZRk5tMJmCspvNQAD3BAA */
     context: {
       date: "",
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
@@ -18,6 +17,14 @@ export const machine = createMachine(
       grid_years: [],
       error: "",
       grid_months: ENGLISH_MONTHS,
+      is_today_valid: false,
+      date_picker_body_data: {
+        weeks: weeks["en"],
+      },
+      calendar_controller_labels: {
+        month_label: "",
+        year_label: "",
+      },
     },
 
     id: "Calendar Picker",
@@ -41,28 +48,28 @@ export const machine = createMachine(
               on_next_month_click: {
                 target: "day_view_mode",
                 internal: false,
-                actions: ["increment_month", "setGridDates", "setMonthYearPanelData"],
+                actions: ["increment_month", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
               },
 
               on_next_year_click: {
-                actions: ["increment_year", "setMonthYearPanelData", "setGridDates"],
+                actions: ["increment_year", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_previous_year_click: {
-                actions: ["decrement_year", "setMonthYearPanelData", "setGridDates"],
+                actions: ["decrement_year", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_previous_month_click: {
-                actions: ["decrement_month", "setGridDates", "setMonthYearPanelData"],
+                actions: ["decrement_month", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
               },
 
               on_today_click: {
                 target: "#Calendar Picker.idle",
-                actions: ["setToday", "setGridDates", "setMonthYearPanelData"],
+                actions: ["setToday", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
               },
 
               on_day_selection: {
-                actions: ["setDate", "setCalendarReferenceDate", "setGridDates", "setMonthYearPanelData"],
+                actions: ["setDate", "setCalendarReferenceDate", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
                 target: "#Calendar Picker.idle",
               },
 
@@ -80,7 +87,7 @@ export const machine = createMachine(
             on: {
               on_month_selection: {
                 target: "day_view_mode",
-                actions: ["selectMonth", "setGridDates"],
+                actions: ["selectMonth", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_year_view_mode_click: "year_view_mode",
@@ -103,7 +110,7 @@ export const machine = createMachine(
             on: {
               on_year_selection: {
                 target: "month_view_mode",
-                actions: ["selectYear", "setGridDates"],
+                actions: ["selectYear", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_next_decade_click: {
@@ -129,7 +136,7 @@ export const machine = createMachine(
           },
         },
 
-        entry: ["setGridDates", "setMonthYearPanelData"],
+        entry: ["setGridDates", "setMonthYearPanelData", "setIsTodayValid", "setCalendarControllerLabels"],
       },
     },
 
@@ -143,7 +150,7 @@ export const machine = createMachine(
     on: {
       on_date_input: {
         target: ".calendar_body_opened",
-        actions: ["setDate", "setCalendarReferenceDate", "setMonthYearPanelData", "setGridDates"],
+        actions: ["setDate", "setCalendarReferenceDate", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
       },
     },
   },
@@ -165,6 +172,8 @@ export const machine = createMachine(
       setPreviousYearForMonthView,
       setYearViewModePreviousDecade,
       setYearViewModeNextDecade,
+      setIsTodayValid,
+      setCalendarControllerLabels,
     },
     services: {},
     guards: {},
@@ -174,8 +183,8 @@ export const machine = createMachine(
 
 // ACTIONS
 function setDate(context: any, event: any) {
-  const working_date = event?.data?.date;
-
+  const dayInfo = event?.data?.dayInfo;
+  const working_date = `${dayInfo?.workingYear}-${zero_pad(dayInfo?.workingMonth as number)}-${zero_pad(dayInfo?.workingDay as number)}`;
   if (working_date) {
     context.date = working_date ?? dayjs().format("YYYY-MM-DD");
     event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
@@ -190,16 +199,22 @@ function setDate(context: any, event: any) {
   // }
 }
 
+function setCalendarControllerLabels(context: any) {
+  const splited = context.calendar_reference_date.split("-");
+  context.calendar_controller_labels.month_label = ENGLISH_MONTHS[+splited[1] - 1];
+  context.calendar_controller_labels.year_label = splited[0];
+}
 function setCalendarReferenceDate(context: any, event: any) {
   context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
 
-  const working_date = event?.data?.date;
+  let working_date = event?.data?.date;
 
   const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
 
   if (validation_result.is_valid) {
     if (working_date) {
-      context.calendar_reference_date = working_date ?? dayjs().format("YYYY-MM-DD");
+      working_date = working_date ?? dayjs().format("YYYY-MM-DD");
+      context.calendar_reference_date = working_date;
     }
     context.error = "";
   } else {
@@ -244,10 +259,15 @@ function decrement_year(context: any) {
 }
 function setToday(context: any, event: any) {
   const today = dayjs().format("YYYY-MM-DD");
-  context.date = today;
-  context.calendar_reference_date = today;
 
-  event.data?.onChange?.(today);
+  const validation_result = validate(today, context.disable_date_before, context.disable_date_after);
+
+  if (validation_result.is_valid) {
+    context.date = today;
+    context.calendar_reference_date = today;
+
+    event.data?.onChange?.(today);
+  }
 }
 
 function setGridYears(context: any) {
@@ -305,6 +325,12 @@ function setYearViewModePreviousDecade(context: any) {
   const current_decade_last_year = context.grid_years[0];
   const year_grid = get_year_list_in_decade(current_decade_last_year);
   context.grid_years = [year_grid[0] - 1, ...year_grid, year_grid[year_grid.length - 1] + 1];
+}
+
+function setIsTodayValid(context: any) {
+  const today = dayjs().format("YYYY-MM-DD");
+  const validation_result = validate(today, context.disable_date_before, context.disable_date_after);
+  context.is_today_valid = validation_result.is_valid;
 }
 
 // UTILITIES

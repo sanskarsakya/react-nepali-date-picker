@@ -1,5 +1,5 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from "@chakra-ui/react";
-import { IDayInfo, weeks, zero_pad } from "../../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
+import { IDayInfo } from "../calendar-engine";
 import { get_styles } from "./style";
 
 interface DatepickerBodyProps {
@@ -16,7 +16,7 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                 bg: "#fff",
                 color: '#535562',
             }}>
-                {weeks['en'].map(
+                {state.context.date_picker_body_data.weeks.map(
                     (weekDay: string, index: number) => (
                         <Td p={2} key={index}>
                             {weekDay}
@@ -48,10 +48,12 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                                             key={`week-day-${weekDayIdx}`}
                                             sx={sx}
                                             onClick={() => {
-                                                const working_date = `${dayInfo?.workingYear}-${zero_pad(dayInfo?.workingMonth as number)}-${zero_pad(dayInfo?.workingDay as number)}`;
+                                                if (dayInfo.isDisabled) {
+                                                    return
+                                                }
                                                 send("on_day_selection", {
                                                     data: {
-                                                        date:working_date,
+                                                        dayInfo,
                                                         onChange
                                                     }
                                                 })

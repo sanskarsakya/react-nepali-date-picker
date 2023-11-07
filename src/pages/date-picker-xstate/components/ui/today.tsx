@@ -1,13 +1,14 @@
 import { Box, Button } from '@chakra-ui/react'
 
 interface TodayProps {
+    state: any
     send: any
     onChange?: any
 }
-const Today = ({send, onChange}: TodayProps) => {
+const Today = ({ send, state, onChange }: TodayProps) => {
     return <Box
         as={Button}
-        // isDisabled={!isValid}
+        isDisabled={!state.context.is_today_valid}
         w="full"
         p={3}
         mt={1}

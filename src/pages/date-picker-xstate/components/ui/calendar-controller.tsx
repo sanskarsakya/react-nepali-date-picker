@@ -1,6 +1,5 @@
 import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import { ENGLISH_MONTHS } from '../../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine';
 
 interface CalendarControllerProps {
   state: any,
@@ -11,7 +10,6 @@ export const CalendarController = ({
   state,
   send
 }: CalendarControllerProps) => {
-  const splited = state.context.calendar_reference_date.split("-")
   return <Flex w="full" justifyContent='space-between' p={1} pt={3}>
     <Flex gap={1}>
       <Button
@@ -48,7 +46,7 @@ export const CalendarController = ({
         _hover={{ color: '#0875e1', bg: 'gray.100' }}
       >
         <Text p={2} fontSize='16px' fontWeight='600'>
-          {ENGLISH_MONTHS[+splited[1] - 1]}
+          {state.context.calendar_controller_labels.month_label}
         </Text>
       </Button>
       <Center>
@@ -64,7 +62,7 @@ export const CalendarController = ({
         _hover={{ color: '#0875e1', bg: 'gray.100' }}
       >
         <Text p={2} fontSize='16px' fontWeight='600'>
-          {splited[0]}
+        {state.context.calendar_controller_labels.year_label}
         </Text>
       </Button>
     </Flex>

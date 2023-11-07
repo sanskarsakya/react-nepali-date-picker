@@ -7,7 +7,7 @@ interface YearViewModeProp {
 }
 export const YearViewMode = ({ state, send }: YearViewModeProp) => {
     return <>
-        <Flex justifyContent='space-between' p={1} pt={3}>
+        <Flex w="full" justifyContent='space-between' p={1} pt={3}>
             <Button
                 size='xs'
                 px={7}

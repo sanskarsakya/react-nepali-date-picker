@@ -73,7 +73,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     <div
       id={'input-wrapper-2'}
       style={{
-        width: '200px',
+        width: '275px',
         position: 'relative',
       }}
       ref={nepaliDatePickerWrapper}
@@ -84,7 +84,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         <Text>{state.context.error}</Text>
       </When>
       <div style={{
-
+        width: '100%',
         background: "white",
         zIndex: 100,
         position: "absolute",
@@ -101,7 +101,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
           <CalendarController state={state} send={send} />
           <MonthYearPanel state={state} />
           <DatePickerBody state={state} send={send} onChange={onChange} />
-          <Today send={send} onChange={onChange} />
+          <Today send={send} state={state} onChange={onChange} />
         </When>
       </div>
 
