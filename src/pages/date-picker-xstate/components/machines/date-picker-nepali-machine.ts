@@ -187,13 +187,11 @@ export const nepaliMachine = createMachine(
 
 // ACTIONS
 function setDate(context: any, event: any) {
-  console.log(event?.data?.date);
   context.date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
 }
 function setCalendarReferenceDate(context: any, event: any) {
   context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
   const validation_result = validate(event?.data?.date, context.disable_date_before, context.disable_date_after);
-  console.log({ validation_result });
   if (validation_result.is_valid) {
     if (event?.data?.date) {
       context.calendar_reference_date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
@@ -219,8 +217,6 @@ function setGridDates(context: any) {
       return NEPALI_DATE.get_day_info(weekNum, weekDayNum, parsed_date, selectedDate);
     });
   });
-
-  console.log({calendarDates})
 
   context.grid_dates = calendarDates;
 }

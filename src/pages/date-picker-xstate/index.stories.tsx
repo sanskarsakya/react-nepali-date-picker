@@ -15,11 +15,9 @@ export default meta;
 
 export const Default = {
   args: {
-    date: '2023-08-15',
-    disableDateBefore: '2023-07-29',
-    disableDateAfter: '2023-10-29',
-  },
-  argTypes: {
+    value: '2023-10-29',
+    disableDateBefore: '2023-08-29',
+    disableDateAfter: '2023-12-29',
   },
   render: (args: any) => {
     return (
@@ -32,7 +30,7 @@ export const Default = {
             // default: args.date,
             // empty: '',
             // disabled: '',
-            composed: args.date,
+            composed: args.value,
           }}
         >
           <ConnectForm>
@@ -82,6 +80,8 @@ export const Default = {
                   <NepaliDatepickerV2
                     name='composed'
                     label='Composed And RHF Controlled'
+                    disable_date_before={args.disableDateBefore}
+                    disable_date_after={args.disableDateAfter}
                     required
                     {...inputProps}
                   >

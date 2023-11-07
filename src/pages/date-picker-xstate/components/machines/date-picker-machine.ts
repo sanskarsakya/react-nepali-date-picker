@@ -2,10 +2,10 @@ import { ADToBS } from "bikram-sambat-js";
 import dayjs from "dayjs";
 import { englishToNepaliNumber } from "nepali-number";
 import { createMachine } from "xstate";
-import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date, weeks, zero_pad } from "..//calendar-engine";
+import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date, weeks } from "..//calendar-engine";
 export const machine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogAsAJgA0IAJ6IAnKtUA6AIwA2AMzLTqgOy6AHMsE3VAX1ea0mHPmLkqeIYkEJj0XNiMZBjYuHhCokggElIycolKCKr2RoIArIIFtoLGug7GmjoIxsZWhqqmjro2uVm5urn27p7RPoSklNSGUd6xjABGdBBajHThWJD0THR8UhDsZOj+8fLJ0rJY8hlmpoKGpk6Cqk66xqo1yhWIxsXGdQ1OJXfKuqZdIF4xXz9AJDHqjCZTGZzSCGXDTABuJDAAHdGABbSZgRaMeYKFjohgsAAWkU2lG2iV2qQO6UQ5mMNkM9gKxTsbXZgge2kQzNyTOU+XMlkE9jZuj+AN6fgGgWGgLw40m01m2BhcMYiJRBLW2Nx+K0YHwpK2Ih2kj2aVAGXpjOZBQZ7UduUeCGsuhMzUulzUdhsxglYKB-kGct6ishKvmEFhqARSNRGJ1DEYXDwYERy1gjANRo2JoS4nN1MOdIZTJZDvZ7U5LoFRny+WczlMdkcAZGQZloI7Cohyuh0fVmoTmOxqfTsh4WYxWGJxvJpspRf2JYQNsMeRZRRKZRdtj59kspXMN2cpVMuXb8ulIND4KVUNVg9jGvj2qxyZYkxfeYXBaSy6WooTymCcZwXFcgg3F8XKVIeyiGG0h72KKuS5N8NjKFeUrAiGga9g+kZqi+w7vti6qwGAmBkNSFKFikK60lUF6nOchTXLc9wuhYrzOMhyg2KKyjKCh2GxDeeE9uG-ZPjGcZaomH5MDOc6kYp84UHRAEMUBGQdPYZwsuYbQlCUxQujY5i2jYLbGCe5jOMYuS-B4-z4RJsr4dJj5RnJr4KaOyY5gqamYhpWlUoxVqIPphkFMZNyJeZ3IIPYpjutUQonoIJzOVBYmdreXl9j5MIqSSoVJsphIkpR1G0Yu9EWjS0WuiKJgnM4dicqBsExShG7OTYOXZGhaE2AVfTBp5UklUR0blf5I5VdmhohW+6m-ppjXac1q7PKUhhOPkPyCTU9R9QgmEGQKh5+syLaqOhk0ed28refNhiLZVSk4mAeKrbmZLbf+kW6TybQmE5OWWGYaU1NxJ5nKBdj0pytwCi9uEze9c0Dl9NVLWRybjhmU6AwqW0RYBLXAalIl1M8Io5TloF3C66HmIhViHiKIkMpZWPTW9YZ47JwVE4p2IS3VYA0fs1M6bTRzPEYzy5E55gWBruRChzDhnOYh7tHcNzKMZQtdneRpi75Es-bq-34msURrOFO1g8rTzGVzxlPaY1QuFkgjmIjpiGDaArKLcQq6N8ltFbNhH4-bG2BUwpOTlmLuoG7VMezT+2WGraFORYVlOXZHNOCYTTfMYaWYQJnR-FgmLwIkkridjZpK6uAC0pguv3qhc6U48TxPLfdD2r3BJgvd7Uxpl8ulhQtro5h3PULpMwhW9xz8aiij85gJ5JuPJ0+i-Fkx9TupuhTDTu9jlClFhHd8DjCTlAqWWfrku6FQvqLK+vkhxpzWDfKKdNjIIRDlcBwp8bDDQ0ClBwjIdbFFyi4Mwl5AHuWxiLe8EZ8bfUgWAaB4NUp2DqA5GGJRvhWDfpUTCpxBItjQlrAo91z441AaQ8Wa1JaYioV7KoVlw5mGaJZVQDgrLOhSpZRk5tMJmCspvNQAD3BAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVHjqJBCY9FzYjGQY2Lh4QqJIIBJSMnJ5Sgh6ggbqytqCqnqqFdaqug7OCKZmguraxgZmev1N2pqqqiFhGZGEpJTU6ukRWYwARnQQjox0KViQ9Ex0fFIQ7GToMTnyBdKyWPKlxqo+6tbWtQaaZmY6vWatiF4Vbq9PR6Ww6WyqTTjEDhTJRGaxeaTJardabbaQdS4DYANxIYAA7owALZrMB7Rg7BQsEkMFgACzSZ0oFzyVyKtxKiAG7kEnVUBmMege1QM2lUfwQry6FmMw0Eak0xhGY1CMOR8JicwWcLwKzWGy22Ex2MYeMJtOOFKpNMcYHwTPOIkukmuxVApR56j5byFIss2klqmUemebksSpMyp00NhU2isziOqm+rRRp2ECxqFx+KJpKtDEYXDwYDxB1gjDtDtOTty4ldHLu3LMvP5guFwYDEqciE+mnUvTl-X0gu+sY10y1SYnqcNGMzpvNebJFOLpdkPArpKwDMdLOdbIbNybZU6VRqdQaNmagZ7CGUmhl1jl5RGPVeA3Hi01iaR371qJzsaC7ZmauaWuShYsGsoE1vudb5Ee7qKP8jyhi8bwfF8PR9JK1jVFU-h6MoBiqEKtjPl+uoJoiyYoga6LAVmOYWvmkFMKasBgJgZAcqy9aFMeXLtJC6GvAKWHfLhd7BpUmgkcRDz+Ph4pUfGCLajOgGMRmzFgaxK6Ftuu5LhBe4UPxiGCchpRke41j8s0D42D0xiSpoxHqAYIYCoImjWDU4p6GpWQ0Zp-6zjpJqgaZbEUlWeqxWS5mWeyQkeogdnPI5riaC5ph4XUWgNM575+A8IU-rRWkMemmLGYySUFkwDWMFxPF8QeAlupyGUIHU7idH5phqEKqgWJKNjKFogj1P0aH6ONlWTr+dEOtpdWZq1TXsZW9qJeBbEpV1Vk9SeI3TeN7zlORxgPr8d4fKGXgGOUTQCl4ZHLWF04RRt87qNth2GUwNp7dWzIWSdaU2YgLzTYYpHipoHmkcoD1tHUZgeEK8m6LJFTKN9Gm-bqkWbYDdKNcDzVFiWZabuDepwVDCEw71KFSkq6j+MNvh1PUwqTaCA76CMKNvDYxNTn+ZP-UxCX6cutOK+1YC8TcqVIRz9x3ZUAzvEM759Hok36FU1ivcRfl5ejRNqnGoUk7LKby7pis7daYDUsw6uoMcx1s9r516CMXn6EO3kBc+psyeU3Tjb4gTPijpHS6tNVpgDHs07ta4MxWxzpAHLNa9ZOv-PU+sRgFzSgt5sdtK92MOZ8yi2CR+GW+nsQ0LAjhYGQdNbLAZdncJAC05juMogi1BYLxGJ8QqTdzymkTowqW8qIRqlgZLwHkjtVdQLrlyeE9uFUc-jdoi98i2jeIJf2geK9fnPu2L6gj3cwJJgZ9x59RfNYbo5RRgmAsD0eokpdCgOGInYithozGF-qTV2tV5yAMbMJao01qi1HqI0G8k1QGBCcndcaPhXgVQdhOH6Lt6JZyYouXO2D0qc1Dv2B8wpiLWy+AVO8d9poPDlN5HCYp5JoMYetTBTEgYGWOOw2GCAajTS+LUcUVglL2EeoYHmIInJuAct5Aw0i1oATke7faSsILKIru0Xwr9Oj4VqAKIwIx3KeW8P0V6IYUYhl3kEIAA */
     context: {
       date: "",
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
@@ -137,11 +137,11 @@ export const machine = createMachine(
         },
 
         entry: ["setGridDates", "setMonthYearPanelData", "setIsTodayValid", "setCalendarControllerLabels"],
-      },
+      }
     },
 
     schema: {
-      events: {} as { type: "setNextYearForMonthView" } | { type: "setPreviousYearForMonthView" } | { type: "on_date_input" } | { type: "sync_date" } | { type: "on_outside_click" } | { type: "open_calendar" } | { type: "on_today_click" } | { type: "on_next_month_click" } | { type: "on_previous_month_click" } | { type: "on_next_year_click" } | { type: "on_previous_year_click" } | { type: "on_next_decade_click" } | { type: "on_previous_decade_click" } | { type: "on_year_selection" } | { type: "on_month_selection" } | { type: "on_day_selection" } | { type: "on_month_view_mode_click" } | { type: "on_year_view_mode_click" },
+      events: {} as { type: "sync_props" } | { type: "setNextYearForMonthView" } | { type: "setPreviousYearForMonthView" } | { type: "on_date_input" } | { type: "sync_date" } | { type: "on_outside_click" } | { type: "open_calendar" } | { type: "on_today_click" } | { type: "on_next_month_click" } | { type: "on_previous_month_click" } | { type: "on_next_year_click" } | { type: "on_previous_year_click" } | { type: "on_next_decade_click" } | { type: "on_previous_decade_click" } | { type: "on_year_selection" } | { type: "on_month_selection" } | { type: "on_day_selection" } | { type: "on_month_view_mode_click" } | { type: "on_year_view_mode_click" },
     },
 
     predictableActionArguments: true,
@@ -152,6 +152,12 @@ export const machine = createMachine(
         target: ".calendar_body_opened",
         actions: ["setDate", "setCalendarReferenceDate", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
       },
+
+      sync_props: {
+        target: "#Calendar Picker",
+        internal: true,
+        actions: "setPropsData"
+      }
     },
   },
   {
@@ -174,6 +180,7 @@ export const machine = createMachine(
       setYearViewModeNextDecade,
       setIsTodayValid,
       setCalendarControllerLabels,
+      setPropsData,
     },
     services: {},
     guards: {},
@@ -183,20 +190,20 @@ export const machine = createMachine(
 
 // ACTIONS
 function setDate(context: any, event: any) {
-  const dayInfo = event?.data?.dayInfo;
-  const working_date = `${dayInfo?.workingYear}-${zero_pad(dayInfo?.workingMonth as number)}-${zero_pad(dayInfo?.workingDay as number)}`;
+  const working_date = event?.data?.date;
   if (working_date) {
     context.date = working_date ?? dayjs().format("YYYY-MM-DD");
+    
     event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
   }
-  // const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
-  // if (validation_result.is_valid) {
-  //   if (working_date) {
-  //     context.date = working_date ?? dayjs().format("YYYY-MM-DD");
-  //   }
-  // } else {
-  //   context.date = ""
-  // }
+}
+
+function setPropsData(context: any, event: any) {
+  const props = event?.data;
+  context.date = props?.date ?? "";
+  context.disable_date_before = props?.disable_date_before ?? "";
+  context.disable_date_after = props?.disable_date_after ?? "";
+  context.calendar_reference_date = props?.date ?? dayjs().format("YYYY-MM-DD");
 }
 
 function setCalendarControllerLabels(context: any) {

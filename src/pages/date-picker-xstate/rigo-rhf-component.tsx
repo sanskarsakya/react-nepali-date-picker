@@ -16,10 +16,6 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
     disableDateBefore
   } = useDatePicker();
 
-  console.log({
-    disableDateBefore,
-    disableDateAfter,
-  })
 
   return (
     <Controller
@@ -34,7 +30,7 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
 
           const validation_result = validate(value, disableDateBefore as string, disableDateAfter as string);
           if (!validation_result.is_valid) {
-            return validation_result.message + "  asdfasdf"
+            return validation_result.message
           }
           return true;
         }

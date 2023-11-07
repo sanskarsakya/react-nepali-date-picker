@@ -19,14 +19,29 @@ interface DatepickerComponentProps {
   onChange?: any
   isRhfBound?: boolean
   isNepali?: boolean
+  date?: string
+  disable_date_before?: string
+  disable_date_after?: string
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, onChange } = props
+  const { isRhfBound = false, onChange, ...propsRest } = props
   const [
     state,
     send,
   ] = useMachine(machine);
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
+
+  // FUNCTIONS
+  React.useEffect(() => {
+    if (propsRest) {
+      send("sync_props", {
+        data: { ...propsRest }
+      })
+    }
+  },
+  [] 
+  // [propsRest.date, propsRest.disable_date_after, propsRest.disable_date_before, send]
+  )
 
   const handleClickOutside = React.useCallback((event: any) => {
     if (nepaliDatePickerWrapper.current &&
@@ -38,15 +53,11 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
   React.useLayoutEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-    // if (state.matches({ "calendar_body_opened": "year_view_mode" })) {
-    // }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [handleClickOutside]);
-
-
 
   React.useLayoutEffect(() => {
     if (state.matches({ "calendar_body_opened": "year_view_mode" }) && nepaliDatePickerWrapper.current) {
@@ -67,7 +78,6 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       }
     }
   }, [state]);
-
 
   return (
     <div
@@ -113,6 +123,9 @@ interface DatePickerXStateProps {
   isRhfBound?: boolean
   isNepali?: boolean
   onChange?: any
+  date?: string
+  disable_date_before?: string
+  disable_date_after?: string
 }
 export const DatePickerXState = (props: DatePickerXStateProps) => {
   return <DatepickerComponent

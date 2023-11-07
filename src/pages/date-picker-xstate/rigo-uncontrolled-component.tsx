@@ -9,13 +9,13 @@ export const RigoUncontrolledComponent = (props: any) => {
     isRhfBound = false,
     // trigger,
     onChangeRHF,
-    // value: rhfValue,
+    value: rhfValue,
     // ...propRest
   } = props;
 
   const {
     name,
-    // value,
+    value,
     // label,
     // control,
     // errors,
@@ -24,7 +24,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     // this is user defined value for uncontrolled component
     onChange: _onChange,
     // dateType = CALENDAR_MODE.ENGLISH,
-    // ...contextRest
+    ...contextRest
   } = useDatePicker();
 
   const handleChange = (value: any) => {
@@ -35,7 +35,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     // })
   };
 
-  // const valueNormalized = rhfValue ?? value;
+  const valueNormalized = rhfValue ?? value;
 
   // const calendarDate =
   //   dateType === CALENDAR_MODE.NEPALI
@@ -52,5 +52,13 @@ export const RigoUncontrolledComponent = (props: any) => {
   //   ...propRest,
   // };
 
-  return <DatePickerXState isRhfBound={isRhfBound} isNepali={false} onChange={handleChange} />;
+ 
+
+  return <DatePickerXState
+    isRhfBound={isRhfBound}
+    isNepali={false}
+    onChange={handleChange}
+    date={valueNormalized}
+    {...contextRest}
+  />;
 };

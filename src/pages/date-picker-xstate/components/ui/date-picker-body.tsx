@@ -1,5 +1,5 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from "@chakra-ui/react";
-import { IDayInfo } from "../calendar-engine";
+import { IDayInfo, zero_pad } from "../calendar-engine";
 import { get_styles } from "./style";
 
 interface DatepickerBodyProps {
@@ -51,9 +51,10 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                                                 if (dayInfo.isDisabled) {
                                                     return
                                                 }
+                                                const working_date = `${dayInfo?.workingYear}-${zero_pad(dayInfo?.workingMonth as number)}-${zero_pad(dayInfo?.workingDay as number)}`;
                                                 send("on_day_selection", {
                                                     data: {
-                                                        dayInfo,
+                                                        date: working_date,
                                                         onChange
                                                     }
                                                 })

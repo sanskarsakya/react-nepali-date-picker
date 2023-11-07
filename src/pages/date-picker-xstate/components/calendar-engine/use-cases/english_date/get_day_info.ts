@@ -1,12 +1,17 @@
-// migrated
-import { get_first_day_of_the_month } from "./get_first_day_of_the_month";
-import { ENGLISH_DATE } from ".";
+// LIBS
 import dayjs from "dayjs";
-import * as from_utilities from "../../utilities";
+import * as isBetween from "dayjs/plugin/isBetween";
 import { ADToBS } from "bikram-sambat-js";
+import { englishToNepaliNumber } from "nepali-number";
+
+// UTILITIES
+import { ENGLISH_DATE } from ".";
+import { get_first_day_of_the_month } from "./get_first_day_of_the_month";
 import { is_today } from "./is_today";
 import * as fromCalendarEngine from "../../index";
-import { englishToNepaliNumber } from "nepali-number";
+import * as from_utilities from "../../utilities";
+
+dayjs.extend(isBetween)
 
 export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, input_date?: any, disable_date_before?: any, disable_date_after?: any): fromCalendarEngine.IDayInfo => {
   const formattedDate = dayjs(calendar_date).format("YYYY-MM-DD");
@@ -55,20 +60,22 @@ export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, 
   if (input_date) {
     isToday = is_today(new Date(latest_stiched_date));
     isSelected = dayjs(latest_stiched_date).isSame(dayjs(input_date), "day");
-    isDisabled = !isCurrentMonth || (disable_date_before && dayjs(latest_stiched_date).isBefore(disable_date_before)) || (disable_date_after && dayjs(latest_stiched_date).isAfter(disable_date_after));
   }
+  
+  const isInBetween = dayjs(latest_stiched_date).isBetween(disable_date_before, disable_date_after, 'day', '[)')
+  isDisabled = !isCurrentMonth || !isInBetween;
 
   return {
-    workingDay: primaryDay,
-    workingMonth: primaryMonth,
-    workingYear: primaryYear,
-    primaryDay: primaryDay,
-    primaryMonth: primaryMonth,
-    primaryYear: primaryYear,
-    secondaryDay: englishToNepaliNumber(parseInt(splitted_nepali_date[2])) as string,
+    workingDay    : primaryDay,
+    workingMonth  : primaryMonth,
+    workingYear   : primaryYear,
+    primaryDay    : primaryDay,
+    primaryMonth  : primaryMonth,
+    primaryYear   : primaryYear,
+    secondaryDay  : englishToNepaliNumber(parseInt(splitted_nepali_date[2])) as string,
     secondaryMonth: englishToNepaliNumber(parseInt(splitted_nepali_date[1])) as string,
-    secondaryYear: englishToNepaliNumber(parseInt(splitted_nepali_date[0])) as string,
-    isCurrentMonth, // required to enable current month dates
+    secondaryYear : englishToNepaliNumber(parseInt(splitted_nepali_date[0])) as string,
+    isCurrentMonth, 
     isToday,
     isSelected,
     isDisabled,
