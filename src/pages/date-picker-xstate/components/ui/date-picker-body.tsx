@@ -1,5 +1,5 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from "@chakra-ui/react";
-import { IDayInfo, weeks, zero_pad } from "../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
+import { IDayInfo, weeks, zero_pad } from "../../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
 import { get_styles } from "./style";
 
 interface DatepickerBodyProps {

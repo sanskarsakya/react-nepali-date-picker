@@ -5,7 +5,7 @@ import { Controller } from "react-hook-form";
 import { ControlledComponentProps } from "./interface";
 import { RigoUncontrolledComponent } from "./rigo-uncontrolled-component";
 import { useDatePicker } from "./use-date-picker";
-import { validate } from "./components/date-picker-machine";
+import { validate } from "./components/machines/date-picker-machine";
 
 export const RigoRhfComponent = (props: ControlledComponentProps) => {
   const {

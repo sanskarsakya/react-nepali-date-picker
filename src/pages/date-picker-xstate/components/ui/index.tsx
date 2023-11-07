@@ -5,7 +5,7 @@ import { When } from 'react-if';
 import { CalendarController } from './calendar-controller';
 import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
-import { machine } from './date-picker-machine';
+import { machine } from '../machines/date-picker-machine';
 import { MonthViewMode } from './month-view-mode';
 import { MonthYearPanel } from './month-year-panel';
 import Today from './today';
@@ -45,7 +45,6 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [handleClickOutside]);
-
 
 
 

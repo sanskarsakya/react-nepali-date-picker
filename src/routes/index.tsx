@@ -6,7 +6,7 @@ import { RouteEnum } from './routeEnum';
 import DatePickerContainer from '../pages/date-picker';
 import AppShell from '../components/app-shell';
 import { ErrorPlaceholder } from '../components/ErrorPlaceholder/ErrorPlaceholder';
-import { DatePickerXState } from '../pages/date-picker-xstate/components';
+import { DatePickerXState } from '../pages/date-picker-xstate/components/ui';
 
 export const router = createBrowserRouter([
     {

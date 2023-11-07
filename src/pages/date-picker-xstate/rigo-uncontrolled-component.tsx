@@ -1,7 +1,7 @@
 import { useDatePicker } from './use-date-picker';
 // import { RigoNepaliDatePicker } from './components/nepali-date-picker copy';
 // import { CALENDAR_MODE } from './components/nepali-date-picker copy/calendar-engine';
-import { DatePickerXState } from './components';
+import { DatePickerXState } from './components/ui';
 
 export const RigoUncontrolledComponent = (props: any) => {
   const {
@@ -52,12 +52,5 @@ export const RigoUncontrolledComponent = (props: any) => {
   //   ...propRest,
   // };
 
-  return <DatePickerXState isRhfBound={isRhfBound} isNepali={false} onChange={handleChange}
-  // onError={(errorMessage: string) => {
-  //   console.log("onError", errorMessage)
-  //   setError?.(name, {
-  //     message: errorMessage,
-  //   })
-  // }}
-  />;
+  return <DatePickerXState isRhfBound={isRhfBound} isNepali={false} onChange={handleChange} />;
 };
