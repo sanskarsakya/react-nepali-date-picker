@@ -1,13 +1,14 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
+import { machine } from '../machines/date-picker-machine';
 import { CalendarController } from './calendar-controller';
 import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
-import { machine } from '../machines/date-picker-machine';
 import { MonthViewMode } from './month-view-mode';
 import { MonthYearPanel } from './month-year-panel';
+import { get_styles } from './style';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
 
@@ -19,28 +20,29 @@ interface DatepickerComponentProps {
   onChange?: any
   isRhfBound?: boolean
   isNepali?: boolean
+  is_dark?: boolean
   date?: string
   disable_date_before?: string
   disable_date_after?: string
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, onChange, ...propsRest } = props
+  const { isRhfBound = false, onChange, is_dark = false, ...propsRest } = props
   const [
     state,
     send,
   ] = useMachine(machine);
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
+  const styles = get_styles(is_dark)
+
   // FUNCTIONS
   React.useEffect(() => {
     if (propsRest) {
       send("sync_props", {
-        data: { ...propsRest }
+        data: { ...props }
       })
     }
-  },
-  [] 
-  // [propsRest.date, propsRest.disable_date_after, propsRest.disable_date_before, send]
+  },[]
   )
 
   const handleClickOutside = React.useCallback((event: any) => {
@@ -83,18 +85,22 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     <div
       id={'input-wrapper-2'}
       style={{
-        width: '275px',
+        // width: '275px',
         position: 'relative',
       }}
       ref={nepaliDatePickerWrapper}
     >
 
-      <DateInput state={state} send={send} onChange={onChange} />
-      <When condition={!isRhfBound && state.context.error}>
+      <DateInput state={state} send={send} onChange={onChange} styles={styles} />
+      <When condition={!isRhfBound && state.context.error} >
         <Text>{state.context.error}</Text>
       </When>
-      <div style={{
-        width: '100%',
+
+      {/* RENDER CALENDAR BODY */}
+      <Box
+      shadow="md"
+      style={{
+        width: '288px',
         background: "white",
         zIndex: 100,
         position: "absolute",
@@ -102,18 +108,21 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         left: 0,
       }}>
         <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
-          <YearViewMode state={state} send={send} />
+          <YearViewMode state={state} send={send} styles={styles} />
         </When>
+
         <When condition={state.matches({ "calendar_body_opened": "month_view_mode" })}>
-          <MonthViewMode state={state} send={send} />
+          <MonthViewMode state={state} send={send} styles={styles} />
         </When>
+
         <When condition={state.matches({ "calendar_body_opened": "day_view_mode" })}>
-          <CalendarController state={state} send={send} />
-          <MonthYearPanel state={state} />
-          <DatePickerBody state={state} send={send} onChange={onChange} />
-          <Today send={send} state={state} onChange={onChange} />
+          <CalendarController state={state} send={send} styles={styles} />
+          <MonthYearPanel state={state} styles={styles} />
+          <DatePickerBody state={state} send={send} onChange={onChange} styles={styles} />
+          <Today send={send} state={state} onChange={onChange} styles={styles} />
         </When>
-      </div>
+
+      </Box>
 
     </div>
   )
@@ -122,6 +131,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 interface DatePickerXStateProps {
   isRhfBound?: boolean
   isNepali?: boolean
+  isDark?: boolean
   onChange?: any
   date?: string
   disable_date_before?: string

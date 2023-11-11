@@ -18,7 +18,9 @@ export const Default = {
     value: '2023-10-29',
     disableDateBefore: '2023-08-29',
     disableDateAfter: '2023-12-29',
+    is_dark: false,
   },
+
   render: (args: any) => {
     return (
       <ChakraProvider>
@@ -82,6 +84,7 @@ export const Default = {
                     label='Composed And RHF Controlled'
                     disable_date_before={args.disableDateBefore}
                     disable_date_after={args.disableDateAfter}
+                    is_dark={args.is_dark}
                     required
                     {...inputProps}
                   >

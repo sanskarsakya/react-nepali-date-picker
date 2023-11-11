@@ -3,11 +3,13 @@ import { Box, Button } from '@chakra-ui/react'
 interface TodayProps {
     state: any
     send: any
+    styles: any
     onChange?: any
 }
-const Today = ({ send, state, onChange }: TodayProps) => {
+const Today = ({ send, state, onChange, styles }: TodayProps) => {
     return <Box
         as={Button}
+        sx={styles.today}
         isDisabled={!state.context.is_today_valid}
         w="full"
         p={3}

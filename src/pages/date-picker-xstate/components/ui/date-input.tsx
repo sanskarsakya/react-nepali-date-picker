@@ -4,6 +4,7 @@ import React from "react";
 interface DateInputProps {
     state: any;
     send: any;
+    styles: any;
     onChange?: any;
 
 }

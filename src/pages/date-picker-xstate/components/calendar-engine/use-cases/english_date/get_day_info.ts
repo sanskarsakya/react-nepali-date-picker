@@ -11,7 +11,7 @@ import { is_today } from "./is_today";
 import * as fromCalendarEngine from "../../index";
 import * as from_utilities from "../../utilities";
 
-dayjs.extend(isBetween)
+dayjs.extend(isBetween);
 
 export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, input_date?: any, disable_date_before?: any, disable_date_after?: any): fromCalendarEngine.IDayInfo => {
   const formattedDate = dayjs(calendar_date).format("YYYY-MM-DD");
@@ -54,28 +54,37 @@ export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, 
 
   const converted_nepali_date = primaryYear > 999 && primaryYear < 2042 ? ADToBS(new Date(latest_stiched_date)) : "2099-12-31";
   const splitted_nepali_date = converted_nepali_date.split("-");
-  let isToday = false;
+  const isToday = is_today(new Date(latest_stiched_date));
+
   let isSelected = false;
-  let isDisabled = false;
   if (input_date) {
-    isToday = is_today(new Date(latest_stiched_date));
     isSelected = dayjs(latest_stiched_date).isSame(dayjs(input_date), "day");
   }
-  
-  const isInBetween = dayjs(latest_stiched_date).isBetween(disable_date_before, disable_date_after, 'day', '[)')
-  isDisabled = !isCurrentMonth || !isInBetween;
+
+  let isDayAfterDisabledBeforeDate = true;
+  let isDayBeforeDisabledAfterDate = true;
+
+  if (disable_date_before) {
+    isDayAfterDisabledBeforeDate = dayjs(latest_stiched_date).isAfter(disable_date_before, "day");
+  }
+
+  if (disable_date_after) {
+    isDayBeforeDisabledAfterDate = dayjs(latest_stiched_date).isBefore(disable_date_after, "day");
+  }
+
+  const isDisabled = !isCurrentMonth || !isDayAfterDisabledBeforeDate || !isDayBeforeDisabledAfterDate;
 
   return {
-    workingDay    : primaryDay,
-    workingMonth  : primaryMonth,
-    workingYear   : primaryYear,
-    primaryDay    : primaryDay,
-    primaryMonth  : primaryMonth,
-    primaryYear   : primaryYear,
-    secondaryDay  : englishToNepaliNumber(parseInt(splitted_nepali_date[2])) as string,
+    workingDay: primaryDay,
+    workingMonth: primaryMonth,
+    workingYear: primaryYear,
+    primaryDay: primaryDay,
+    primaryMonth: primaryMonth,
+    primaryYear: primaryYear,
+    secondaryDay: englishToNepaliNumber(parseInt(splitted_nepali_date[2])) as string,
     secondaryMonth: englishToNepaliNumber(parseInt(splitted_nepali_date[1])) as string,
-    secondaryYear : englishToNepaliNumber(parseInt(splitted_nepali_date[0])) as string,
-    isCurrentMonth, 
+    secondaryYear: englishToNepaliNumber(parseInt(splitted_nepali_date[0])) as string,
+    isCurrentMonth,
     isToday,
     isSelected,
     isDisabled,

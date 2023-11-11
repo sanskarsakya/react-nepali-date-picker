@@ -13,6 +13,8 @@ export const RigoUncontrolledComponent = (props: any) => {
     // ...propRest
   } = props;
 
+  const context= useDatePicker();
+
   const {
     name,
     value,
@@ -25,8 +27,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     onChange: _onChange,
     // dateType = CALENDAR_MODE.ENGLISH,
     ...contextRest
-  } = useDatePicker();
-
+  }  = context
   const handleChange = (value: any) => {
     _onChange?.(name, value);
     onChangeRHF?.(value);

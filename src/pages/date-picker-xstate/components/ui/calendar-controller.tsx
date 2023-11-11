@@ -3,7 +3,8 @@ import { AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineLeft, AiOutlineRigh
 
 interface CalendarControllerProps {
   state: any,
-  send: any
+  send: any,
+  styles: any
 }
 
 export const CalendarController = ({

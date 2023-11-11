@@ -4,6 +4,7 @@ import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 interface YearViewModeProp {
     state: any;
     send: any
+    styles: any
 }
 export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
     return <>

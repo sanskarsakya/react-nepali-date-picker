@@ -5,15 +5,15 @@ import { createMachine } from "xstate";
 import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date, weeks } from "..//calendar-engine";
 export const machine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVHjqJBCY9FzYjGQY2Lh4QqJIIBJSMnJ5Sgh6ggbqytqCqnqqFdaqug7OCKZmguraxgZmev1N2pqqqiFhGZGEpJTU6ukRWYwARnQQjox0KViQ9Ex0fFIQ7GToMTnyBdKyWPKlxqo+6tbWtQaaZmY6vWatiF4Vbq9PR6Ww6WyqTTjEDhTJRGaxeaTJardabbaQdS4DYANxIYAA7owALZrMB7Rg7BQsEkMFgACzSZ0oFzyVyKtxKiAG7kEnVUBmMege1QM2lUfwQry6FmMw0Eak0xhGY1CMOR8JicwWcLwKzWGy22Ex2MYeMJtOOFKpNMcYHwTPOIkukmuxVApR56j5byFIss2klqmUemebksSpMyp00NhU2isziOqm+rRRp2ECxqFx+KJpKtDEYXDwYDxB1gjDtDtOTty4ldHLu3LMvP5guFwYDEqciE+mnUvTl-X0gu+sY10y1SYnqcNGMzpvNebJFOLpdkPArpKwDMdLOdbIbNybZU6VRqdQaNmagZ7CGUmhl1jl5RGPVeA3Hi01iaR371qJzsaC7ZmauaWuShYsGsoE1vudb5Ee7qKP8jyhi8bwfF8PR9JK1jVFU-h6MoBiqEKtjPl+uoJoiyYoga6LAVmOYWvmkFMKasBgJgZAcqy9aFMeXLtJC6GvAKWHfLhd7BpUmgkcRDz+Ph4pUfGCLajOgGMRmzFgaxK6Ftuu5LhBe4UPxiGCchpRke41j8s0D42D0xiSpoxHqAYIYCoImjWDU4p6GpWQ0Zp-6zjpJqgaZbEUlWeqxWS5mWeyQkeogdnPI5riaC5ph4XUWgNM575+A8IU-rRWkMemmLGYySUFkwDWMFxPF8QeAlupyGUIHU7idH5phqEKqgWJKNjKFogj1P0aH6ONlWTr+dEOtpdWZq1TXsZW9qJeBbEpV1Vk9SeI3TeN7zlORxgPr8d4fKGXgGOUTQCl4ZHLWF04RRt87qNth2GUwNp7dWzIWSdaU2YgLzTYYpHipoHmkcoD1tHUZgeEK8m6LJFTKN9Gm-bqkWbYDdKNcDzVFiWZabuDepwVDCEw71KFSkq6j+MNvh1PUwqTaCA76CMKNvDYxNTn+ZP-UxCX6cutOK+1YC8TcqVIRz9x3ZUAzvEM759Hok36FU1ivcRfl5ejRNqnGoUk7LKby7pis7daYDUsw6uoMcx1s9r516CMXn6EO3kBc+psyeU3Tjb4gTPijpHS6tNVpgDHs07ta4MxWxzpAHLNa9ZOv-PU+sRgFzSgt5sdtK92MOZ8yi2CR+GW+nsQ0LAjhYGQdNbLAZdncJAC05juMogi1BYLxGJ8QqTdzymkTowqW8qIRqlgZLwHkjtVdQLrlyeE9uFUc-jdoi98i2jeIJf2geK9fnPu2L6gj3cwJJgZ9x59RfNYbo5RRgmAsD0eokpdCgOGInYithozGF-qTV2tV5yAMbMJao01qi1HqI0G8k1QGBCcndcaPhXgVQdhOH6Lt6JZyYouXO2D0qc1Dv2B8wpiLWy+AVO8d9poPDlN5HCYp5JoMYetTBTEgYGWOOw2GCAajTS+LUcUVglL2EeoYHmIInJuAct5Aw0i1oATke7faSsILKIru0Xwr9Oj4VqAKIwIx3KeW8P0V6IYUYhl3kEIAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVHjqJBCY9FzYjGQY2Lh4QqJIIBJSMnJ5Sgh6ggbqytqCqnqqFdaqug7OCKZmguraxgZmev1N2pqqqiFhGZGEpJTU6ukRWYwARnQQjox0KViQ9Ex0fFIQ7GToMTnyBdKyWPKlxqo+6tbWtQaaZmY6vWatiF4Vbq9PR6Ww6WyqTTjEDhTJRGaxeaTJardabbaQdS4DYANxIYAA7owALZrMB7Rg7BQsEkMFgACzSZ0oFzyVyKtxKiAG7kEnVUBmMege1QM2lUfwQry6FmMw0Eak0xhGY1CMOR8JicwWcLwKzWGy22Ex2MYeMJtOOFKpNMcYHwTPOIkukmuxVApR56j5byFIss2klqmUemebksSpMyp00NhU2isziOqm+rRRp2ECxqFx+KJpKtDEYXDwYDxB1gjDtDtOTty4ldHLu3LMvP5guFwYDEqciE+mnUvTl-X0gu+sY10y1SYnqcNGMzpvNebJFOLpdkPArpKwDMdLOdbIbNybZU6VRqdQaNmagZ7CGUmhl1jl5RGPVeA3Hi01iaR371qJzsaC7ZmauaWuShYsGsoE1vudb5Ee7qKP8jyhi8bwfF8PR9JK1jVFU-h6MoBiqEKtjPl+uoJoiyYoga6LAVmOYWvmkFMKasBgJgZAcqy9aFMeXLtJC6GvAKWHfLhd7BpUmgkcRDz+Ph4pUfGCLajOgGMRmzFgaxK6Ftuu5LhBe4UPxiGCchpRke41j8s0D42D0xiSpoxHqAYIYCoImjWDU4p6GpWQ0Zp-6zjpJqgaZbEUlWeqxWS5mWeyQkeogdnPI5riaC5ph4XUWgNM575+A8IU-rRWkMemmLGYySUFkwDWMFxPF8QeAlupyGUIHU7idH5phqEKqgWJKNjKFogj1P0aH6ONlWTr+dEOtpdWZq1TXsZW9qJeBbEpV1Vk9SeI3TeN7zlORxgPr8d4fKGXgGOUTQCl4ZHLWF04RRt87qNth2GUwNp7dWzIWSdaU2YgLzTYYpHipoHmkcoD1tHUZgeEK8m6LJFTKN9Gm-bqkWbYDdKNcDzVFiWZabuDepwVDCEw71KFSkq6j+MNvh1PUwqTaCA76CMKNvDYxNTn+ZP-UxCX6cutOK+1YC8TcqVIRz9x3ZUAzvEM759Hok36FU1ivcRfl5ejRNqnGoUk7LKby7pis7daYDUsw6uoMcx1s9r516CMXn6EO3kBc+psyeU3Tjb4gTPijpHS6tNVpgDHs07ta4MxWxzpAHLNa9ZOv-PU+sRgFzSgt5sdtK92MOZ8yi2CR+GW+nsQ0LAjhYGQdNbLAZdncJAC0bj2X0HduHlfn6JNOg89o4lWI8dlmCEapYGS8B5I7VXUC65cnlPlR+KHljYX5NgfJKU-aB4r1+c+7YvqCPdzAkmCn+PfUXzWG6OUUYJgLA9HqJKXQwDhiJ2IrYaMxhv6k1drVec-9GzCWqNNaotR6iNBvJNYBgQnJ3XGj4V4FUHYTh+i7eiWcmKLlzpg9KnNQ79gfMKYi1svgFTvGvaaDw5TeRwmKeSKD6HrXQUxIGBljisNhggGo00vi1HFFYJS9hHqGB5iCJybgHLeQMJItaAEZHu32krCCiiK7tF8M-To+FagCiMCMdynlvD9FeiGFGIZJE7AJAQWALBUBsAIMYWx8hoJcEyubR8DxrzJ1eNYBwmAABmLAVDTQqMGPk3lAjo3IQ4VYLBoLEkQB8dwCSBRNGSd4BweASBQHpFk9oZgclo3ycoQpLZY4EgSAyf4PSHD0jAM01pvZUmc2UJ0vJ-gemuBbGoIM8STC1IaGvFJO8ghAA */
     context: {
       date: "",
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
       grid_dates: [],
       show_calendar_body: "",
       month_year_panel_data: "",
-      disable_date_before: "2023-07-29",
-      disable_date_after: "2023-10-29",
+      disable_date_before: "", // "2023-07-29",
+      disable_date_after: "", //"2023-10-29",
       grid_years: [],
       error: "",
       grid_months: ENGLISH_MONTHS,
@@ -21,6 +21,7 @@ export const machine = createMachine(
       date_picker_body_data: {
         weeks: weeks["en"],
       },
+      is_dark: false,
       calendar_controller_labels: {
         month_label: "",
         year_label: "",
@@ -137,7 +138,9 @@ export const machine = createMachine(
         },
 
         entry: ["setGridDates", "setMonthYearPanelData", "setIsTodayValid", "setCalendarControllerLabels"],
-      }
+      },
+
+      "new state 1": {},
     },
 
     schema: {
@@ -156,8 +159,8 @@ export const machine = createMachine(
       sync_props: {
         target: "#Calendar Picker",
         internal: true,
-        actions: "setPropsData"
-      }
+        actions: "setPropsData",
+      },
     },
   },
   {
@@ -193,7 +196,7 @@ function setDate(context: any, event: any) {
   const working_date = event?.data?.date;
   if (working_date) {
     context.date = working_date ?? dayjs().format("YYYY-MM-DD");
-    
+
     event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
   }
 }
@@ -233,7 +236,15 @@ function setGridDates(context: any) {
 
   const calendarDates: IDayInfo[][] = range(0, weeks_in_english_month - 1).map((weekNum: number) => {
     return range(1, 7).map((weekDayNum: number) => {
-      return ENGLISH_DATE.get_day_info(weekNum, weekDayNum, context.calendar_reference_date, context.date, context.disable_date_before, context.disable_date_after);
+      return ENGLISH_DATE.get_day_info(
+        //
+        weekNum,
+        weekDayNum,
+        context.calendar_reference_date,
+        context.date,
+        context.disable_date_before,
+        context.disable_date_after
+      );
     });
   });
 
@@ -343,7 +354,19 @@ function setIsTodayValid(context: any) {
 // UTILITIES
 export const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
 
-export function validate(val: string, disableDateAfter: string, disableDateBefore: string) {
+export function check_if_in_range(value: string, disableDateBefore: string, disableDateAfter: string) {
+  if (disableDateBefore && dayjs(value).isBefore(dayjs(disableDateBefore))) {
+    return false;
+  }
+
+  if (disableDateAfter && dayjs(value).isAfter(dayjs(disableDateAfter))) {
+    return false;
+  }
+
+  return true;
+}
+
+export function validate(val: string, disableDateBefore: string, disableDateAfter: string) {
   const is_date_format_valid = dateFormat.test(val);
   if (!is_date_format_valid) {
     return {
@@ -374,7 +397,8 @@ export function validate(val: string, disableDateAfter: string, disableDateBefor
     };
   }
 
-  const is_date_valid_inside_range = disableDateBefore && dayjs(val).isBefore(disableDateBefore) && disableDateAfter && dayjs(val).isAfter(disableDateAfter);
+  const is_date_valid_inside_range = check_if_in_range(val, disableDateBefore, disableDateAfter);
+
   if (!is_date_valid_inside_range) {
     return {
       message: "This date is out of range",
