@@ -8,7 +8,7 @@ import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
 import { MonthViewMode } from './month-view-mode';
 import { MonthYearPanel } from './month-year-panel';
-import { get_styles } from './style';
+import { get_styles_base } from './style';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
 
@@ -33,7 +33,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   ] = useMachine(machine);
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
-  const styles = get_styles(is_dark)
+  const styles = get_styles_base(is_dark)
 
   // FUNCTIONS
   React.useEffect(() => {

@@ -11,17 +11,6 @@ const Today = ({ send, state, onChange, styles }: TodayProps) => {
         as={Button}
         sx={styles.today}
         isDisabled={!state.context.is_today_valid}
-        w="full"
-        p={3}
-        mt={1}
-        bg="white"
-        fontSize={"14px"}
-        borderRadius={"none"}
-        fontWeight="400"
-        textAlign='center'
-        cursor='pointer'
-        color='#0875e1'
-        borderTop='1px solid #E5E6EB'
         onClick={() => {
             send("on_today_click", {
                 data: {
@@ -29,9 +18,7 @@ const Today = ({ send, state, onChange, styles }: TodayProps) => {
                 }
             })
         }}
-        _hover={{
-            bg: "white"
-        }}
+        
     >
         Today
     </Box>
