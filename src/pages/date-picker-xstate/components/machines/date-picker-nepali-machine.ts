@@ -1,25 +1,31 @@
-import dayjs from "dayjs";
-import { createMachine } from "xstate";
-import { ENGLISH_MONTHS, IDayInfo, NEPALI_DATE, parse_date, range, stitch_date } from "../../../../components/nepali-date-picker/components/nepali-date-picker copy/calendar-engine";
-import { englishToNepaliNumber } from "nepali-number";
 import { ADToBS } from "bikram-sambat-js";
-import { isEmpty } from "lodash";
-
+import dayjs from "dayjs";
+import { englishToNepaliNumber } from "nepali-number";
+import { createMachine } from "xstate";
+import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date, weeks } from "..//calendar-engine";
 export const nepaliMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogAsAJgA0IAJ6IAHAE4AbADoAjId2rdAdmvLrAVkNWAvi81pMOfMXJU8xiQQmPRc2IxkGNi4eEKiSCASUjJyCUoIqtaqxroOyvr6uqYOAMzWhqYlhpo6CKamqoLGmSWq+sWVgoYODm4eUd6EpJTUxpFeMYwARnQQWox0YViQ9Ex0fFIQ7GTofnHySdKyWPLp5g6mxsrKDoIlutf5ljWIhQ7N1q3tFyVdPX0gTzRHzDfxjAaTGZzBZLSDGXDzABuJDAAHdGABbWZgVaMZYKFiYhgsAAWEV2lH2CUOKROaUQrRKZkMBRsykEylM+mULwQtn0OVuglUJXZv30HIBQMGvhGAXGwLw01m80W2DhCMYyLRRK2uPxhK0YHw5L2IgOkiOqVA6RKJUuDn0qiFmUEtmcvMMdzMukEfuUvxK+nuvXcgIhIL8owVg2V0LVywg8NQSJR6KxeoYjC4eDAyPWsEYRpNOzN8XEltppwZ5g+dl0VTyVlUPO0KlUJlurIcjXsukMhhKUojQyj8pHcdVsKTmu16exuJzedkPELWKwpNNlPN1Mrx2rCF+1kF+UKxTKFSqvJbAoefsEhXadsyumHE0jcvB76VUKn6pnKZammuo4lmLCzIBpbbuWiR7taiiIOclzXLc9yPIUGhtggvq6MYXp2o6bzitYb6KrKYIxpCKowv+yapjqGagUwmqwGAmBkLSVIVsk+70nUhiclcNx3A81wYZ6gjvIIDYlI61hGChr5htKMTkdGE6-jRiZ0UBDELlm66bnOIFbhQXGwTx8HpA48lXByZ5qNcuS8tY9Q5EUFjWLovpVEp-Tfmp47fpOWkaoBxmMbixZKhF2KmeZNK8TaiA2QK7JPKYjnKM5WEPEy9QNg4RQdm6JHKSOgVfoqIUJnChlkrFmZMPVjCsexnE7txVp0slCCDlJN7KAJjp+k4vJFbh7TmOKXoCaRMqgupwWabVSYtY1THZrm+arkWxpKlBZmdRZ3UHg2AqCMUl1um6jQXJ6lR4a5Fick4+SDvNqmLUF1UrdOxjrcBkVZgae0lhSR0wYlVl6PkxjtKy9QTXkra1Bcx49OY9j5D8eSfR+FEadRq3GNFunzk1YNKm1YAcccCVwT1CF1Jl7xFPkjSSd0DTVFhhFXMGLQ3JkmXKPjo6fpRJp-bRgN6ZTZMbfFx3Q0zZwPk0qimH6vzCk6zjWC5qjZENdqBlk1wiuLlVSz+xP-YrQP6UwoNbJEWzK1DjMHpU1xmDZpv3MVmUPU0rQivcvxa90hjW99VWxjL2mO-Lm1LjthZu6gHuHQzllq4hz7w16foijZLY2eNmXNMK9wNEY3llG4YZYNi8AJCpBPUBa+cHgAtLztR9yK8MFGP49j9JcdjoEwRgD3p18aYNjHrrdzdIUdiiry+hecYdoBjcpjlOdqjT5LRPxtOC9Vnxzq3nkiOlOUlSD4gg5XEKfp3lYu+x+VAV462xqv9WcTstg3ySszUUygchlFuGocUu97A7wqMYC4BRH6-AeBUc+hNlr21lsSBq4D567l7nxGwTQ7j5HKHQoaAkXLV3kucSwODbh+XDIAmewCk5whThTMhXVb69VfiYXezoRSPDdA8JhyFEE-BsDg5uLggA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVHjqJBCY9FzYjGQY2Lh4QqJIIBJSMnJ5Sgh6ggbqytqCqnqqFdaqug7OCKZmguraxgZmev1N2pqqqiFhGZGEpJTU6ukRWYwARnQQjox0KViQ9Ex0fFIQ7GToMTnyBdKyWPKlxqo+6tbWtQaaZmY6vWatiF4Vbq9PR6Ww6WyqTTjEDhTJRGaxeaTJardabbaQdS4DYANxIYAA7owALZrMB7Rg7BQsEkMFgACzSZ0oFzyVyKtxKiAG7kEnVUBmMege1QM2lUfwQry6FmMw0Eak0xhGY1CMOR8JicwWcLwKzWGy22Ex2MYeMJtOOFKpNMcYHwTPOIkukmuxVApR56j5byFIss2klqmUemebksSpMyp00NhU2isziOqm+rRRp2ECxqFx+KJpKtDEYXDwYDxB1gjDtDtOTty4ldHLu3LMvP5guFwYDEqciE+mnUvTl-X0gu+sY10y1SYnqcNGMzpvNebJFOLpdkPArpKwDMdLOdbIbNybZU6VRqdQaNmagZ7CGUmhl1jl5RGPVeA3Hi01iaR371qJzsaC7ZmauaWuShYsGsoE1vudb5Ee7qKP8jyhi8bwfF8PR9JK1jVFU-h6MoBiqEKtjPl+uoJoiyYoga6LAVmOYWvmkFMKasBgJgZAcqy9aFMeXLtJC6GvAKWHfLhd7BpUmgkcRDz+Ph4pUfGCLajOgGMRmzFgaxK6Ftuu5LhBe4UPxiGCchpRke41j8s0D42D0xiSpoxHqAYIYCoImjWDU4p6GpWQ0Zp-6zjpJqgaZbEUlWeqxWS5mWeyQkeogdnPI5riaC5ph4XUWgNM575+A8IU-rRWkMemmLGYySUFkwDWMFxPF8QeAlupyGUIHU7idH5phqEKqgWJKNjKFogj1P0aH6ONlWTr+dEOtpdWZq1TXsZW9qJeBbEpV1Vk9SeI3TeN7zlORxgPr8d4fKGXgGOUTQCl4ZHLWF04RRt87qNth2GUwNp7dWzIWSdaU2YgLzTYYpHipoHmkcoD1tHUZgeEK8m6LJFTKN9Gm-bqkWbYDdKNcDzVFiWZabuDepwVDCEw71KFSkq6j+MNvh1PUwqTaCA76CMKNvDYxNTn+ZP-UxCX6cutOK+1YC8TcqVIRz9x3ZUAzvEM759Hok36FU1ivcRfl5ejRNqnGoUk7LKby7pis7daYDUsw6uoMcx1s9r516CMXn6EO3kBc+psyeU3Tjb4gTPijpHS6tNVpgDHs07ta4MxWxzpAHLNa9ZOv-PU+sRgFzSgt5sdtK92MOZ8yi2CR+GW+nsQ0LAjhYGQdNbLAZdncJAC0bj2X0HduHlfn6JNOg89o4lWI8dlmCEapYGS8B5I7VXUC65cnlPlR+KHljYX5NgfJKU-aB4r1+c+7YvqCPdzAkmCn+PfUXzWG6OUUYJgLA9HqJKXQwDhiJ2IrYaMxhv6k1drVec-9GzCWqNNaotR6iNBvJNYBgQnJ3XGj4V4FUHYTh+i7eiWcmKLlzpg9KnNQ79gfMKYi1svgFTvGvaaDw5TeRwmKeSKD6HrXQUxIGBljisNhggGo00vi1HFFYJS9hHqGB5iCJybgHLeQMJItaAEZHu32krCCiiK7tF8M-To+FagCiMCMdynlvD9FeiGFGIZJE7AJAQWALBUBsAIMYWx8hoJcEyubR8DxrzJ1eNYBwmAABmLAVDTQqMGPk3lAjo3IQ4VYLBoLEkQB8dwCSBRNGSd4BweASBQHpFk9oZgclo3ycoQpLZY4EgSAyf4PSHD0jAM01pvZUmc2UJ0vJ-gemuBbGoIM8STC1IaGvFJO8ghAA */
     context: {
-      date: "",
+      date                   : "",
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
-      grid_dates: [],
-      show_calendar_body: "",
-      panel_year: "",
-      panel_month: "",
-      disable_date_before: "2023-07-29",
-      disable_date_after: "2023-10-29",
-      grid_years: [],
-      error: "",
-      grid_months: ENGLISH_MONTHS,
+      grid_dates             : [],
+      show_calendar_body     : "",
+      month_year_panel_data  : "",
+      disable_date_before    : "",                             // "2023-07-29",
+      disable_date_after     : "",                             //"2023-10-29",
+      grid_years             : [],
+      error                  : "",
+      grid_months            : ENGLISH_MONTHS,
+      is_today_valid         : false,
+      date_picker_body_data  : {
+        weeks: weeks["en"],
+      },
+      is_dark: false,
+      calendar_controller_labels: {
+        month_label: "",
+        year_label: "",
+      },
     },
 
     id: "Calendar Picker",
@@ -35,49 +41,36 @@ export const nepaliMachine = createMachine(
       },
 
       calendar_body_opened: {
-        entry: [
-          {
-            type: "setGridDates",
-          },
-          {
-            type: "setPanelMonth",
-          },
-          {
-            type: "setPanelYear",
-          },
-        ],
         initial: "day_view_mode",
+
         states: {
           day_view_mode: {
             on: {
               on_next_month_click: {
                 target: "day_view_mode",
                 internal: false,
-                actions: ["increment_month", "setGridDates", "setPanelYear", "setPanelMonth"],
+                actions: ["increment_month", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
               },
 
               on_next_year_click: {
-                internal: true,
-                actions: ["increment_year", "setPanelMonth", "setPanelYear", "setGridDates"],
+                actions: ["increment_year", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_previous_year_click: {
-                internal: true,
-                actions: ["decrement_year", "setPanelMonth", "setPanelYear", "setGridDates"],
+                actions: ["decrement_year", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_previous_month_click: {
-                internal: true,
-                actions: ["decrement_month", "setGridDates", "setPanelYear", "setPanelMonth"],
+                actions: ["decrement_month", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
               },
 
               on_today_click: {
                 target: "#Calendar Picker.idle",
-                actions: ["setToday", "setGridDates", "setPanelMonth", "setPanelYear"],
+                actions: ["setToday", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
               },
 
               on_day_selection: {
-                actions: ["setDate", "setCalendarReferenceDate", "setGridDates", "setPanelMonth", "setPanelYear"],
+                actions: ["setDate", "setCalendarReferenceDate", "setGridDates", "setMonthYearPanelData", "setCalendarControllerLabels"],
                 target: "#Calendar Picker.idle",
               },
 
@@ -95,7 +88,7 @@ export const nepaliMachine = createMachine(
             on: {
               on_month_selection: {
                 target: "day_view_mode",
-                actions: ["selectMonth", "setGridDates"],
+                actions: ["selectMonth", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_year_view_mode_click: "year_view_mode",
@@ -118,7 +111,7 @@ export const nepaliMachine = createMachine(
             on: {
               on_year_selection: {
                 target: "month_view_mode",
-                actions: ["selectYear", "setGridDates"],
+                actions: ["selectYear", "setGridDates", "setCalendarControllerLabels"],
               },
 
               on_next_decade_click: {
@@ -137,16 +130,21 @@ export const nepaliMachine = createMachine(
             entry: "setGridYears",
           },
         },
+
         on: {
           on_outside_click: {
             target: "idle",
           },
         },
+
+        entry: ["setGridDates", "setMonthYearPanelData", "setIsTodayValid", "setCalendarControllerLabels"],
       },
+
+      "new state 1": {},
     },
 
     schema: {
-      events: {} as { type: "setNextYearForMonthView" } | { type: "setPreviousYearForMonthView" } | { type: "on_date_input" } | { type: "sync_date" } | { type: "on_outside_click" } | { type: "open_calendar" } | { type: "on_today_click" } | { type: "on_next_month_click" } | { type: "on_previous_month_click" } | { type: "on_next_year_click" } | { type: "on_previous_year_click" } | { type: "on_next_decade_click" } | { type: "on_previous_decade_click" } | { type: "on_year_selection" } | { type: "on_month_selection" } | { type: "on_day_selection" } | { type: "on_month_view_mode_click" } | { type: "on_year_view_mode_click" },
+      events: {} as { type: "sync_props" } | { type: "setNextYearForMonthView" } | { type: "setPreviousYearForMonthView" } | { type: "on_date_input" } | { type: "sync_date" } | { type: "on_outside_click" } | { type: "open_calendar" } | { type: "on_today_click" } | { type: "on_next_month_click" } | { type: "on_previous_month_click" } | { type: "on_next_year_click" } | { type: "on_previous_year_click" } | { type: "on_next_decade_click" } | { type: "on_previous_decade_click" } | { type: "on_year_selection" } | { type: "on_month_selection" } | { type: "on_day_selection" } | { type: "on_month_view_mode_click" } | { type: "on_year_view_mode_click" },
     },
 
     predictableActionArguments: true,
@@ -155,7 +153,13 @@ export const nepaliMachine = createMachine(
     on: {
       on_date_input: {
         target: ".calendar_body_opened",
-        actions: ["setDate", "setCalendarReferenceDate", "setPanelMonth", "setPanelYear", "setGridDates"],
+        actions: ["setDate", "setCalendarReferenceDate", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
+      },
+
+      sync_props: {
+        target: "#Calendar Picker",
+        internal: true,
+        actions: "setPropsData",
       },
     },
   },
@@ -164,8 +168,7 @@ export const nepaliMachine = createMachine(
       setDate,
       setCalendarReferenceDate,
       setGridDates,
-      setPanelMonth,
-      setPanelYear,
+      setMonthYearPanelData,
       increment_month,
       decrement_month,
       decrement_year,
@@ -178,6 +181,9 @@ export const nepaliMachine = createMachine(
       setPreviousYearForMonthView,
       setYearViewModePreviousDecade,
       setYearViewModeNextDecade,
+      setIsTodayValid,
+      setCalendarControllerLabels,
+      setPropsData,
     },
     services: {},
     guards: {},
@@ -187,14 +193,38 @@ export const nepaliMachine = createMachine(
 
 // ACTIONS
 function setDate(context: any, event: any) {
-  context.date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
+  const working_date = event?.data?.date;
+  if (working_date) {
+    context.date = working_date ?? dayjs().format("YYYY-MM-DD");
+
+    event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
+  }
+}
+
+function setPropsData(context: any, event: any) {
+  const props = event?.data;
+  context.date = props?.date ?? "";
+  context.disable_date_before = props?.disable_date_before ?? "";
+  context.disable_date_after = props?.disable_date_after ?? "";
+  context.calendar_reference_date = props?.date ?? dayjs().format("YYYY-MM-DD");
+}
+
+function setCalendarControllerLabels(context: any) {
+  const splited = context.calendar_reference_date.split("-");
+  context.calendar_controller_labels.month_label = ENGLISH_MONTHS[+splited[1] - 1];
+  context.calendar_controller_labels.year_label = splited[0];
 }
 function setCalendarReferenceDate(context: any, event: any) {
   context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
-  const validation_result = validate(event?.data?.date, context.disable_date_before, context.disable_date_after);
+
+  let working_date = event?.data?.date;
+
+  const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
+
   if (validation_result.is_valid) {
-    if (event?.data?.date) {
-      context.calendar_reference_date = event?.data?.date ?? dayjs().format("YYYY-MM-DD");
+    if (working_date) {
+      working_date = working_date ?? dayjs().format("YYYY-MM-DD");
+      context.calendar_reference_date = working_date;
     }
     context.error = "";
   } else {
@@ -202,34 +232,37 @@ function setCalendarReferenceDate(context: any, event: any) {
   }
 }
 function setGridDates(context: any) {
-  const normalized_calendar_date = NEPALI_DATE.get_normalized_date(context.calendar_reference_date, "ENGLISH");
+  const weeks_in_english_month = ENGLISH_DATE.get_weeks_in_month(new Date(context.calendar_reference_date));
 
-  const normalized_date = NEPALI_DATE.get_normalized_date(isEmpty(context.date) ? dayjs().format("YYYY-MM-DD") : context.date, "ENGLISH");
-
-  const parsed_date = parse_date(normalized_calendar_date);
-
-  const selectedDate = parse_date(normalized_date);
-
-  const weeks_in_month = NEPALI_DATE.get_weeks_in_month(parsed_date);
-
-  const calendarDates: IDayInfo[][] = range(0, weeks_in_month - 1).map((weekNum: number) => {
+  const calendarDates: IDayInfo[][] = range(0, weeks_in_english_month - 1).map((weekNum: number) => {
     return range(1, 7).map((weekDayNum: number) => {
-      return NEPALI_DATE.get_day_info(weekNum, weekDayNum, parsed_date, selectedDate);
+      return ENGLISH_DATE.get_day_info(
+        //
+        weekNum,
+        weekDayNum,
+        context.calendar_reference_date,
+        context.date,
+        context.disable_date_before,
+        context.disable_date_after
+      );
     });
   });
 
   context.grid_dates = calendarDates;
 }
-function setPanelMonth(context: any) {
+function setMonthYearPanelData(context: any) {
   const now = new Date(context.calendar_reference_date);
-  context.panel_month = now.getMonth();
-}
-function setPanelYear(context: any) {
+
   const panel_converted_nepali_date = ADToBS(new Date(context.calendar_reference_date));
   const panel_splited_nepali_date = panel_converted_nepali_date.split("-");
 
-  context.panel_year = englishToNepaliNumber(panel_splited_nepali_date[0]);
+  const year = englishToNepaliNumber(panel_splited_nepali_date[0]);
+
+  const mapped = `${nepaliMonthMap[now.getMonth()]} ${year}`;
+
+  context.month_year_panel_data = mapped;
 }
+
 function increment_month(context: any) {
   context.calendar_reference_date = dayjs(context.calendar_reference_date).add(1, "month").format("YYYY-MM-DD");
 }
@@ -242,10 +275,17 @@ function increment_year(context: any) {
 function decrement_year(context: any) {
   context.calendar_reference_date = dayjs(context.calendar_reference_date).subtract(1, "year").format("YYYY-MM-DD");
 }
-function setToday(context: any) {
+function setToday(context: any, event: any) {
   const today = dayjs().format("YYYY-MM-DD");
-  context.date = today;
-  context.calendar_reference_date = today;
+
+  const validation_result = validate(today, context.disable_date_before, context.disable_date_after);
+
+  if (validation_result.is_valid) {
+    context.date = today;
+    context.calendar_reference_date = today;
+
+    event.data?.onChange?.(today);
+  }
 }
 
 function setGridYears(context: any) {
@@ -305,10 +345,28 @@ function setYearViewModePreviousDecade(context: any) {
   context.grid_years = [year_grid[0] - 1, ...year_grid, year_grid[year_grid.length - 1] + 1];
 }
 
+function setIsTodayValid(context: any) {
+  const today = dayjs().format("YYYY-MM-DD");
+  const validation_result = validate(today, context.disable_date_before, context.disable_date_after);
+  context.is_today_valid = validation_result.is_valid;
+}
+
 // UTILITIES
 export const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
 
-function validate(val: string, disableDateAfter: string, disableDateBefore: string) {
+export function check_if_in_range(value: string, disableDateBefore: string, disableDateAfter: string) {
+  if (disableDateBefore && dayjs(value).isBefore(dayjs(disableDateBefore))) {
+    return false;
+  }
+
+  if (disableDateAfter && dayjs(value).isAfter(dayjs(disableDateAfter))) {
+    return false;
+  }
+
+  return true;
+}
+
+export function validate(val: string, disableDateBefore: string, disableDateAfter: string) {
   const is_date_format_valid = dateFormat.test(val);
   if (!is_date_format_valid) {
     return {
@@ -339,10 +397,11 @@ function validate(val: string, disableDateAfter: string, disableDateBefore: stri
     };
   }
 
-  const is_date_valid_inside_range = disableDateBefore && dayjs(val).isBefore(disableDateBefore) && disableDateAfter && dayjs(val).isAfter(disableDateAfter);
+  const is_date_valid_inside_range = check_if_in_range(val, disableDateBefore, disableDateAfter);
+
   if (!is_date_valid_inside_range) {
     return {
-      message: "This date is out of range in nepal",
+      message: "This date is out of range",
       is_valid: false,
     };
   }
@@ -353,7 +412,7 @@ function validate(val: string, disableDateAfter: string, disableDateBefore: stri
   };
 }
 
-function get_year_list_in_decade(current_year: number) {
+export function get_year_list_in_decade(current_year: number) {
   // Calculate the start year of the current decade
   const startYear = Math.floor(current_year / 10) * 10;
 
@@ -367,3 +426,20 @@ function get_year_list_in_decade(current_year: number) {
 
   return decadeYears;
 }
+
+/**
+ * describe('get_year_list_in_decade', () => {
+  it('should return the correct decade for a given year', () => {
+    expect(get_year_list_in_decade(2021)).toEqual([2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029]);
+    expect(get_year_list_in_decade(2000)).toEqual([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009]);
+  });
+
+  it('should return the correct decade for a year at the start of a decade', () => {
+    expect(get_year_list_in_decade(1990)).toEqual([1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]);
+  });
+
+  it('should return the correct decade for a year at the end of a decade', () => {
+    expect(get_year_list_in_decade(1999)).toEqual([1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]);
+  });
+});
+ */

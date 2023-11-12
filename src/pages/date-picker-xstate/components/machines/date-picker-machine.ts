@@ -7,18 +7,18 @@ export const machine = createMachine(
   {
     /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVHjqJBCY9FzYjGQY2Lh4QqJIIBJSMnJ5Sgh6ggbqytqCqnqqFdaqug7OCKZmguraxgZmev1N2pqqqiFhGZGEpJTU6ukRWYwARnQQjox0KViQ9Ex0fFIQ7GToMTnyBdKyWPKlxqo+6tbWtQaaZmY6vWatiF4Vbq9PR6Ww6WyqTTjEDhTJRGaxeaTJardabbaQdS4DYANxIYAA7owALZrMB7Rg7BQsEkMFgACzSZ0oFzyVyKtxKiAG7kEnVUBmMege1QM2lUfwQry6FmMw0Eak0xhGY1CMOR8JicwWcLwKzWGy22Ex2MYeMJtOOFKpNMcYHwTPOIkukmuxVApR56j5byFIss2klqmUemebksSpMyp00NhU2isziOqm+rRRp2ECxqFx+KJpKtDEYXDwYDxB1gjDtDtOTty4ldHLu3LMvP5guFwYDEqciE+mnUvTl-X0gu+sY10y1SYnqcNGMzpvNebJFOLpdkPArpKwDMdLOdbIbNybZU6VRqdQaNmagZ7CGUmhl1jl5RGPVeA3Hi01iaR371qJzsaC7ZmauaWuShYsGsoE1vudb5Ee7qKP8jyhi8bwfF8PR9JK1jVFU-h6MoBiqEKtjPl+uoJoiyYoga6LAVmOYWvmkFMKasBgJgZAcqy9aFMeXLtJC6GvAKWHfLhd7BpUmgkcRDz+Ph4pUfGCLajOgGMRmzFgaxK6Ftuu5LhBe4UPxiGCchpRke41j8s0D42D0xiSpoxHqAYIYCoImjWDU4p6GpWQ0Zp-6zjpJqgaZbEUlWeqxWS5mWeyQkeogdnPI5riaC5ph4XUWgNM575+A8IU-rRWkMemmLGYySUFkwDWMFxPF8QeAlupyGUIHU7idH5phqEKqgWJKNjKFogj1P0aH6ONlWTr+dEOtpdWZq1TXsZW9qJeBbEpV1Vk9SeI3TeN7zlORxgPr8d4fKGXgGOUTQCl4ZHLWF04RRt87qNth2GUwNp7dWzIWSdaU2YgLzTYYpHipoHmkcoD1tHUZgeEK8m6LJFTKN9Gm-bqkWbYDdKNcDzVFiWZabuDepwVDCEw71KFSkq6j+MNvh1PUwqTaCA76CMKNvDYxNTn+ZP-UxCX6cutOK+1YC8TcqVIRz9x3ZUAzvEM759Hok36FU1ivcRfl5ejRNqnGoUk7LKby7pis7daYDUsw6uoMcx1s9r516CMXn6EO3kBc+psyeU3Tjb4gTPijpHS6tNVpgDHs07ta4MxWxzpAHLNa9ZOv-PU+sRgFzSgt5sdtK92MOZ8yi2CR+GW+nsQ0LAjhYGQdNbLAZdncJAC0bj2X0HduHlfn6JNOg89o4lWI8dlmCEapYGS8B5I7VXUC65cnlPlR+KHljYX5NgfJKU-aB4r1+c+7YvqCPdzAkmCn+PfUXzWG6OUUYJgLA9HqJKXQwDhiJ2IrYaMxhv6k1drVec-9GzCWqNNaotR6iNBvJNYBgQnJ3XGj4V4FUHYTh+i7eiWcmKLlzpg9KnNQ79gfMKYi1svgFTvGvaaDw5TeRwmKeSKD6HrXQUxIGBljisNhggGo00vi1HFFYJS9hHqGB5iCJybgHLeQMJItaAEZHu32krCCiiK7tF8M-To+FagCiMCMdynlvD9FeiGFGIZJE7AJAQWALBUBsAIMYWx8hoJcEyubR8DxrzJ1eNYBwmAABmLAVDTQqMGPk3lAjo3IQ4VYLBoLEkQB8dwCSBRNGSd4BweASBQHpFk9oZgclo3ycoQpLZY4EgSAyf4PSHD0jAM01pvZUmc2UJ0vJ-gemuBbGoIM8STC1IaGvFJO8ghAA */
     context: {
-      date: "",
+      date                   : "",
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
-      grid_dates: [],
-      show_calendar_body: "",
-      month_year_panel_data: "",
-      disable_date_before: "", // "2023-07-29",
-      disable_date_after: "", //"2023-10-29",
-      grid_years: [],
-      error: "",
-      grid_months: ENGLISH_MONTHS,
-      is_today_valid: false,
-      date_picker_body_data: {
+      grid_dates             : [],
+      show_calendar_body     : "",
+      month_year_panel_data  : "",
+      disable_date_before    : "",                             // "2023-07-29",
+      disable_date_after     : "",                             //"2023-10-29",
+      grid_years             : [],
+      error                  : "",
+      grid_months            : ENGLISH_MONTHS,
+      is_today_valid         : false,
+      date_picker_body_data  : {
         weeks: weeks["en"],
       },
       is_dark: false,
@@ -412,7 +412,7 @@ export function validate(val: string, disableDateBefore: string, disableDateAfte
   };
 }
 
-function get_year_list_in_decade(current_year: number) {
+export function get_year_list_in_decade(current_year: number) {
   // Calculate the start year of the current decade
   const startYear = Math.floor(current_year / 10) * 10;
 
@@ -426,3 +426,20 @@ function get_year_list_in_decade(current_year: number) {
 
   return decadeYears;
 }
+
+/**
+ * describe('get_year_list_in_decade', () => {
+  it('should return the correct decade for a given year', () => {
+    expect(get_year_list_in_decade(2021)).toEqual([2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029]);
+    expect(get_year_list_in_decade(2000)).toEqual([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009]);
+  });
+
+  it('should return the correct decade for a year at the start of a decade', () => {
+    expect(get_year_list_in_decade(1990)).toEqual([1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]);
+  });
+
+  it('should return the correct decade for a year at the end of a decade', () => {
+    expect(get_year_list_in_decade(1999)).toEqual([1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]);
+  });
+});
+ */
