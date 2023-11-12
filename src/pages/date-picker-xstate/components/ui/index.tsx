@@ -11,6 +11,7 @@ import { MonthYearPanel } from './month-year-panel';
 import { get_styles_base } from './style';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
+import { nepaliMachine } from '../machines/date-picker-nepali-machine';
 
 export const childOf = (childNode: any, parentNode: any): boolean =>
   parentNode.contains(childNode);
@@ -27,10 +28,11 @@ interface DatepickerComponentProps {
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
   const { isRhfBound = false, onChange, is_dark = false, ...propsRest } = props
+  const is_nepali = true;
   const [
     state,
     send,
-  ] = useMachine(machine);
+  ] = useMachine((is_nepali ? nepaliMachine : machine));
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
   const styles = get_styles_base(is_dark)
@@ -42,7 +44,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         data: { ...props }
       })
     }
-  },[]
+  }, []
   )
 
   const handleClickOutside = React.useCallback((event: any) => {
@@ -98,15 +100,15 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
       {/* RENDER CALENDAR BODY */}
       <Box
-      shadow="md"
-      style={{
-        width: '288px',
-        background: "white",
-        zIndex: 100,
-        position: "absolute",
-        top: 40,
-        left: 0,
-      }}>
+        shadow="md"
+        style={{
+          width: '288px',
+          background: "white",
+          zIndex: 100,
+          position: "absolute",
+          top: 40,
+          left: 0,
+        }}>
         <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
           <YearViewMode state={state} send={send} styles={styles} />
         </When>

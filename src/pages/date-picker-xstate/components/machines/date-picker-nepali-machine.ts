@@ -1,14 +1,14 @@
-import { ADToBS } from "bikram-sambat-js";
+import { ADToBS, BSToAD } from "bikram-sambat-js";
 import dayjs from "dayjs";
-import { englishToNepaliNumber } from "nepali-number";
+import { englishToNepaliNumber, nepaliToEnglishNumber } from "nepali-number";
 import { createMachine } from "xstate";
-import { ENGLISH_DATE, ENGLISH_MONTHS, IDayInfo, nepaliMonthMap, range, stitch_date, weeks } from "..//calendar-engine";
+import { IDayInfo, NEPALI_DATE, englishMonthMap, months, parse_date, range, stitch_date, weeks } from "..//calendar-engine";
 export const nepaliMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVHjqJBCY9FzYjGQY2Lh4QqJIIBJSMnJ5Sgh6ggbqytqCqnqqFdaqug7OCKZmguraxgZmev1N2pqqqiFhGZGEpJTU6ukRWYwARnQQjox0KViQ9Ex0fFIQ7GToMTnyBdKyWPKlxqo+6tbWtQaaZmY6vWatiF4Vbq9PR6Ww6WyqTTjEDhTJRGaxeaTJardabbaQdS4DYANxIYAA7owALZrMB7Rg7BQsEkMFgACzSZ0oFzyVyKtxKiAG7kEnVUBmMege1QM2lUfwQry6FmMw0Eak0xhGY1CMOR8JicwWcLwKzWGy22Ex2MYeMJtOOFKpNMcYHwTPOIkukmuxVApR56j5byFIss2klqmUemebksSpMyp00NhU2isziOqm+rRRp2ECxqFx+KJpKtDEYXDwYDxB1gjDtDtOTty4ldHLu3LMvP5guFwYDEqciE+mnUvTl-X0gu+sY10y1SYnqcNGMzpvNebJFOLpdkPArpKwDMdLOdbIbNybZU6VRqdQaNmagZ7CGUmhl1jl5RGPVeA3Hi01iaR371qJzsaC7ZmauaWuShYsGsoE1vudb5Ee7qKP8jyhi8bwfF8PR9JK1jVFU-h6MoBiqEKtjPl+uoJoiyYoga6LAVmOYWvmkFMKasBgJgZAcqy9aFMeXLtJC6GvAKWHfLhd7BpUmgkcRDz+Ph4pUfGCLajOgGMRmzFgaxK6Ftuu5LhBe4UPxiGCchpRke41j8s0D42D0xiSpoxHqAYIYCoImjWDU4p6GpWQ0Zp-6zjpJqgaZbEUlWeqxWS5mWeyQkeogdnPI5riaC5ph4XUWgNM575+A8IU-rRWkMemmLGYySUFkwDWMFxPF8QeAlupyGUIHU7idH5phqEKqgWJKNjKFogj1P0aH6ONlWTr+dEOtpdWZq1TXsZW9qJeBbEpV1Vk9SeI3TeN7zlORxgPr8d4fKGXgGOUTQCl4ZHLWF04RRt87qNth2GUwNp7dWzIWSdaU2YgLzTYYpHipoHmkcoD1tHUZgeEK8m6LJFTKN9Gm-bqkWbYDdKNcDzVFiWZabuDepwVDCEw71KFSkq6j+MNvh1PUwqTaCA76CMKNvDYxNTn+ZP-UxCX6cutOK+1YC8TcqVIRz9x3ZUAzvEM759Hok36FU1ivcRfl5ejRNqnGoUk7LKby7pis7daYDUsw6uoMcx1s9r516CMXn6EO3kBc+psyeU3Tjb4gTPijpHS6tNVpgDHs07ta4MxWxzpAHLNa9ZOv-PU+sRgFzSgt5sdtK92MOZ8yi2CR+GW+nsQ0LAjhYGQdNbLAZdncJAC0bj2X0HduHlfn6JNOg89o4lWI8dlmCEapYGS8B5I7VXUC65cnlPlR+KHljYX5NgfJKU-aB4r1+c+7YvqCPdzAkmCn+PfUXzWG6OUUYJgLA9HqJKXQwDhiJ2IrYaMxhv6k1drVec-9GzCWqNNaotR6iNBvJNYBgQnJ3XGj4V4FUHYTh+i7eiWcmKLlzpg9KnNQ79gfMKYi1svgFTvGvaaDw5TeRwmKeSKD6HrXQUxIGBljisNhggGo00vi1HFFYJS9hHqGB5iCJybgHLeQMJItaAEZHu32krCCiiK7tF8M-To+FagCiMCMdynlvD9FeiGFGIZJE7AJAQWALBUBsAIMYWx8hoJcEyubR8DxrzJ1eNYBwmAABmLAVDTQqMGPk3lAjo3IQ4VYLBoLEkQB8dwCSBRNGSd4BweASBQHpFk9oZgclo3ycoQpLZY4EgSAyf4PSHD0jAM01pvZUmc2UJ0vJ-gemuBbGoIM8STC1IaGvFJO8ghAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QGECGAbMA7CqBOABAAoCWAxgNZh4DEA9lgPq4AuYjJWADgK4sDaABgC6iUFzqwSLEgzEgAHogBMANgB0AdgCc2gMwBWQQEZjAFm0GDADk0AaEAE9E25cfWHjg63u1mbgvoAvkEOaJg4+MTkVLSwjlhkjFx4dFywQqJIIBJSMnLZSggAtG7u1gZmtspumkY6eg7OCAY66hbWgqpWqtaqpmYhYRjYuISklNTqJBCY9FzYjGQjkXiZ8rnSsljyRXqCBurK2l16qgd9uk2IA4Lq2saVemZ6l5qqqkMg4aNRE7HqZYRMaMABGdAgjkYaWwkHoTDofCkEHYZHQMXW2U2+R2hRuvT06msnW6mjMZh0jzM1wQXgO90eelemh0tlUmi+P1W0UmeEBKxB4Mh0IWWEg6lwUIAbiQwAB3RgAWwhYHhjDFChYSoYLAAFkt0ZRMeJJFsCqA9mZ3IIzF0DMY9MZVMcDNpVDTOncLMZtJpBGpNMZ3p9Qt8BX8YlMgb88GCIVCYWKIBLUNLZQrlSi1RqtY4wPgDRiRBtTTjdohntbbd0HU6Xdoac7CdY3JZAyYgzpOeHxpG+dHVnHhYnxZLGDL5dqswxkngwDLEbBGHmC2ii1kTXltuWEJX1Da7bXnZY3TTyZp1I8fS99PbKd3gRHefzH7GhQnRaPU+P01PVTOUnnWQeCXZUsD1QsjWLLFS23PFd1tI4TlUM4LlUK4nBUP12msH19neB5OmeB8Yx5AEB0FeMRVhZMxwnDMVTVFgIW-NcoI3HJYPNRR8R8IkSVac8HkqD1jiOfw9GUAx+mZXCSO5f4ox7IcPxolM00nTN-yYMdYDATAyBxY1OK3biiidTRmwEskKWE6lMIQZ1Dk0KTJKdfwWzdeSxjIpTXxU6ik3Un9NMYmcwIg+i-0gihjOxOCLUQfpymrdDlDqawHmMGlLOUdQDGUM56kywIUO8p9yOU99Aq-DSGOnJgV1jKKtJiuKuNxRLHNMIlUtcDKso9FCtHOdLXWMTKrRDYZX18-sqqokdkwi-UWrCpgVsYPSDKM6DNzNTqeMcx12kEQRA2MNQHVUCwaRsPK-TOF4CX0G7yt7Z8KILaqlvUTa1oa5d82a39WrY2K9pMg6d1MGp1Bu1p9gdXD0vs5oyUJLwDH2Poay6Yx3rml8YwC37-tB9b1TATUgdXQ0IY4+KzMQYk8sMaS3RZQxnTRpLng8B0XN0JyDmUQnFPm-yfs-ZadVWinAcAhcQNp2Nwfa0zDqKWx3H8c6HTdJkUOyhzsesS99HeFk7RscW+2JwdpbUpqQvq7TVa2-SwEM7YNeh+DYcOZ5WkuQinju-QjgqJllHOuplDMMXQy5HyJYdyjhxl9QXYB92c2Yb3UBRNrIaZrWbj0d58v0a8Csy3DGgclC7jdG9AlwllpLtz6Fsz53gddv81SV4ClxRZZi-V0uOphoqPDbTL0NeArG+abGzF68llGqe6KhCUMsBVeBshTirqBLTWd1KdxY66DoKhtK1V8QUptA8bGHX9FtbSTmbSLTmYmAL7+y6nhc2+gujnHMLoa6NJdDgPeC8SSOsWQE2Tj2ImX03yLRlsAss8Fjh5WOKcc4Nh0INlNubUqxJiTnW6McPQ3dKpSxwWpOiCswB4ISkdSuF50qOkkpJG0F04EtkvP0SwxxHiuhckwvyJMnZBXJqFFEXDmYIBOHlCkXQ3RWHcvYByllDhILSm4aw-gpJyMlgo1hQUc4cLUeXWkvg362hbJAqwdCcqSX3OYwwgiWSFX3kEIAA */
     context: {
       date                   : "",
-      calendar_reference_date: dayjs().format("YYYY-MM-DD"),
+      calendar_reference_date: ADToBS(dayjs().format("YYYY-MM-DD")),
       grid_dates             : [],
       show_calendar_body     : "",
       month_year_panel_data  : "",
@@ -16,7 +16,7 @@ export const nepaliMachine = createMachine(
       disable_date_after     : "",                             //"2023-10-29",
       grid_years             : [],
       error                  : "",
-      grid_months            : ENGLISH_MONTHS,
+      grid_months            : months.ne,
       is_today_valid         : false,
       date_picker_body_data  : {
         weeks: weeks["en"],
@@ -138,9 +138,7 @@ export const nepaliMachine = createMachine(
         },
 
         entry: ["setGridDates", "setMonthYearPanelData", "setIsTodayValid", "setCalendarControllerLabels"],
-      },
-
-      "new state 1": {},
+      }
     },
 
     schema: {
@@ -206,14 +204,16 @@ function setPropsData(context: any, event: any) {
   context.date = props?.date ?? "";
   context.disable_date_before = props?.disable_date_before ?? "";
   context.disable_date_after = props?.disable_date_after ?? "";
-  context.calendar_reference_date = props?.date ?? dayjs().format("YYYY-MM-DD");
+  context.calendar_reference_date = ADToBS(dayjs().format("YYYY-MM-DD"));
+  // context.calendar_reference_date = props?.date ?? dayjs().format("YYYY-MM-DD");
 }
 
-function setCalendarControllerLabels(context: any) {
+export function setCalendarControllerLabels(context: any) {
   const splited = context.calendar_reference_date.split("-");
-  context.calendar_controller_labels.month_label = ENGLISH_MONTHS[+splited[1] - 1];
-  context.calendar_controller_labels.year_label = splited[0];
+  context.calendar_controller_labels.month_label = months.ne[+splited[1] - 1];
+  context.calendar_controller_labels.year_label = englishToNepaliNumber(splited[0]);
 }
+
 function setCalendarReferenceDate(context: any, event: any) {
   context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
 
@@ -232,18 +232,18 @@ function setCalendarReferenceDate(context: any, event: any) {
   }
 }
 function setGridDates(context: any) {
-  const weeks_in_english_month = ENGLISH_DATE.get_weeks_in_month(new Date(context.calendar_reference_date));
+  const weeks_in_month = NEPALI_DATE.get_weeks_in_month(parse_date(context.calendar_reference_date));
 
-  const calendarDates: IDayInfo[][] = range(0, weeks_in_english_month - 1).map((weekNum: number) => {
+  const calendarDates: IDayInfo[][] = range(0, weeks_in_month).map((weekNum: number) => {
     return range(1, 7).map((weekDayNum: number) => {
-      return ENGLISH_DATE.get_day_info(
+      return NEPALI_DATE.get_day_info(
         //
         weekNum,
         weekDayNum,
-        context.calendar_reference_date,
-        context.date,
-        context.disable_date_before,
-        context.disable_date_after
+        parse_date(context.calendar_reference_date),
+        parse_date(context.date),
+        // context.disable_date_before,
+        // context.disable_date_after
       );
     });
   });
@@ -253,12 +253,12 @@ function setGridDates(context: any) {
 function setMonthYearPanelData(context: any) {
   const now = new Date(context.calendar_reference_date);
 
-  const panel_converted_nepali_date = ADToBS(new Date(context.calendar_reference_date));
-  const panel_splited_nepali_date = panel_converted_nepali_date.split("-");
+  const panel_converted_english_date = BSToAD(context.calendar_reference_date);
+  const panel_splited_english_date = panel_converted_english_date.split("-");
 
-  const year = englishToNepaliNumber(panel_splited_nepali_date[0]);
+  const year = nepaliToEnglishNumber(panel_splited_english_date[0]);
 
-  const mapped = `${nepaliMonthMap[now.getMonth()]} ${year}`;
+  const mapped = `${englishMonthMap[now.getMonth()]} ${year}`;
 
   context.month_year_panel_data = mapped;
 }

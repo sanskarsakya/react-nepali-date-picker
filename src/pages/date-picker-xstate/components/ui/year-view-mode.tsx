@@ -6,11 +6,10 @@ interface YearViewModeProp {
     send: any
     styles?: any
 }
-export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
+export const YearViewMode = ({ state, send }: YearViewModeProp) => {
     return <>
-        <Flex sx={styles.year_view_mode.wrapper} w="full" justifyContent='space-between' p={1} pt={3}>
+        <Flex w="full" justifyContent='space-between' p={1} pt={3}>
             <Button
-                sx={styles.year_view_mode.button}
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
@@ -22,11 +21,11 @@ export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
             >
                 <AiOutlineDoubleLeft color='black' />
             </Button>
-            <Text sx={styles.year_view_mode.label} p={2} fontSize='16px' fontWeight='600'>
+            <Text
+                p={2} fontSize='16px' fontWeight='600'>
                 {state.context.grid_years[0]} - {state.context.grid_years[0] + 10}
             </Text>
             <Button
-                sx={styles.year_view_mode.button}
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
@@ -40,16 +39,13 @@ export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
             </Button>
         </Flex>
         <Flex
-            style={{
-                flexWrap: 'wrap',
-                columnGap: '8px',
-                rowGap: '8px',
-            }}
+            flexWrap={'wrap'}
+            columnGap={'8px'}
+            rowGap={'8px'}
             p={2}
         >
             {state.context.grid_years.map((year: number, index: number) => {
                 return <Button
-                    sx={styles.year_view_mode.grid_button}
                     key={index}
                     size={'sm'}
                     variant='unstyled'
@@ -71,7 +67,8 @@ export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
                         // opacity: isnotFocus || isDisabled ? 0.6 : 1,
                     }}
                 >
-                    <Text sx={styles.year_view_mode.grid_button_label} fontWeight='400'>{year}</Text>
+                    <Text 
+                     fontWeight='400'>{year}</Text>
                 </Button>
             })}
 
