@@ -32,6 +32,7 @@ export const get_day_info = (weekNum: any, weekDayNum: any, date: any, selectedD
   const engDayInfo = ENGLISH_DATE.get_eng_day_info(primaryYear, primaryMonth, primaryDay);
   const eng_disable_date_before = disable_date_before ? BSToAD(disable_date_before) : "";
   const eng_disable_date_after = disable_date_after ? BSToAD(disable_date_after) : "";
+
   const is_in_range = check_if_in_range(
     from_utilities.stitch_date({
       year: engDayInfo.engYear,
@@ -40,16 +41,14 @@ export const get_day_info = (weekNum: any, weekDayNum: any, date: any, selectedD
     }),
     eng_disable_date_before,
     eng_disable_date_after
-  )
+  );
 
-  console.log({is_in_range})
-  const isDisabled =
-    !isCurrentMonth || !is_in_range
+  const isDisabled = !isCurrentMonth || !is_in_range;
 
   return {
-    workingDay: engDayInfo.engDay,
-    workingMonth: engDayInfo.engMonth,
-    workingYear: engDayInfo.engYear,
+    workingDay: primaryDay,
+    workingMonth: primaryMonth,
+    workingYear: primaryYear,
     primaryDay: englishToNepaliNumber(primaryDay),
     primaryMonth: englishToNepaliNumber(primaryMonth),
     primaryYear: englishToNepaliNumber(primaryYear),

@@ -19,6 +19,7 @@ export const Default = {
     disableDateBefore: '2023-08-29',
     disableDateAfter: '2023-12-29',
     is_dark: false,
+    is_nepali: true,
   },
 
   render: (args: any) => {
@@ -85,6 +86,7 @@ export const Default = {
                     disable_date_before={args.disableDateBefore}
                     disable_date_after={args.disableDateAfter}
                     is_dark={args.is_dark}
+                    is_nepali={args.is_nepali}
                     required
                     {...inputProps}
                   >

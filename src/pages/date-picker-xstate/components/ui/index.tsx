@@ -3,6 +3,7 @@ import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
 import { machine } from '../machines/date-picker-machine';
+import { nepaliMachine } from '../machines/date-picker-nepali-machine';
 import { CalendarController } from './calendar-controller';
 import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
@@ -11,7 +12,6 @@ import { MonthYearPanel } from './month-year-panel';
 import { get_styles_base } from './style';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
-import { nepaliMachine } from '../machines/date-picker-nepali-machine';
 
 export const childOf = (childNode: any, parentNode: any): boolean =>
   parentNode.contains(childNode);
@@ -25,10 +25,10 @@ interface DatepickerComponentProps {
   date?: string
   disable_date_before?: string
   disable_date_after?: string
+  is_nepali?: boolean
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, onChange, is_dark = false, ...propsRest } = props
-  const is_nepali = true;
+  const { isRhfBound = false, onChange, is_dark = false, is_nepali, ...propsRest } = props
   const [
     state,
     send,

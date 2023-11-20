@@ -6,15 +6,17 @@ import { ControlledComponentProps } from "./interface";
 import { RigoUncontrolledComponent } from "./rigo-uncontrolled-component";
 import { useDatePicker } from "./use-date-picker";
 import { validate } from "./components/machines/date-picker-machine";
+import { validate as NepaliValidator } from "./components/machines/date-picker-nepali-machine";
+import { BSToAD } from "bikram-sambat-js";
 
 export const RigoRhfComponent = (props: ControlledComponentProps) => {
+  const context = useDatePicker();
   const {
     control,
     required,
     name,
-    disableDateAfter,
-    disableDateBefore
-  } = useDatePicker();
+    ...contextProps
+  } = context
 
 
   return (
@@ -28,7 +30,15 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
         },
         validate: (value: string) => {
 
-          const validation_result = validate(value, disableDateBefore as string, disableDateAfter as string);
+          if (context.is_nepali) {
+            const validation_result = NepaliValidator(BSToAD(value), BSToAD(context.disableDateBefore ?? "") as string, BSToAD(context.disableDateAfter ?? "") as string);
+            if (!validation_result.is_valid) {
+              return validation_result.message
+            }
+            return true;
+          }
+
+          const validation_result = validate(value, context.disableDateBefore as string, context.disableDateAfter as string);
           if (!validation_result.is_valid) {
             return validation_result.message
           }
@@ -41,6 +51,7 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
           isRhfBound={true}
           // setError={setError}
           onChangeRHF={onChange}
+          {...contextProps}
           {...props}
         />
       )}

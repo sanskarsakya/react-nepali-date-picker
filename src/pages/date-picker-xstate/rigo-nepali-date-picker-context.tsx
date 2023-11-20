@@ -1,7 +1,6 @@
 import React from "react";
-import { InputTextProps } from "./interface";
 
-export const RigoNepaliDatePickerContext = React.createContext<InputTextProps>({
+export const RigoNepaliDatePickerContext = React.createContext<any>({
   label: "Sample label",
   name: "",
   control: undefined,
@@ -11,5 +10,6 @@ export const RigoNepaliDatePickerContext = React.createContext<InputTextProps>({
   rule: undefined,
   value: "",
   onChange: undefined,
+  is_nepali: false,
 });
 RigoNepaliDatePickerContext.displayName = "RigoInputTextContext";

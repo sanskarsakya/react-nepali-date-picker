@@ -13,7 +13,7 @@ export const nepaliMachine = createMachine(
       show_calendar_body     : "",
       month_year_panel_data  : "",
       disable_date_before    : "",                             // "2023-07-29",
-      disable_date_after     : "",                             //"2023-10-29",
+      disable_date_after     : "",                             // "2023-10-29",
       grid_years             : [],
       error                  : "",
       grid_months            : months.ne,
@@ -215,11 +215,11 @@ export function setCalendarControllerLabels(context: any) {
 }
 
 function setCalendarReferenceDate(context: any, event: any) {
-  context.calendar_reference_date = dayjs().format("YYYY-MM-DD");
+  context.calendar_reference_date = ADToBS(dayjs().format("YYYY-MM-DD"));
 
   let working_date = event?.data?.date;
 
-  const validation_result = validate(working_date, context.disable_date_before, context.disable_date_after);
+  const validation_result = validate(BSToAD(working_date), BSToAD(context.disable_date_before), BSToAD(context.disable_date_after));
 
   if (validation_result.is_valid) {
     if (working_date) {
@@ -242,8 +242,8 @@ function setGridDates(context: any) {
         weekDayNum,
         parse_date(context.calendar_reference_date),
         parse_date(context.date),
-        // context.disable_date_before,
-        // context.disable_date_after
+        context.disable_date_before,
+        context.disable_date_after
       );
     });
   });
@@ -278,13 +278,14 @@ function decrement_year(context: any) {
 function setToday(context: any, event: any) {
   const today = dayjs().format("YYYY-MM-DD");
 
-  const validation_result = validate(today, context.disable_date_before, context.disable_date_after);
+  const today_nepali = ADToBS(today)
+  const validation_result = validate(today, BSToAD(context.disable_date_before), BSToAD(context.disable_date_after));
 
   if (validation_result.is_valid) {
-    context.date = today;
-    context.calendar_reference_date = today;
+    context.date = today_nepali;
+    context.calendar_reference_date = today_nepali;
 
-    event.data?.onChange?.(today);
+    event.data?.onChange?.(today_nepali);
   }
 }
 
@@ -347,7 +348,7 @@ function setYearViewModePreviousDecade(context: any) {
 
 function setIsTodayValid(context: any) {
   const today = dayjs().format("YYYY-MM-DD");
-  const validation_result = validate(today, context.disable_date_before, context.disable_date_after);
+  const validation_result = validate(today, BSToAD(context.disable_date_before), BSToAD(context.disable_date_after));
   context.is_today_valid = validation_result.is_valid;
 }
 
@@ -390,7 +391,7 @@ export function validate(val: string, disableDateBefore: string, disableDateAfte
     };
   }
 
-  if (+val.slice(0, 4) > 2042) {
+  if (+val.slice(0, 4) > 2100) {
     return {
       message: "Date is greater than max date",
       is_valid: false,
