@@ -27,7 +27,11 @@ export const get_day_info = (weekNum: any, weekDayNum: any, date: any, selectedD
   const today = from_utilities.split_date(ADToBS(new Date()));
 
   const isToday = isCurrentMonth ? today.day === primaryDay && today.month === date.bsMonth && today.year === date.bsYear : false;
-  const isSelected = isCurrentMonth ? selectedDate.bsDay === primaryDay && selectedDate.bsMonth === date.bsMonth && selectedDate.bsYear === date.bsYear : false;
+  let isSelected = false;
+
+  if (selectedDate) {
+    isSelected = isCurrentMonth ? selectedDate.bsDay === primaryDay && selectedDate.bsMonth === date.bsMonth && selectedDate.bsYear === date.bsYear : false;
+  }
 
   const engDayInfo = ENGLISH_DATE.get_eng_day_info(primaryYear, primaryMonth, primaryDay);
   const eng_disable_date_before = disable_date_before ? BSToAD(disable_date_before) : "";

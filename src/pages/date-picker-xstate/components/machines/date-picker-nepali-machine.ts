@@ -205,7 +205,6 @@ function setPropsData(context: any, event: any) {
   context.disable_date_before = props?.disable_date_before ?? "";
   context.disable_date_after = props?.disable_date_after ?? "";
   context.calendar_reference_date = ADToBS(dayjs().format("YYYY-MM-DD"));
-  // context.calendar_reference_date = props?.date ?? dayjs().format("YYYY-MM-DD");
 }
 
 export function setCalendarControllerLabels(context: any) {
