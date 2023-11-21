@@ -5,9 +5,7 @@ import { DatePickerXState } from './components/ui';
 
 export const RigoUncontrolledComponent = (props: any) => {
   const {
-    // setError,
     isRhfBound = false,
-    // trigger,
     onChangeRHF,
     value: rhfValue,
     // ...propRest
@@ -31,29 +29,9 @@ export const RigoUncontrolledComponent = (props: any) => {
   const handleChange = (value: any) => {
     _onChange?.(name, value);
     onChangeRHF?.(value);
-    // setError?.(name, {
-    //   message: "errorMessage",
-    // })
   };
 
   const valueNormalized = rhfValue ?? value;
-
-  // const calendarDate =
-  //   dateType === CALENDAR_MODE.NEPALI
-  //     ? ADToBS(dayjs().format('YYYY-MM-DD'))
-  //     : dayjs().format('YYYY-MM-DD');
-
-  // const inputProps = {
-  //   name,
-  //   // date: valueNormalized,
-  //   // dateType: dateType,
-  //   // calendarDate: isEmpty(valueNormalized) ? calendarDate : valueNormalized,
-  //   is_dark: false,
-  //   ...contextRest,
-  //   ...propRest,
-  // };
-
- 
 
   return <DatePickerXState
     isRhfBound={isRhfBound}

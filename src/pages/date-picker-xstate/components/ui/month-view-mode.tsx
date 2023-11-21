@@ -6,11 +6,14 @@ interface YearViewModeProp {
     send: any
     styles: any
 }
-export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
+export const MonthViewMode = ({ state, send, styles }: YearViewModeProp) => {
     return <>
         {/* START MONTH CONTROLLER */}
-        <Flex justifyContent='space-between' p={1} pt={3}>
+        <Flex
+            sx={styles.month_view_mode.panel} justifyContent='space-between' p={1} pt={3}>
             <Button
+                id="previous_year_button"
+                sx={styles.month_view_mode.year_button}
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
@@ -18,14 +21,15 @@ export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
                 onClick={() => {
                     send("on_previous_year_click")
                 }}
-            // onClick={onPreviousYearClickHandler}
             // isDisabled={_selected - 1 < fromCalendarEngine.minADYear}
             >
-                <AiOutlineDoubleLeft color='black' />
+                <AiOutlineDoubleLeft />
             </Button>
 
             <Button
                 variant='unstyled'
+                id="year_view_mode_button"
+                sx={styles.month_view_mode.year_button}
                 onClick={() => {
                     send("on_year_view_mode_click")
                 }}
@@ -37,6 +41,8 @@ export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
             </Button>
 
             <Button
+                id="next_year_button"
+                sx={styles.month_view_mode.year_button}
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
@@ -46,7 +52,7 @@ export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
                 }}
             // isDisabled={_selected + 1 > fromCalendarEngine.maxADYear}
             >
-                <AiOutlineDoubleRight color='black' />
+                <AiOutlineDoubleRight />
             </Button>
         </Flex>
         {/* END MONTH CONTROLLER */}
@@ -61,36 +67,22 @@ export const MonthViewMode = ({ state, send }: YearViewModeProp) => {
             {state.context.grid_months.map((month: number, index: number) => {
                 return <Button
                     key={index}
+                    id="month_cell_button"
                     size={'sm'}
                     variant='unstyled'
-                    color='black'
-                    // isDisabled={isDisabled}
-                    // _hover={
-                    //     !isnotFocus && !isDisabled
-                    //         ? { color: '#0875e1', bg: 'gray.100' }
-                    //         : { bg: 'gray.100' }
-                    // }
                     onClick={() => {
                         send("on_month_selection", {
                             data: {
                                 month: index + 1
                             }
                         })
-                        // if (isFirstButton) {
-                        //     onPreviousDecadeClickHandler();
-                        // } else if (isLastButton) {
-                        //     onNextDecadeClickHandler();
-                        // } else {
-                        //     onYearSelectHandler(new_date);
-                        //     _setViewMode(fromCalendarEngine.VIEW_MODE.MONTH);
-                        // }
+
                     }}
                     style={{
                         flex: '0 0 calc(33.33% - 8px)',
                         boxSizing: 'border-box',
                         padding: '4px',
                         cursor: 'pointer',
-                        // opacity: isnotFocus || isDisabled ? 0.6 : 1,
                     }}
                 >
                     <Text fontWeight='400'>{month}</Text>

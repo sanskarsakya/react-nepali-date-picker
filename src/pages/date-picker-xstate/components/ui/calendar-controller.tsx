@@ -9,35 +9,37 @@ interface CalendarControllerProps {
 
 export const CalendarController = ({
   state,
-  send
+  send,
+  styles
 }: CalendarControllerProps) => {
-  return <Flex w="full" justifyContent='space-between' p={1} pt={3}>
+  return <Flex
+    sx={styles.calendar_controller.panel}
+  >
     <Flex gap={1}>
       <Button
-        size='xs'
-        px={3}
-        _hover={{ bg: 'gray.100' }}
+        id="previous-year-button"
+        sx={styles.calendar_controller.year_button}
         variant='link'
         onClick={() => {
           send("on_previous_year_click")
         }}
       // isDisabled={_selected - 1 < fromCalendarEngine.minADYear}
       >
-        <AiOutlineDoubleLeft color='black' />
+        <AiOutlineDoubleLeft />
       </Button>
       <Button
-        size='xs'
-        px={3}
+      id="previous-month-button"
+        sx={styles.calendar_controller.month_button}
         variant='link'
-        _hover={{ bg: 'gray.100' }}
         onClick={() => {
           send("on_previous_month_click")
         }}
       // isDisabled={_selected + 1 < fromCalendarEngine.minADYear}
       >
-        <AiOutlineLeft color='black' />
+        <AiOutlineLeft />
       </Button>
     </Flex>
+
     <Flex gap='2px'>
       <Button
         variant='unstyled'
@@ -63,34 +65,33 @@ export const CalendarController = ({
         _hover={{ color: '#0875e1', bg: 'gray.100' }}
       >
         <Text p={2} fontSize='16px' fontWeight='600'>
-        {state.context.calendar_controller_labels.year_label}
+          {state.context.calendar_controller_labels.year_label}
         </Text>
       </Button>
     </Flex>
+
     <Flex gap={1}>
       <Button
-        size='xs'
-        px={3}
-        _hover={{ bg: 'gray.100' }}
+      id='next-month-button'
+        sx={styles.calendar_controller.month_button}
         variant='link'
         onClick={() => {
           send("on_next_month_click")
         }}
       // isDisabled={_selected > fromCalendarEngine.maxADYear}
       >
-        <AiOutlineRight color='black' />
+        <AiOutlineRight />
       </Button>
       <Button
-        size='xs'
-        px={3}
-        _hover={{ bg: 'gray.100' }}
+      id='next-year-button'
+        sx={styles.calendar_controller.year_button}
         variant='link'
         onClick={() => {
           send("on_next_year_click")
         }}
       // isDisabled={_selected + 1 > fromCalendarEngine.maxADYear}
       >
-        <AiOutlineDoubleRight color='black' />
+        <AiOutlineDoubleRight />
       </Button>
     </Flex>
   </Flex>;

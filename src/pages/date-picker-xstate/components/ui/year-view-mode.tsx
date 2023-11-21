@@ -6,10 +6,11 @@ interface YearViewModeProp {
     send: any
     styles?: any
 }
-export const YearViewMode = ({ state, send }: YearViewModeProp) => {
+export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
     return <>
-        <Flex w="full" justifyContent='space-between' p={1} pt={3}>
+        <Flex sx={styles.year_view_mode.panel}>
             <Button
+                // sx={styles.year_view_mode.decade_button}
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
@@ -19,13 +20,14 @@ export const YearViewMode = ({ state, send }: YearViewModeProp) => {
                 }}
             // isDisabled={_selected - 10 <= fromCalendarEngine.minADYear}
             >
-                <AiOutlineDoubleLeft color='black' />
+                <AiOutlineDoubleLeft  />
             </Button>
             <Text
                 p={2} fontSize='16px' fontWeight='600'>
                 {state.context.grid_years[0]} - {state.context.grid_years[0] + 10}
             </Text>
             <Button
+                // sx={styles.year_view_mode.decade_button}
                 size='xs'
                 px={7}
                 _hover={{ bg: 'gray.100' }}
@@ -35,7 +37,7 @@ export const YearViewMode = ({ state, send }: YearViewModeProp) => {
                 }}
             // isDisabled={_selected + 10 > fromCalendarEngine.maxADYear}
             >
-                <AiOutlineDoubleRight color='black' />
+                <AiOutlineDoubleRight  />
             </Button>
         </Flex>
         <Flex
@@ -49,7 +51,6 @@ export const YearViewMode = ({ state, send }: YearViewModeProp) => {
                     key={index}
                     size={'sm'}
                     variant='unstyled'
-                    color='black'
                     // isDisabled={isDisabled}
                     onClick={() => {
                         send("on_year_selection", {
@@ -67,8 +68,8 @@ export const YearViewMode = ({ state, send }: YearViewModeProp) => {
                         // opacity: isnotFocus || isDisabled ? 0.6 : 1,
                     }}
                 >
-                    <Text 
-                     fontWeight='400'>{year}</Text>
+                    <Text
+                        fontWeight='400'>{year}</Text>
                 </Button>
             })}
 

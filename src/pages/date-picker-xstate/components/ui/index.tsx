@@ -9,7 +9,7 @@ import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
 import { MonthViewMode } from './month-view-mode';
 import { MonthYearPanel } from './month-year-panel';
-import { get_styles_base } from './style';
+import { get_base_styles } from './style';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
 
@@ -33,9 +33,10 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     state,
     send,
   ] = useMachine((is_nepali ? nepaliMachine : machine));
+
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
-  const styles = get_styles_base(is_dark)
+  const styles = get_base_styles(is_dark)
 
   // FUNCTIONS
   React.useEffect(() => {
@@ -99,15 +100,10 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       </When>
 
       {/* RENDER CALENDAR BODY */}
-      <Box
-        shadow="md"
+      <Box sx={styles.panel}
         style={{
-          width: '288px',
-          background: "white",
-          zIndex: 100,
-          position: "absolute",
           top: 40,
-          left: 0,
+
         }}>
         <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
           <YearViewMode state={state} send={send} styles={styles} />
@@ -130,9 +126,9 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   )
 }
 
-interface DatePickerXStateProps {
+interface DatePickerXStateProps extends Record<string, any> {
   isRhfBound?: boolean
-  isNepali?: boolean
+  is_nepali?: boolean
   isDark?: boolean
   onChange?: any
   date?: string
@@ -140,6 +136,7 @@ interface DatePickerXStateProps {
   disable_date_after?: string
 }
 export const DatePickerXState = (props: DatePickerXStateProps) => {
+
   return <DatepickerComponent
     {...props}
   />

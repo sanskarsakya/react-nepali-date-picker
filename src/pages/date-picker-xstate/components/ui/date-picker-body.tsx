@@ -1,6 +1,5 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from "@chakra-ui/react";
 import { IDayInfo, zero_pad } from "../calendar-engine";
-import { get_styles_base } from "./style";
 
 interface DatepickerBodyProps {
     state: any;
@@ -8,23 +7,22 @@ interface DatepickerBodyProps {
     onChange?: any
     styles: any
 }
-export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) => {
-    const Styles = get_styles_base(false);
+export const DatePickerBody = ({ state, send, onChange, styles }: DatepickerBodyProps) => {
 
-    return <Table id="table" sx={Styles.date_picker_body.table}>
-        <Thead id="header" p={0} sx={Styles.date_picker_body.header}>
+    return <Table id="table" sx={styles.date_picker_body.table}>
+        <Thead id="header" sx={styles.date_picker_body.header}>
             <Tr
                 p={0}
                 id="weekday_panel"
-                sx={Styles.date_picker_body.weekday_panel}
+                sx={styles.date_picker_body.weekday_panel}
             >
                 {state.context.date_picker_body_data.weeks.map(
                     (weekDay: string, index: number) => (
                         <Td
-                            p={0}
-                            border="1px solid red"
                             id="weekday"
+                            // border="1px solid red"
                             // sx={Styles.date_picker_body.weekday}
+                            p={0}
                             key={index}
                         >
                             {weekDay}
@@ -44,7 +42,7 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                         <Tr
                             id="day_panel"
                             p={0}
-                            
+
                             key={`week-row-${weekRowIdx}`}
                         // sx={Styles.date_picker_body.day_panel}
                         >
@@ -52,10 +50,10 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                                 (dayInfo: IDayInfo, weekDayIdx: number) => {
 
                                     const sx_base = {
-                                        ...Styles.date_picker_body.day_base,
-                                        ...(dayInfo.isSelected && { ...Styles.date_picker_body.day_selected }),
-                                        ...(dayInfo.isToday && { ...Styles.date_picker_body.day_today_indicator }),
-                                        ...(dayInfo.isDisabled && { ...Styles.date_picker_body.day_disabled }),
+                                        ...styles.date_picker_body.day_base,
+                                        ...(dayInfo.isSelected && { ...styles.date_picker_body.day_selected }),
+                                        ...(dayInfo.isToday && { ...styles.date_picker_body.day_today_indicator }),
+                                        ...(dayInfo.isDisabled && { ...styles.date_picker_body.day_disabled }),
                                     };
 
                                     return (
@@ -64,7 +62,7 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                                             id="day_base"
                                             key={`week-day-${weekDayIdx}`}
                                             sx={sx_base}
-                                            border="1px solid red"
+                                            // border="1px solid red"
                                             onClick={() => {
                                                 if (dayInfo.isDisabled) {
                                                     return
@@ -80,17 +78,17 @@ export const DatePickerBody = ({ state, send, onChange }: DatepickerBodyProps) =
                                         >
                                             <Flex
                                                 id="cell"
-                                                sx={Styles.date_picker_body.cell}
+                                                sx={styles.date_picker_body.cell}
                                             >
                                                 <Text
                                                     id="primary_label"
-                                                    sx={Styles.date_picker_body.primary_label}
+                                                    sx={styles.date_picker_body.primary_label}
                                                 >
                                                     {dayInfo.primaryDay}
                                                 </Text>
                                                 <Text
                                                     id="seconadry_label"
-                                                    sx={Styles.date_picker_body.secondary_label}
+                                                    sx={styles.date_picker_body.secondary_label}
                                                 >
                                                     {dayInfo.secondaryDay}
                                                 </Text>

@@ -5,25 +5,20 @@ type BadgeCountProps = {
   isActive: boolean;
 } & FlexProps;
 
-export const BadgeCount = (props: BadgeCountProps) => {
-  const {
-    badgeCount,
-    isActive,
-    ...propsRest
-  } = props;
-
+export const BadgeCount = ({
+  badgeCount,
+  isActive,
+  ...rest
+}: BadgeCountProps) => {
   return (
     <Flex
       alignItems={"center"}
-      justifyContent={"center"}
       background={isActive ? "#0875e1" : "#e4e4e4"}
-      color={isActive ? "#fff" : "#6c6969"}
       borderRadius='50%'
-      flexShrink={0}
-      width='24px'
-      height='24px'
-      // marginLeft='8px'
-      {...propsRest}
+      color={isActive ? "#fff" : "#6c6969"}
+      justifyContent={"center"}
+      marginLeft='8px'
+      {...rest}
     >
       {badgeCount}
     </Flex>
@@ -31,5 +26,3 @@ export const BadgeCount = (props: BadgeCountProps) => {
 };
 
 export default BadgeCount;
-
-
