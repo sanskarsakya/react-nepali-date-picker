@@ -7,7 +7,7 @@ import { englishToNepaliNumber, nepaliToEnglishNumber } from "nepali-number";
 
 export const mergedMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QFswCcYQPrIIYGMALASwDswBiAe1KwAc0q7YsjdSYBtABgF1FQdKrGIAXYjQEgAHogAsAJgA0IAJ6IAjAGYtCgHTcA7AFZuprQA45GiwDY5AXwcrUGSDgIly1WgyYs2DjBODX4kECERcUlw2QRFFXUEBStbPTljU1tbQxTc4ycXdEwPIjIwPWIIABtKGhwqAFdSUR4wwWExCVIpOK1FPQ0Nbm4FAE4LOy0xwy1EzQz9WZHTRW4MjMKQVxK8MvJKmrraZCaWkPaIzuie2MR+-SGR8cnbadn55LGcweHubMM9jGYwUti2O3cey8FXIdFw1WIh1q1DoYFo+HhaIguDQbSkkS6MVAcVsNkGIzMwI0CmMFl0nw0pj0Ywp6zGcm4Yw0OXBxUhnnKelh8MRAGFMaRsWgAAQABWI+AA1ug9NjVFgAG7EMAAdwaEGOWHI0lEDRahFYCKVePCBJuvUQtmMWnJKypNLpyjUmm4WjSWg0hgsY2MclsCg5xkMvLc2ChguFCL04tqkpxcoVyrQqtw6q1uv1huNptUYBxlszNo6UW6DoQTpdf0pXI99O9CAsxjGensQcM2jkAepMd2AoOibFEqlGaVKrVmu1etOBp89DQYC1TRYpfL+CtiqrVxrRJkjudrub1NpbaStgs+hmQZZikMIIU0ec2z5cbHMLAcKTFMsXTeVZ2zed8yXKgV3qBgNwkRoWFOc0K2tPh8WuWs7nrc8my7Ftry9JIsj0LQjBZENqVmfotBHfl9j-ADJ1TadQKzHM80XQtVx3NAFwLZcwFQg90NtTCTziMYdD0BQtFMQN1lfIw5nbYY-WZOw707b4FG4Ts6J-BihX-EVkynEDMznXN+KgmCThoUQLUgwthMPO0sOJRApJdWT5MMRSWQ+dt+w0AxgWBIwI0sD8iljUpoWMpizJYiywI4mzuPqedYDAWp8BuNzxNuTzkkivQrDkEMMlsdY-UMBluUMcqnXI+wcmDMFPwhQyEonZLgJlNirM4gToMNJpRBEA1XNE6tCWK09SvDcq5Eq0NjBqwcck+dluHKzszHfUN-N0Az4oTEzAPMwbLPA6znME1dRGg6y90rWaj3mutdNyFa1uq2rtvbKlBhDMxMnfNaLDO+Nx0u5iBpndjeIyx76mLLADQxaa3rQy53IkzRdLkAxFGdFJjoUFIdvfcqTBGDQqVJHQYd-RLTKAtMbrSlGHrG1c4M3RDMbAbGhNxkT8aKushhBFbTCp-tpl9FSkjpUKTEqwKaqdSrWaMvrOdY269F5ri0doFGcrygqPoJha4g0OQ7HSMj1jkWZDEMZ3bAZZ5SLZCxAVk4ZGX13r4f6rmkZVZDHNR-nYPXIXtzLPiJcK48Hc0Ew0g2qHsg6ukdsqgxuFD2Twy5f5w4upKjdS9i46c83E9oDGUYzu3pewwMfjDGltGMJ37G5T5O30SZhnvbRvg96Guu-c64fr66Y+zZuE7ss14+t0XbalrOZZ912RlWz3vbsT5Kr2qStZmDldJBTrYtHIy0SgBFYEIJE6lRdFrqZy+thN4oUbAjC0ICKwowNAMjeN2Cm7ty5+mfrXA4H8v4-wbtzdiEFW7bwxpvLuh9gElWyGkKSIwap3yVrA9sNImS2BmMCawvY7xoIqBg4g38o7GzSng0aBCwAmiwJ3fcQD7QgOyMyN21D+i0M+LJb2Bh3yTD9JA0EoYOF6C4Tw7B690p823oLBCqddziO7kfKRFDZGcnkdoOhSQFCMyanJV8GRn42G0borBa8hp3RGrZQ0Jitw7wtMQjCViyHSPAb6KBj9HGIF0rpHsQc6TOgmO1bxHBMG8MbsNLehpN5GPFhYkhkiSogiassVqwYIpyEUVTYw6QLDINBGRTs-Rsmf24b4lKOCCklNXNlXK+9ugSI8otXSRgDD+SMBtV8IY-SKLvPoCMphwa6FmJsRecVYacJyb0vJAyAmFNXBNKapT3rlMmY7YETUjAjFzos50vt6EZGaaCZ2b5dCDhmN03J+j-GGPwYaZ684IliSiVMp5synkLOBK8xRphmlRm+Rs4wskFAAqOUCk2Aigk8TToUmaNzCYICqXoGpr47zhXWMi4epFC7lyYcCSwL8vx7LZj445BizaCKLMI00WNcA4zKZE0hi1ZYWD0M6EwmLxjvnLsYRRq01mZCdpYCYekcV6L8SbflhKk7wVCSKsV1yJUVKlTYVxHI9LOkyJk1WST+hpCHtoUEORqRh12W-BKPK8U82JUM+oVtRn5XGZYyVjswx7XvMPYYuRyKZGRdyVJw9cjURyDSXVfTEbAuKaCgWydTGiOJZCuaVrHb9jjSYZxig5Kjwae8t4pELBDCeE6d8KRc28oLQ5FuArVwd3LeKqF0ac7OKpa0x5aL2SM0UXVGSpJOQTBopq3tgam4DrOfUTee8I00AmeSkecbB6Jp+iGFV9CVikUZODWSqRZhOE-KQMa8BwjdWXmAS1tzEAAFo3lJH-f5ZkGz+wpBnZyGKnK-WCiqLUX95KEj0O+GAswvoMgUnvNoicSHs4IEyE1PC7pCJwNlRSYYrL20Q1w5HBDP7x1VpdVGDSZ9tB6WUs2pI1JBzMm5JVUOox-KOF9fRCOq9+nr3w3WGqzSSMEU9Mi-QmQNmVS9jYRYdHJP5vxfdUFMmQHAlIvTdR1hAThgZM4pqExXyM1pNyYE2mOb6qDeWEphmSrUlBDJNkOk-mqL9ikZkYMPVNP7DBr9+z2ZXSk-2lCHmmN-oQIGGYPZIbhkxZAmY16eMYcGM40YckpJ2DGLmzzi0ox7ViZAu8CSGSrH2ii9kORoO0TEz1QUPKGMVbiIrR40z3zasHIORRJgZXjBajod2EZN2uazL1x0ZIavxJgQyb2t87WrT83JubcW9OBMLIthAJ1BiZY2qGCeQMnGzH0HVKSNraSYsi0vaLAb5sqkNUdpLJ6qahTku0577JnbcaSaGF0kDh4avGL6Kwe3dNpULQK47gZrDlTBkw7SjM7zIvsBRoYVNJshxfQ4IAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QFswCcYQPrIIYGMALASwDswBiAe1KwAc0q7YsjdSYBtABgF1FQdKrGIAXYjQEgAHogAsAJgA0IAJ6IAjAHYAnADoAbAFYj3M0Y0mAzAq0KAvvZWoMkHARLlqtBkxZsOME4NfiQQIRFxSTDZBEUVdQQFBQAOPW45U24rAwMFbJTuFMdndEx3IjIwPWIIABtKGhwqAFdSUR5QwWExCVIpWKs5bj0NHTNuMZ0dBSsTAwTEBWm9OYn8lJStFKM5EpAXcrxK8hr6xtpkVvbgrvCeqP6YzQMNUcKJjTktIys5lMWCG0CgMeh0P24CiMEIytn2hzcx081XIdFwdWI3iwEFwojAWDIdBaHT4UgivWioFiBgyehBExS0w0XwMALUmlsbxBplmGXGOisxScBzKiI8VT0qPRxDODWodDAtHw6MVOLQnTJDz6A0QOhSVlWBi03FeRo0IJ2gK+kL0u1sRnyJg0rL2woR2CREqlGL0yoapDVWAARlQIKosExFZA9DjwwA3YhgADuzQgFyw5Gkoma7UIrAx+AA1hqwuTHjqEFpcqsrGZnV8LCkoVbuFXRuaUrkfrpO1p4aKPeLTt6ZX7Vbg0MHQ+HI+QIDHcPHEymrmmsZns6owBP88QiyXupFtc9K9W-nXXpkNE2jIDGfo5IodnMdGMtkLSq5BycUWA0T6xwDHcQzDCMFTnBcl2TVN0wYMAE1aFgtx3fAC2LUlSy1SkZEQKtQXPSZL0bZt2UrZI9C0OwUmGRQjD1GZ+y-CpkUlP9pV9FUgMnECZ3A6NYywBNoNXWC0HgiQWhYK5c13fcMMPCknipXCz1rQiG2vEjEl2UENEhJs7Do6YMkYo4h1-f9R04wMeLAqN5wEoSV1DdNkMnJyYNk9C7jLY9lKBDJQTkYxuCMGlguNZ0WzbbZnR2SjGQ0GxTLFH9WMsjj-Rs6c7IgxzlxgrFpNEPMPJEryD3uI9sNiPTgr0YLTDCwLIoWUiIT0RlTCS5ldGhHQUu-FiR0y8duJy2d+MXQSCpErEBNgMAGnwR5Kt8mqlmvUFWwsZ1uB0O0DDkK18i0QwaUhYFzQMBi3QHZivTYgDrOAia+Ic6aypcrFWlEEQ0wq+SqsUisFG0bafmZGkDsUI7AT1EZWQmOwny0L5Boe4cnqsrLXtAyaPqg5y1yaURQ2m1C928zVqqUnCki29JIb2mGQWO0i9NrMFxjMHYTFsEy7qYz0sYywDsvx969DcmbhO+poN2xMBlQBym5J8rC6dqqxtDpQyUg7VI33ho1DGNQjBWNIZXU-My0pG8W8d4+zpe3dzZvlnwxIQySlZV-E1epzDaYrJKTSZ0w0d+ORplsO80dtLIksouRLC0G2RWF8z0vYx3xsll2Za+knaBlxbltWoH1q1zQjPOswBVbWxwS0FtFFGT5cjrP4M-dTGLNzl78+diDitKj2S-ob2JKQt3AY1kOTy2-Q+r0hRMiNS34c2CidBpZ0wp0YKdYxkWB+e3Hh9y6Mx9l4n00VmXA7WzXQ82RGZn3h1BXGW9SMZBQZt95WAOsYHYH5M522GtjUaXEpwF1HjQEqd9CpNFvuXZWlcF4gyXnXLu+1ax2F0JRQEvwRhaDUiaXI94fin2zoqKAGJYCEHmrifEhJiQv0Xv5OQgoawMiPuCfamRAQgnIqkUwmRBRQhBH2IWUCJQMKYYQWUjRwKsCHlwnB-kjRpEFGYOwrIjFWFbqRVI9UQFmAipzCwVg6FpSUcQZhsCJYjymkTVBtBFa32flXV+J40ZyFGGpQxOwzRtUSFCbIFETGMgyGMdevd7pnz0I45xed4FuMJiguaCswBZiwE-NCWjywBK+MEgxFowpowiUsGwZ0TTbEolCGwG97EsTSSojJtkCaQRyZ7Ke4lEKFLnr47BpT-KBIqU3Vk1SopmMsCMEB2wjpFBRnI22qUOkcGUS4p219snF1EkM32Pjil+O4fTNGBp9EzM7J2ExVpwQGiITsfaYN176naYonZTiulD0yQcvpRyipIPHnLVW5zxl+XpuCIJjcdqCiOpRWpDNti2nyNkI0ugwZGG+acTpeyr69PyhC9MC0lqYL6CUmFsRHRBIFiyCwFC45mIMHMOkbypE3hBPi6ohLulvRdqS++P1iT-QDlCmm2j6b5EfHrSYjVtD1NEcMPRoVsj7XiakPlqTfnpIBT0qWIrPFYDJgJMZ0qJmytCgyyKSqWWmMiZkNIrxTA2DBsYWwGzIFbJ+Ywv5RLAUks+hPVyc8jnzytbS3U6cwQhN+J2b4VZRGSIao04RwxtCtl1QKw1QqIJFzDeufJ2Y0z+yjcHGVtV15GBiVWWYFhWx9VESAutyxJFWKbLdTZQ1-W7MFQg6MRayVYjgj7Fg5bcCQqpjSjaQJZhBN2JMMGIDF1OqWMsfQ2h3XpzmKnb4ub9X-MvsGqWI7RVNDLpSla1KLnVtrkUdIUIkqzPAbw1VN0KJROGCCJKr4j0BoNaeo1Ltb4gqaOOmeIyUJSqrda2qPw0g7X-c1IwTY2TOudA1MGGRISELBoBgd+ah3znA8WvJBSimzvvQhzQVY0gIySvqZIOk-6RJsEsyY2QqzaGojkIjgbB1ZL0OR0daCwVYAwbemgc6a5AlMMhl9ORwHoY-RzA6eiTCavPFCTIjhhSkBcvAMIfcz7RvnQAWlRV+mioCqzBVkQNeRfrTi1AaBZ+T8RSK1nbYs7I5plip2c72-uOcMSeYrPMOkF0ihMhZJh2uDTdAHVfPFI0+mXN9tFuxdzYBIsnm9aCYhR13V5EyBugKPwwQ-G+K+ahibdUOxI1kgrkzrz8PUleG8ojXxgi3ey8Ymw21NZgcJoFJqRJtfpgbQBNJuo-HBKYAUJ1oQUQwyl2YeoTCjbFi1oFF6YLTe1iAhqaxiFg0CaivSrJd51nvPFgwu3B4gYLTfSTRzjuaFfCMdL+HXzfGvC2RkYI9pjE0kMQTzCvsIEsZ1uLMdjRH3Y7XaiFENVzFSB6jQUOVF5Zh7MMYqx8hfBmGMGwDpU3YfXiyI6EVxhPay2FvNr3SMw9yHW25oTjGVe0ETkwC20b7W0LjoNoG8qhrJTDjqOQoTGmIZCSrVT026GyOhh0vDRfjd6Ydqb8GY0Ltu-zPIdFLAzHXqqveDVFmw1eM6ELvrsv8uPWLt7ZGPthph3x-Q+1bFut4Y+DQVOzq7DquYl8QpHBAA */
     id: "merged_machine",
     context: {
       date: "",
@@ -47,11 +47,11 @@ export const mergedMachine = createMachine(
         states: {
           idle: {
             on: {
-              open_calendar: "Calendar Picker",
+              open_calendar: "calendar_body_opened",
             },
           },
 
-          "Calendar Picker": {
+          calendar_body_opened: {
             entry: [
               "np_setCalendarReferenceDate",
               "np_setGridDates",
@@ -150,18 +150,31 @@ export const mergedMachine = createMachine(
         },
 
         initial: "idle",
-        entry: "np_mountSetup"
+        entry: "np_mountSetup",
+
+        on: {
+          on_date_input: {
+            target: ".calendar_body_opened",
+            actions: [
+              "np_setDate",
+              "np_setCalendarReferenceDate",
+              "np_setMonthYearPanelData",
+              "np_setGridDates",
+              "np_setCalendarControllerLabels"
+            ]
+          }
+        }
       },
 
       english: {
         states: {
           idle: {
             on: {
-              open_calendar: "Calendar Picker",
+              open_calendar: "calendar_body_opened",
             },
           },
 
-          "Calendar Picker": {
+          calendar_body_opened: {
             entry: [
               "setCalendarReferenceDate",
               "setGridDates",
@@ -263,7 +276,20 @@ export const mergedMachine = createMachine(
         },
 
         initial: "idle",
-        entry: "mountSetup"
+        entry: "mountSetup",
+
+        on: {
+          on_date_input: {
+            target: ".calendar_body_opened",
+            actions: [
+              "setDate",
+              "setCalendarReferenceDate",
+              "setMonthYearPanelData",
+              "setGridDates",
+              "setCalendarControllerLabels"
+            ]
+          }
+        }
       },
     },
 
@@ -304,6 +330,7 @@ export const mergedMachine = createMachine(
       setCalendarControllerLabels,
       setPropsData,
       mountSetup,
+      en_date_input,
       // NEPALI FUNCTIONS
       np_setDate,
       np_setCalendarReferenceDate,
@@ -503,6 +530,10 @@ function setIsTodayValid(context: any) {
   context.is_today_valid = validation_result.is_valid;
 }
 
+function en_date_input() {
+  console.log("en_date_input")
+}
+
 // UTILITIES
 export function check_if_in_range(value: string, disableDateBefore: string, disableDateAfter: string) {
   if (disableDateBefore && dayjs(value).isBefore(dayjs(disableDateBefore))) {
@@ -578,7 +609,7 @@ export function get_year_list_in_decade(current_year: number) {
 }
 
 // NEPALI FUNCTIONS
-function np_mountSetup (context: any, event: any) {
+function np_mountSetup (context: any) {
   context.grid_months = months.ne;
   if(context.date) {
     context.date = ADToBS(context.date)

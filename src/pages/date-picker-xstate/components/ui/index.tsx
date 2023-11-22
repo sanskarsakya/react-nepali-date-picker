@@ -1,4 +1,4 @@
-import { Box, Code, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
@@ -72,7 +72,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   }, [handleClickOutside]);
 
   React.useLayoutEffect(() => {
-    if ((state.matches("english.Calendar Picker.day_view_mode") || state.matches("nepali.Calendar Picker.day_view_mode")) && nepaliDatePickerWrapper.current) {
+    if ((state.matches("english.calendar_body_opened.day_view_mode") || state.matches("nepali.calendar_body_opened.day_view_mode")) && nepaliDatePickerWrapper.current) {
       const nepaliDatePicker = nepaliDatePickerWrapper.current.getBoundingClientRect();
       const screenHeight = window.innerHeight;
 
@@ -120,15 +120,15 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
           style={{
             top: 40,
           }}>
-          <When condition={state.matches("english.Calendar Picker.year_view_mode") || state.matches("nepali.Calendar Picker.year_view_mode")}>
+          <When condition={state.matches("english.calendar_body_opened.year_view_mode") || state.matches("nepali.calendar_body_opened.year_view_mode")}>
             <YearViewMode state={state} send={send} styles={styles} />
           </When>
 
-          <When condition={state.matches("english.Calendar Picker.month_view_mode") || state.matches("nepali.Calendar Picker.month_view_mode")}>
+          <When condition={state.matches("english.calendar_body_opened.month_view_mode") || state.matches("nepali.calendar_body_opened.month_view_mode")}>
             <MonthViewMode state={state} send={send} styles={styles} />
           </When>
 
-          <When condition={state.matches("english.Calendar Picker.day_view_mode") || state.matches("nepali.Calendar Picker.day_view_mode")}>
+          <When condition={state.matches("english.calendar_body_opened.day_view_mode") || state.matches("nepali.calendar_body_opened.day_view_mode")}>
             <CalendarController state={state} send={send} styles={styles} />
             <MonthYearPanel state={state} styles={styles} />
             <DatePickerBody state={state} send={send} onChange={onChange} styles={styles} />
