@@ -1,9 +1,8 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Code, Text } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
 import React from 'react';
 import { When } from 'react-if';
-import { machine } from '../machines/date-picker-machine';
-import { nepaliMachine } from '../machines/date-picker-nepali-machine';
+import { mergedMachine } from '../machines/date-picker-merged-machine';
 import { CalendarController } from './calendar-controller';
 import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
@@ -28,11 +27,12 @@ interface DatepickerComponentProps {
   is_nepali?: boolean
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, onChange, is_dark = false, is_nepali, ...propsRest } = props
+  const { isRhfBound = false, onChange, is_dark = false, ...propsRest } = props
+
   const [
     state,
     send,
-  ] = useMachine((is_nepali ? nepaliMachine : machine));
+  ] = useMachine(mergedMachine);
 
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
@@ -40,13 +40,20 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
   // FUNCTIONS
   React.useEffect(() => {
-    if (propsRest) {
-      send("sync_props", {
-        data: { ...props }
+    if (props) {
+      send("on_mount", {
+        data: props
       })
     }
-  }, []
-  )
+  }, [])
+  
+  React.useEffect(() => {
+    if (props) {
+      send("on_props_change", {
+        data: props
+      })
+    }
+  }, [props, send])
 
   const handleClickOutside = React.useCallback((event: any) => {
     if (nepaliDatePickerWrapper.current &&
@@ -65,7 +72,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   }, [handleClickOutside]);
 
   React.useLayoutEffect(() => {
-    if (state.matches({ "calendar_body_opened": "year_view_mode" }) && nepaliDatePickerWrapper.current) {
+    if ((state.matches("english.Calendar Picker.day_view_mode") || state.matches("nepali.Calendar Picker.day_view_mode")) && nepaliDatePickerWrapper.current) {
       const nepaliDatePicker = nepaliDatePickerWrapper.current.getBoundingClientRect();
       const screenHeight = window.innerHeight;
 
@@ -85,44 +92,54 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   }, [state]);
 
   return (
-    <div
-      id={'input-wrapper-2'}
-      style={{
-        // width: '275px',
-        position: 'relative',
-      }}
-      ref={nepaliDatePickerWrapper}
-    >
+    <>
 
-      <DateInput state={state} send={send} onChange={onChange} styles={styles} />
-      <When condition={!isRhfBound && state.context.error} >
-        <Text>{state.context.error}</Text>
-      </When>
-
-      {/* RENDER CALENDAR BODY */}
-      <Box sx={styles.panel}
+      <pre>
+        {JSON.stringify({
+        state: state.value,
+        // context: state.context,
+      }, null, 2)}
+      </pre>
+      
+      <div
+        id={'input-wrapper-2'}
         style={{
-          top: 40,
+          // width: '275px',
+          position: 'relative',
+        }}
+        ref={nepaliDatePickerWrapper}
+      >
 
-        }}>
-        <When condition={state.matches({ "calendar_body_opened": "year_view_mode" })}>
-          <YearViewMode state={state} send={send} styles={styles} />
+        <DateInput state={state} send={send} onChange={onChange} styles={styles} />
+        <When condition={!isRhfBound && state.context.error} >
+          <Text>{state.context.error}</Text>
         </When>
 
-        <When condition={state.matches({ "calendar_body_opened": "month_view_mode" })}>
-          <MonthViewMode state={state} send={send} styles={styles} />
-        </When>
+        {/* RENDER CALENDAR BODY */}
+        <Box sx={styles.panel}
+          style={{
+            top: 40,
+          }}>
+          <When condition={state.matches("english.Calendar Picker.year_view_mode") || state.matches("nepali.Calendar Picker.year_view_mode")}>
+            <YearViewMode state={state} send={send} styles={styles} />
+          </When>
 
-        <When condition={state.matches({ "calendar_body_opened": "day_view_mode" })}>
-          <CalendarController state={state} send={send} styles={styles} />
-          <MonthYearPanel state={state} styles={styles} />
-          <DatePickerBody state={state} send={send} onChange={onChange} styles={styles} />
-          <Today send={send} state={state} onChange={onChange} styles={styles} />
-        </When>
+          <When condition={state.matches("english.Calendar Picker.month_view_mode") || state.matches("nepali.Calendar Picker.month_view_mode")}>
+            <MonthViewMode state={state} send={send} styles={styles} />
+          </When>
 
-      </Box>
+          <When condition={state.matches("english.Calendar Picker.day_view_mode") || state.matches("nepali.Calendar Picker.day_view_mode")}>
+            <CalendarController state={state} send={send} styles={styles} />
+            <MonthYearPanel state={state} styles={styles} />
+            <DatePickerBody state={state} send={send} onChange={onChange} styles={styles} />
+            <Today send={send} state={state} onChange={onChange} styles={styles} />
+          </When>
 
-    </div>
+        </Box>
+
+      </div>
+    </>
+
   )
 }
 
