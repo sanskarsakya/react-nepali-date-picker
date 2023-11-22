@@ -15,7 +15,7 @@ export const get_base_styles = (is_dark?: boolean) => {
   return {
     panel: {
       shadow: "md",
-      width: "288px",
+      width: "360px",
       background: "white",
       zIndex: 100,
       position: "absolute",
@@ -29,15 +29,21 @@ export const get_base_styles = (is_dark?: boolean) => {
       header: {},
       weekday_panel: {
         bg: is_dark ? "gray.800" : "",
-        color: is_dark ? "gray.100" : "gray.900",
+        color: is_dark ? "gray.100" : textColor,
       },
       weekday: {
-        p: 2,
+        px: "10px",
+        py: "6px",
+        border:"none",
       },
       body: {},
-      day_panel: {},
+      day_panel: {
+        border:"none",
+      },
       day_base: {
-        // px:0,
+        px:'10px',
+        py:'6px',
+        border: "none",
         cursor: "pointer",
         _hover: {
           bg: primary,
@@ -56,14 +62,14 @@ export const get_base_styles = (is_dark?: boolean) => {
       day_today_indicator: {
         position: "relative",
         _after: {
-          bg: primary,
+          bg: today,
           content: '""',
-          height: "5px",
-          width: "5px",
+          height: "4px",
+          width: "4px",
           position: "absolute",
           borderRadius: "100%",
           left: "48%",
-          bottom: "2%",
+          bottom: "1%",
           transform: "translate(-50%, -50%)",
           zIndex: "-1",
         },
@@ -91,6 +97,7 @@ export const get_base_styles = (is_dark?: boolean) => {
     month_year_panel: {
       p: "6px",
       textAlign: "center",
+      fontSize: "14px",
       my: "5px",
       w: "full",
       bg: is_dark ? "gray.800" : "#EEEFF1",
@@ -124,27 +131,29 @@ export const get_base_styles = (is_dark?: boolean) => {
     selected: {},
 
     disabled: {
-      color: "gray.500",
+      color: text_disabled,
       pointerEvents: "none",
     },
+
     today: {
       _hover: {
-        bg: is_dark ? "gray.800" : "",
-        color: is_dark ? "gray.100" : "gray.900",
+        bg: is_dark ? "gray.900" : "gray.100",
+        color: primary,
       },
       w: "full",
       p: 3,
       mt: 1,
       fontSize: "14px",
       borderRadius: "none",
-      fontWeight: "400",
+      fontWeight: "500",
       textAlign: "center",
       cursor: "pointer",
       borderTop: "1px solid",
-      bg: is_dark ? "gray.800" : "",
-      color: is_dark ? "gray.100" : "gray.900",
-      borderColor: is_dark ? "gray.600" : "gray.400",
+      bg: is_dark ? "black" : "white",
+      color: primary,
+      borderColor: is_dark ? "white" : "gray.200",
     },
+
     calendar_controller: {
       panel: {
         w: "full",
@@ -156,24 +165,36 @@ export const get_base_styles = (is_dark?: boolean) => {
       year_button: {
         size: "xs",
         px: 3,
-        bg: is_dark ? "gray.800" : "gray.100",
-        color: is_dark ? "gray.100" : "gray.900",
+        bg: is_dark ? "gray.800" : "",
+        color: is_dark ? "gray.100" : "gray.500",
         _hover: { bg: is_dark ? "gray.800" : "gray.100" },
       },
       month_button: {
         size: "xs",
         px: 3,
-        bg: is_dark ? "gray.800" : "gray.100",
-        color: is_dark ? "gray.100" : "gray.900",
+        bg: is_dark ? "gray.800" : "",
+        color: is_dark ? "gray.100" : "gray.500",
         _hover: { bg: is_dark ? "gray.800" : "gray.100" },
       },
       month_label: {},
       year_label: {},
     },
+
     month_view_mode: {
       panel: {
-        bg: is_dark ? "gray.800" : "gray.100",
-        color: is_dark ? "gray.100" : "gray.900",
+        w: "360px",
+        pt: 3,
+        justifyContent: "space-between",
+        bg: is_dark ? "gray.800" : "",
+        color: is_dark ? "gray.100" : textColor,
+      },
+      body:{
+        flex: '0 0 calc(33.33% - 8px)',
+        boxSizing: 'border-box',
+        padding: '4px',
+        cursor: 'pointer',
+        color: is_dark ? "white" : textColor,
+        _hover: { color: '#0875e1', bg: 'gray.100' }
       },
       year_button: {
         
@@ -182,12 +203,23 @@ export const get_base_styles = (is_dark?: boolean) => {
     },
     year_view_mode: {
       panel: {
-        bg: is_dark ? "gray.800" : "gray.100",
-        color: is_dark ? "gray.100" : "gray.900",
+        w: "360px",
+        pt: 3,
+        justifyContent: "space-between",
+        bg: is_dark ? "gray.800" : "",
+        color: is_dark ? "gray.100" : textColor,
+      },
+      body:{
+        flex: '0 0 calc(33.33% - 8px)',
+        boxSizing: 'border-box',
+        padding: '4px',
+        cursor: 'pointer',
+        color: is_dark ? "white" : textColor,
+        _hover: { color: '#0875e1', bg: 'gray.100' }
       },
       decade_button: {
-        bg: is_dark ? "gray.800" : "gray.100",
-        color: is_dark ? "gray.100" : "gray.900",
+        bg: is_dark ? "gray.800" : "",
+        color: is_dark ? "gray.100" : textColor,
       }
       
     }

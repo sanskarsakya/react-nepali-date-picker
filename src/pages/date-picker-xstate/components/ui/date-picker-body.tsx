@@ -21,7 +21,7 @@ export const DatePickerBody = ({ state, send, onChange, styles }: DatepickerBody
                         <Td
                             id="weekday"
                             // border="1px solid red"
-                            // sx={Styles.date_picker_body.weekday}
+                            sx={styles.date_picker_body.weekday}
                             p={0}
                             key={index}
                         >
@@ -44,7 +44,7 @@ export const DatePickerBody = ({ state, send, onChange, styles }: DatepickerBody
                             p={0}
 
                             key={`week-row-${weekRowIdx}`}
-                        // sx={Styles.date_picker_body.day_panel}
+                            sx={styles.date_picker_body.day_panel}
                         >
                             {calendarDate.map(
                                 (dayInfo: IDayInfo, weekDayIdx: number) => {

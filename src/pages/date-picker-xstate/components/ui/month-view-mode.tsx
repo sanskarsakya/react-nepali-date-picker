@@ -30,10 +30,10 @@ export const MonthViewMode = ({ state, send, styles }: YearViewModeProp) => {
                 variant='unstyled'
                 id="year_view_mode_button"
                 sx={styles.month_view_mode.year_button}
+                _hover={{ color: '#0875e1', bg: 'gray.100' }}
                 onClick={() => {
                     send("on_year_view_mode_click")
                 }}
-                _hover={{ color: '#0875e1', bg: 'gray.100' }}
             >
                 <Text p={2} fontSize='16px' fontWeight='600'>
                     {state.context.calendar_reference_date.split("-")[0]}
@@ -62,7 +62,7 @@ export const MonthViewMode = ({ state, send, styles }: YearViewModeProp) => {
                 columnGap: '8px',
                 rowGap: '8px',
             }}
-            p={2}
+            p={2} 
         >
             {state.context.grid_months.map((month: number, index: number) => {
                 return <Button
@@ -78,14 +78,9 @@ export const MonthViewMode = ({ state, send, styles }: YearViewModeProp) => {
                         })
 
                     }}
-                    style={{
-                        flex: '0 0 calc(33.33% - 8px)',
-                        boxSizing: 'border-box',
-                        padding: '4px',
-                        cursor: 'pointer',
-                    }}
+                    sx={styles.month_view_mode.body}
                 >
-                    <Text fontWeight='400'>{month}</Text>
+                    <Text fontSize={'14px'} fontWeight='400'>{month}</Text>
                 </Button>
             })}
 

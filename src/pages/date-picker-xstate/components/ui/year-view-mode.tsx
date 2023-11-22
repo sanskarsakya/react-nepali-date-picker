@@ -24,7 +24,7 @@ export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
             </Button>
             <Text
                 p={2} fontSize='16px' fontWeight='600'>
-                {state.context.grid_years[0]} - {state.context.grid_years[0] + 10}
+                {state.context.grid_years[0]} - {state.context.grid_years[0] + 11}
             </Text>
             <Button
                 // sx={styles.year_view_mode.decade_button}
@@ -60,13 +60,7 @@ export const YearViewMode = ({ state, send, styles }: YearViewModeProp) => {
                         })
 
                     }}
-                    style={{
-                        flex: '0 0 calc(33.33% - 8px)',
-                        boxSizing: 'border-box',
-                        padding: '4px',
-                        cursor: 'pointer',
-                        // opacity: isnotFocus || isDisabled ? 0.6 : 1,
-                    }}
+                    sx={styles.year_view_mode.body}
                 >
                     <Text
                         fontWeight='400'>{year}</Text>
