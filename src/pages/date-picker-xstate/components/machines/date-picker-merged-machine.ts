@@ -7,10 +7,11 @@ import { englishToNepaliNumber, nepaliToEnglishNumber } from "nepali-number";
 
 export const mergedMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QFswCcYQPrIIYGMALASwDswBiAe1KwAc0q7YsjdSYBtABgF1FQdKrGIAXYjQEgAHogAsAJgA0IAJ6IAjAHYAnADoAbAFYj3M0Y0mAzAq0KAvvZWoMkHARLlqtBkxZsOME4NfiQQIRFxSTDZBEUVdQQFBQAOPW45U24rAwMFbJTuFMdndEx3IjIwPWIIABtKGhwqAFdSUR5QwWExCVIpWKs5bj0NHTNuMZ0dBSsTAwTEBWm9OYn8lJStFKM5EpAXcrxK8hr6xtpkVvbgrvCeqP6YzQMNUcKJjTktIys5lMWCG0CgMeh0P24CiMEIytn2hzcx081XIdFwdWI3iwEFwojAWDIdBaHT4UgivWioFiBgyehBExS0w0XwMALUmlsbxBplmGXGOisxScBzKiI8VT0qPRxDODWodDAtHw6MVOLQnTJDz6A0QOhSVlWBi03FeRo0IJ2gK+kL0u1sRnyJg0rL2woR2CREqlGL0yoapDVWAARlQIKosExFZA9DjwwA3YhgADuzQgFyw5Gkoma7UIrAx+AA1hqwuTHjqEFpcqsrGZnV8LCkoVbuFXRuaUrkfrpO1p4aKPeLTt6ZX7Vbg0MHQ+HI+QIDHcPHEymrmmsZns6owBP88QiyXupFtc9K9W-nXXpkNE2jIDGfo5IodnMdGMtkLSq5BycUWA0T6xwDHcQzDCMFTnBcl2TVN0wYMAE1aFgtx3fAC2LUlSy1SkZEQKtQXPSZL0bZt2UrZI9C0OwUmGRQjD1GZ+y-CpkUlP9pV9FUgMnECZ3A6NYywBNoNXWC0HgiQWhYK5c13fcMMPCknipXCz1rQiG2vEjEl2UENEhJs7Do6YMkYo4h1-f9R04wMeLAqN5wEoSV1DdNkMnJyYNk9C7jLY9lKBDJQTkYxuCMGlguNZ0WzbbZnR2SjGQ0GxTLFH9WMsjj-Rs6c7IgxzlxgrFpNEPMPJEryD3uI9sNiPTgr0YLTDCwLIoWUiIT0RlTCS5ldGhHQUu-FiR0y8duJy2d+MXQSCpErEBNgMAGnwR5Kt8mqlmvUFWwsZ1uB0O0DDkK18i0QwaUhYFzQMBi3QHZivTYgDrOAia+Ic6aypcrFWlEEQ0wq+SqsUisFG0bafmZGkDsUI7AT1EZWQmOwny0L5Boe4cnqsrLXtAyaPqg5y1yaURQ2m1C928zVqqUnCki29JIb2mGQWO0i9NrMFxjMHYTFsEy7qYz0sYywDsvx969DcmbhO+poN2xMBlQBym5J8rC6dqqxtDpQyUg7VI33ho1DGNQjBWNIZXU-My0pG8W8d4+zpe3dzZvlnwxIQySlZV-E1epzDaYrJKTSZ0w0d+ORplsO80dtLIksouRLC0G2RWF8z0vYx3xsll2Za+knaBlxbltWoH1q1zQjPOswBVbWxwS0FtFFGT5cjrP4M-dTGLNzl78+diDitKj2S-ob2JKQt3AY1kOTy2-Q+r0hRMiNS34c2CidBpZ0wp0YKdYxkWB+e3Hh9y6Mx9l4n00VmXA7WzXQ82RGZn3h1BXGW9SMZBQZt95WAOsYHYH5M522GtjUaXEpwF1HjQEqd9CpNFvuXZWlcF4gyXnXLu+1ax2F0JRQEvwRhaDUiaXI94fin2zoqKAGJYCEHmrifEhJiQv0Xv5OQgoawMiPuCfamRAQgnIqkUwmRBRQhBH2IWUCJQMKYYQWUjRwKsCHlwnB-kjRpEFGYOwrIjFWFbqRVI9UQFmAipzCwVg6FpSUcQZhsCJYjymkTVBtBFa32flXV+J40ZyFGGpQxOwzRtUSFCbIFETGMgyGMdevd7pnz0I45xed4FuMJiguaCswBZiwE-NCWjywBK+MEgxFowpowiUsGwZ0TTbEolCGwG97EsTSSojJtkCaQRyZ7Ke4lEKFLnr47BpT-KBIqU3Vk1SopmMsCMEB2wjpFBRnI22qUOkcGUS4p219snF1EkM32Pjil+O4fTNGBp9EzM7J2ExVpwQGiITsfaYN176naYonZTiulD0yQcvpRyipIPHnLVW5zxl+XpuCIJjcdqCiOpRWpDNti2nyNkI0ugwZGG+acTpeyr69PyhC9MC0lqYL6CUmFsRHRBIFiyCwFC45mIMHMOkbypE3hBPi6ohLulvRdqS++P1iT-QDlCmm2j6b5EfHrSYjVtD1NEcMPRoVsj7XiakPlqTfnpIBT0qWIrPFYDJgJMZ0qJmytCgyyKSqWWmMiZkNIrxTA2DBsYWwGzIFbJ+Ywv5RLAUks+hPVyc8jnzytbS3U6cwQhN+J2b4VZRGSIao04RwxtCtl1QKw1QqIJFzDeufJ2Y0z+yjcHGVtV15GBiVWWYFhWx9VESAutyxJFWKbLdTZQ1-W7MFQg6MRayVYjgj7Fg5bcCQqpjSjaQJZhBN2JMMGIDF1OqWMsfQ2h3XpzmKnb4ub9X-MvsGqWI7RVNDLpSla1KLnVtrkUdIUIkqzPAbw1VN0KJROGCCJKr4j0BoNaeo1Ltb4gqaOOmeIyUJSqrda2qPw0g7X-c1IwTY2TOudA1MGGRISELBoBgd+ah3znA8WvJBSimzvvQhzQVY0gIySvqZIOk-6RJsEsyY2QqzaGojkIjgbB1ZL0OR0daCwVYAwbemgc6a5AlMMhl9ORwHoY-RzA6eiTCavPFCTIgngNjTPWByTEHS4RrDZWhSdGFPDFWDI5IxhmRbA3UkF9qx+RbHBjdJJWd7YwOE0CsTl7zM7kjZa+DMaFN7zBJkSYMw96NtRZsM6eF4l73Q-tAa+xSAuXgGEPuZ9o3zoALSoq-cMHkgphjsuWL5hRpxagNGK-J+IpFaztsWdkc0dWxi6pHC1is8w6QXSKEyFkmHa4NI+BaFpdE8j9ZgU1sAg2TzetBMQo67q8iZFc3pH4YIfjfFfNQxNi2xYkayatyZ15+HqSvDeURr543I25L8SR53B4gYLe4-paZrv0wNoAmk3UfjglMAKE60IKIYd0DMEBfNPsXyM6BwtFmyUA+1iAhqaxiFg0CaivSrJd51nvONgwSOcYo5+2R0zYbMeaFfCMeKNJZivm+NeFsjIwR7TGJpIYBnCAM4QJYu7Y2Y7GiPux2u1EKJ8h7IUI0B1BeqOF7MMY9nFUzDGDYB0qbsPrxZEdCK4wKfyL9QS49QbUeQGF7kOttzQnGL22jfQJh3XvKV4R83fbLdAZPdT0jwL6eRfnR1HIUJjTEMhK5qp6bdDZHQw6XhKvAu9IvTBYX100j8zyHRSwMx16qpi6nSRIJXjOmy72-uer-fW5p6JunGPQ-yb4-ofati3W8MfBofXZ1dh1XMS+IUjggA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QFswCcYQPrIIYGMALASwDswBiAe1KwAc0q7YsjdSYBtABgF1FQdKrGIAXYjQEgAHogC0AJm4BGAHQA2AOwBObZuXaALAGZDy7uoA0IAJ6Jj246uWaArMoAcCw1o+fX6gC+gdaoGJA4BCTk1LQMTCxsHGCcyvxIIEIi4pIZsghyhkqqZrpeLu7qKla2iOYKTsbKrtwKBgra3i7BoeiYkURkYKrEEAA2lDQ4VACupKI86YLCYhKkUvncqka67grqHtrKysaamgrWdgiOW4aahtquCq7GDn49IGH9eIPkI+OTWjIWbzVJLTIrHLrPKITROZplbhudSeNzKS51PzaVRPB7aPynY4eVwfL4RH7RYbkOi4MbEWJYCC4URgLBkOgzBZ8KRZVa5UD5KqGVT7bhiw5HZQ+DwYhDKBT6EXqFoNbgPbiODykvrkqJDVTU2nEf4Tah0MC0fC0i1MtCLHmQtYbRD4xpaCzKLTyg6uWVS1o4opuJSuSoeQza8LYCn6w101RWiakW1YABGVAgNiwTAtkFUTKzADdiGAAO7TCCArDkaSiabzQisOn4ADW9oyvKhzoQmnU6lUrzFnql7i8vtqcqR-eOCg8fbcOjnmkj3z1fzjxsTNtwaDTGazOfIEHzuCLJfLwMrDJrdZsYB3TeIrfby2yTphPb7A+MQ5RhlHzyyhKJRFMSxiuEc+KaFqISfDq0ZrlSYA0vGW7Jg+6aZtm5pHieZ5lhWVYMGAxazCwd4PvgzZttyHaOvyMiwl+g7VCOniARO5wKKoZyzoYarPPinQrrqvxIShm7Wuhu6YQeOF5gWWDFgRl5EWgJESDMLDAg2j7PrRr58tCApMf2LHDv+7Hjlcrg+M4rReOcEG6GqIkIWJBrIUaCZSSmsnYbmx6KcpF4ZlWFG7iFhF6TR4Kdu+JmTnZPgtAEarup6fpTjxfg+mchwnAobkDJSnkST5SZ+fuAW4cF56EQyOmiI2UWqTFL4Qm+DH5OYyXKtwaU+Jo1Sym4WyHC0JzHDorg6MVMbrl5qG+Rh1WHgpp5KfVqkMopsBgBM+BQh18XdYgbRzqoSLuJ6Gq2fshh+komgaFUrQuG0+zCbBZLuaVG4VduMlrfJQWba1YUMrMogiJW7UGZ1Rndm0vZXWit2PEU6iPRO+JbAcYpIt4s76BGP3wSVsZLZJlWrVh61g-hoVXlMogZptVFPrFDpdcZjEIBd-bXccVSYw9WU-ts2iE8SoYKq55NRpTi3lWhVX06DqgRVtKmQ1MN6MmAVpw5z+lxfRfM9U0L0Ks8fizrOBgyrjWgaMN1TGB4w2mGTvRKwt4neWrdNyYFWv3pF2163E6mkVphvG6ypvc3RvPdicFhoy0+gvHiCpAYqoZDqc9zNPc82IWVQcrcDGth9rEMs7Q2v7Ydx0I6dlt1M5r1ijc5w6GcWVFPZv5vScpgVx5APB7Xoe4U1LVR039Cx5p5ER-D5tpx+njqNiM31P+Wie5osr4h4PHaFUnoBEY6hNFP-3U4D0l7nXC80M1OvM1WBva8nE6Ft04eA8PjToN8nie2ltZRAhxuJaBvg4AIrhiQwT9quaeL9Z7v3nnmReP8GpTAIa3I27dt5I13j3PsfcfwDz0GfCcLwthwkJn2A4ug3BPypqrGuuCar4K-kvXWK8G7LyTtRIBO9EoIn7EYSanRr4NACEBL2PEaGlGVGA3Q3C-gWigHSWAhBdrMlZOyTkUjKGJRMJfFi3BDgPGGvI2U+wFDcVnC0f8ntnj7GXIrTBpV9GGMICaSYOFWA10sV2D8vgBxgKJgcRJpwXHhjMtLdK+huDgROLo4YQTiBGNfurPBjNCE7X1mAWs9Zv6AI7sAj8pNnA-gScSL0NQrjPCyTxU4hw1TtEML7OC-tK75MKTg-yDM8JlOjtWSpt5N61IodExKjSM4tICPodp51jAKiur4XiLxvABFyaoUZITxkgzDnVERakNJkSwAAyRdTpH81Wc084Po2kuOaFsBw0Fsb2POHcE5ZyikhwEaUxuty47aSEVvHmVjXknDiWKD5c45zJInAYOEPEFTEg1J9QwHhjAgo4MEsFc8IVTKhY1OFUL4Wp0RfkPQwobjXU9tjM4WyBYuEvk8MUxgtA6DaCSfxolAlkoKecvhEzNbXN-iYrMpCjprCiQlfmIZhTyylMqFwOzGEdIfq4EU+KvFjn2KSgxUqKX8MmfKohtBoawwkVzNVZ0BZqi1cNHV7g4T5wnN4exA4BpZI1H02clryUXI-htJmDqsBs0UoshFyyNUDS9SoFKer-UdP-JfFELQdltGVAqPxGDxX6lBdGkp1LxEMjETchlhlU3MvuNsd5Lw5x3F7C4zxJQLBOIGSoYaZahkBMrZKsZMrLm4QbQqipVTKyJybYjFtdQjndN7Mo8wZxHguOQSKR4aoxREo6EVMVf0J1WqnbTSlky53xuIjChOuATZPKWeqnqDRhS2RUG0Bw36DXnQ6NiCoWT7jgTMMCi9ys8mTulbe21msH3lObpvZV5CU2fu7kG1o7hBVoNQSYFxPgD6dP4vsE4RxI3WurVSghNKphPvXg8hZ76sPuoqJfYWyCqioNnCRz0JQ2jHtVOcZQNGb1AyQ2HBjdaF3zMouxxla65S9kvnjE4xK3G2WVPu4oP5zCnBRNBEwQQYMB1OfBm1srZN0vk0COFGHVXPKZTh7jzwTg+jQcRrFjxbFFx-IOZ4-5JMIek7Zz+ulGNoYfPS5NKnsNyl-QOHxbjdWoiAwLTzA5pZQRcH2IwwRYKkDCvADIv1YMca7gUaUJQDD4hRpUEaWKXAlBaFktx-58TQfLZev4owJjVe7HIaaPFbJ6AGuk+UQ8mFGB4vca+k3CREpORuYbH5Qz9lFOKXQxxpQuLVNsQmOz75uMzWtl+g2wAbcSqW-sg9saFvUEcrLO7jV6FsjoT0PpPaXd4YhyLkBbtItsc0iyAFYEC06AODrTRdDYztv96ugOZ2xumZWEH+R7YaBDRUT7GpjBPVmjlEmugGj4lDMj5aqOY3HhQ2FLHdRXjYhMNnPQKMdVZQOFfIcEo9uempzTCLaPjxyZuUzuURxxqzSqBTqU+hnZXHMIcbYt0DDsUnhZkZ8HJcOF+c0+xOxB1Q89DsnE3gvZmBeN49BY6K16Os9dyXDQDCpczZ0AwOyni9qE10Hw2MhrS3M312DVnr3hbfkDiAku+zGs9qi-Y6KH5vf0NiFlF8lEP3lGFmzova0S8S+6saA4XuzSRJNnN50fT9p0Fk1BuISXa48lW6ddPw5xfEZL70fKnhl6OBBLrJHr71c8fsFEnptC57o5M8Xv9u-QWxHdLzzQTADPRAG31gZep8XAviYrgQgA */
     id: "merged_machine",
     context: {
       date: "",
+      isNepali: false,
       calendar_reference_date: dayjs().format("YYYY-MM-DD"),
       grid_dates: [],
       show_calendar_body: "",
@@ -34,10 +35,14 @@ export const mergedMachine = createMachine(
         on: {
           on_mount: [
             {
-              target: "nepali.idle",
+              target: "nepali",
               cond: "isNepali",
+              actions: "np_mountSetup"
             },
-            "english.idle",
+            {
+              target: "english",
+              actions: "mountSetup"
+            },
           ],
         },
       },
@@ -51,13 +56,7 @@ export const mergedMachine = createMachine(
           },
 
           calendar_body_opened: {
-            entry: [
-              "np_setCalendarReferenceDate",
-              "np_setGridDates",
-              "np_setMonthYearPanelData",
-              "np_setIsTodayValid",
-              "np_setCalendarControllerLabels"
-            ],
+            entry: ["np_setCalendarReferenceDate", "np_setGridDates", "np_setMonthYearPanelData", "np_setIsTodayValid", "np_setCalendarControllerLabels"],
 
             states: {
               day_view_mode: {
@@ -141,7 +140,7 @@ export const mergedMachine = createMachine(
                     actions: ["np_selectMonth", "np_setGridDates", "np_setCalendarControllerLabels"],
                   },
 
-                  on_year_view_mode_click: "year_view_mode"
+                  on_year_view_mode_click: "year_view_mode",
                 },
               },
             },
@@ -151,19 +150,12 @@ export const mergedMachine = createMachine(
         },
 
         initial: "idle",
-        entry: "np_mountSetup",
 
         on: {
           on_date_input: {
             target: ".calendar_body_opened",
-            actions: [
-              "np_setDate",
-              "np_setCalendarReferenceDate",
-              "np_setMonthYearPanelData",
-              "np_setGridDates",
-              "np_setCalendarControllerLabels"
-            ]
-          }
+            actions: ["np_setDate", "np_setCalendarReferenceDate", "np_setMonthYearPanelData", "np_setGridDates", "np_setCalendarControllerLabels"],
+          },
         }
       },
 
@@ -176,13 +168,7 @@ export const mergedMachine = createMachine(
           },
 
           calendar_body_opened: {
-            entry: [
-              "setCalendarReferenceDate",
-              "setGridDates",
-              "setMonthYearPanelData",
-              "setIsTodayValid",
-              "setCalendarControllerLabels"
-            ],
+            entry: ["setCalendarReferenceDate", "setGridDates", "setMonthYearPanelData", "setIsTodayValid", "setCalendarControllerLabels"],
 
             states: {
               day_view_mode: {
@@ -269,7 +255,7 @@ export const mergedMachine = createMachine(
                     actions: ["selectMonth", "setGridDates", "setCalendarControllerLabels"],
                   },
 
-                  on_year_view_mode_click: "year_view_mode"
+                  on_year_view_mode_click: "year_view_mode",
                 },
               },
             },
@@ -279,19 +265,12 @@ export const mergedMachine = createMachine(
         },
 
         initial: "idle",
-        entry: "mountSetup",
 
         on: {
           on_date_input: {
             target: ".calendar_body_opened",
-            actions: [
-              "setDate",
-              "setCalendarReferenceDate",
-              "setMonthYearPanelData",
-              "setGridDates",
-              "setCalendarControllerLabels"
-            ]
-          }
+            actions: ["setDate", "setCalendarReferenceDate", "setMonthYearPanelData", "setGridDates", "setCalendarControllerLabels"],
+          },
         }
       },
     },
@@ -299,10 +278,14 @@ export const mergedMachine = createMachine(
     on: {
       on_props_change: [
         {
-          target: ".nepali.idle",
+          target: ".nepali",
           cond: "isNepali",
+          actions: ["np_propsChange"]
         },
-        ".english.idle",
+        {
+          target: ".english",
+          actions: ["propsChange"]
+        },
       ],
     },
 
@@ -355,26 +338,77 @@ export const mergedMachine = createMachine(
       np_setCalendarControllerLabels,
       np_setPropsData,
       np_mountSetup,
+
+      // common
+      propsChange,
+      np_propsChange,
     },
   }
 );
 
 // GUARDS
 function isNepali(context: any, event: any) {
-  console.log(event.data);
   return event?.data?.isNepali;
 }
 
 // ACTIONS
-function mountSetup (context: any, event: any) {
-  context.grid_months = ENGLISH_MONTHS;
-  if(event?.data?.date) {
-    context.date = event?.data?.date
+function propsChange(context:any, event:any) {
+  console.log("eng props change")
+  let newDate = context.date
+  
+  if(context.isNepali !== event?.data?.isNepali && context.date) {
+    newDate = BSToAD(context.date);
   }
-  if(context.date) {
-    context.date = BSToAD(context.date)
+  if(context.date !== event?.data?.date) {
+    newDate = event?.data?.date;
   }
+
+  context.date = newDate
+  context.isNepali = false
 }
+function np_propsChange(context:any, event:any) {
+  console.log("eng props change")
+  let newDate = context.date
+  
+  if(context.isNepali !== event?.data?.isNepali && context.date) {
+    newDate = ADToBS(context.date);
+  }
+  if(context.date !== event?.data?.date) {
+    newDate = event?.data?.date;
+  }
+
+  context.date = newDate
+  context.isNepali = false
+}
+
+function mountSetup(context: any, event: any) {
+  context.grid_months = ENGLISH_MONTHS;
+  console.log("eng mount setup", event?.data);
+  
+  let newDate = context.date
+  
+  if(context.date !== event?.data?.date) {
+    newDate = event?.data?.date;
+  }
+
+  context.date = newDate
+  context.isNepali = false
+
+}
+function np_mountSetup(context: any, event: any) {
+  console.log("np mount setup", event?.data);
+  context.grid_months = months.ne;
+
+  let newDate = context.date
+  
+  if(context.date !== event?.data?.date) {
+    newDate = event?.data?.date;
+  }
+
+  context.date = newDate
+  context.isNepali = true
+}
+
 function setDate(context: any, event: any) {
   const working_date = event?.data?.date;
   if (working_date) {
@@ -382,7 +416,6 @@ function setDate(context: any, event: any) {
 
     event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
   }
-   
 }
 
 function setPropsData(context: any, event: any) {
@@ -538,7 +571,7 @@ function setIsTodayValid(context: any) {
 }
 
 function en_date_input() {
-  console.log("en_date_input")
+  console.log("en_date_input");
 }
 
 // UTILITIES
@@ -616,15 +649,7 @@ export function get_year_list_in_decade(current_year: number) {
 }
 
 // NEPALI FUNCTIONS
-function np_mountSetup (context: any, event:any) {
-  context.grid_months = months.ne;
-  if(event?.data?.date) {
-    context.date = event?.data?.date
-  }
-  if(context.date) {
-    context.date = ADToBS(context.date)
-  }
-}
+
 function np_setDate(context: any, event: any) {
   const working_date = event?.data?.date;
   if (working_date) {
@@ -666,7 +691,6 @@ function np_setCalendarReferenceDate(context: any, event: any) {
       context.error = validation_result.message;
     }
   }
-
 }
 function np_setGridDates(context: any) {
   const weeks_in_month = NEPALI_DATE.get_weeks_in_month(parse_date(context.calendar_reference_date));

@@ -27,7 +27,7 @@ interface DatepickerComponentProps {
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
-  console.log("props",props)
+  console.log("props", props)
   const { isRhfBound = false, onChange, isDark = false } = props
 
   const [
@@ -50,6 +50,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   
   React.useEffect(() => {
     if (props) {
+      console.log("on_props_change", props)
       send("on_props_change", {
         data: props
       })
