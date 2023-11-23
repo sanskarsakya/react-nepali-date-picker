@@ -16,18 +16,19 @@ export const childOf = (childNode: any, parentNode: any): boolean =>
   parentNode.contains(childNode);
 
 interface DatepickerComponentProps {
-  // date: string
   onChange?: any
   isRhfBound?: boolean
   isNepali?: boolean
-  is_dark?: boolean
   date?: string
-  disable_date_before?: string
-  disable_date_after?: string
-  is_nepali?: boolean
+  isDark?: boolean
+  disableDateBefore?: string
+  disableDateAfter?: string
+
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
-  const { isRhfBound = false, onChange, is_dark = false, ...propsRest } = props
+
+  console.log("props",props)
+  const { isRhfBound = false, onChange, isDark = false } = props
 
   const [
     state,
@@ -36,7 +37,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
   const nepaliDatePickerWrapper = React.useRef<HTMLDivElement>(null);
 
-  const styles = get_base_styles(is_dark)
+  const styles = get_base_styles(isDark)
 
   // FUNCTIONS
   React.useEffect(() => {
@@ -94,12 +95,12 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   return (
     <>
 
-      <pre>
+      {/* <pre>
         {JSON.stringify({
         state: state.value,
         // context: state.context,
       }, null, 2)}
-      </pre>
+      </pre> */}
       
       <div
         id={'input-wrapper-2'}
@@ -145,12 +146,12 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
 interface DatePickerXStateProps extends Record<string, any> {
   isRhfBound?: boolean
-  is_nepali?: boolean
+  isNepali?: boolean
   isDark?: boolean
   onChange?: any
   date?: string
-  disable_date_before?: string
-  disable_date_after?: string
+  disableDateBefore?: string
+  disableDateAfter?: string
 }
 export const DatePickerXState = (props: DatePickerXStateProps) => {
 

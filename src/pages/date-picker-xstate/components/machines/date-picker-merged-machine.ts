@@ -24,7 +24,6 @@ export const mergedMachine = createMachine(
       date_picker_body_data: {
         weeks: weeks["en"],
       },
-      is_dark: false,
       calendar_controller_labels: {
         month_label: "",
         year_label: "",
@@ -367,8 +366,11 @@ function isNepali(context: any, event: any) {
 }
 
 // ACTIONS
-function mountSetup (context: any) {
+function mountSetup (context: any, event: any) {
   context.grid_months = ENGLISH_MONTHS;
+  if(event?.data?.date) {
+    context.date = event?.data?.date
+  }
   if(context.date) {
     context.date = BSToAD(context.date)
   }
@@ -380,6 +382,7 @@ function setDate(context: any, event: any) {
 
     event?.data?.onChange(working_date ?? dayjs().format("YYYY-MM-DD"));
   }
+   
 }
 
 function setPropsData(context: any, event: any) {
@@ -613,8 +616,11 @@ export function get_year_list_in_decade(current_year: number) {
 }
 
 // NEPALI FUNCTIONS
-function np_mountSetup (context: any) {
+function np_mountSetup (context: any, event:any) {
   context.grid_months = months.ne;
+  if(event?.data?.date) {
+    context.date = event?.data?.date
+  }
   if(context.date) {
     context.date = ADToBS(context.date)
   }

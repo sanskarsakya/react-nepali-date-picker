@@ -17,10 +17,9 @@ const today = dayjs().format("YYYY-MM-DD");
 
 const argsBase = {
   value: today,
+  isNepali:false,
   disableDateBefore: dayjs(today).subtract(1, "month").format("YYYY-MM-DD"),
   disableDateAfter: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
-  is_dark: false,
-  is_nepali: false,
 }
 
 export const EngDefault = {
@@ -50,9 +49,6 @@ export const EngDefault = {
               errors,
               setError,
               trigger,
-              dateType: args.dateType,
-              disableDateBefore: args.disableDateBefore,
-              disableDateAfter: args.disableDateAfter,
             };
 
             return (
@@ -61,11 +57,8 @@ export const EngDefault = {
                 <NepaliDatepickerV2.Default
                   name='composed'
                   label='Composed And RHF Controlled'
-                  disable_date_before={args.disableDateBefore}
-                  disable_date_after={args.disableDateAfter}
-                  is_dark={args.is_dark}
-                  is_nepali={args.is_nepali}
                   required
+                  {...args}
                   {...inputProps}
                 />
 
@@ -108,9 +101,6 @@ export const EnglishComposed = {
               errors,
               setError,
               trigger,
-              dateType: args.dateType,
-              disableDateBefore: args.disableDateBefore,
-              disableDateAfter: args.disableDateAfter,
             };
 
             return (
@@ -119,11 +109,8 @@ export const EnglishComposed = {
                 <NepaliDatepickerV2
                   name='composed'
                   label='Composed And RHF Controlled'
-                  disable_date_before={args.disableDateBefore}
-                  disable_date_after={args.disableDateAfter}
-                  is_dark={args.is_dark}
-                  is_nepali={args.is_nepali}
                   required
+                  {...args}
                   {...inputProps}
                 >
                   <NepaliDatepickerV2.FormControl>
@@ -152,24 +139,15 @@ export const EnglishDefaultUncontrolled = {
   args: argsBase,
 
   render: (args: any) => {
-    const inputProps = {
-      dateType: args.dateType,
-      disableDateBefore: args.disableDateBefore,
-      disableDateAfter: args.disableDateAfter,
-    };
 
     return (
       <NepaliDatepickerV2.Default
         name='composed'
         label='Default Uncotrolled'
-        disable_date_before={args.disableDateBefore}
-        disable_date_after={args.disableDateAfter}
-        is_dark={args.is_dark}
-        is_nepali={args.is_nepali}
+        {...args}
         onChange={(name: string, value: string) => {
           console.log(value)
         }}
-        {...inputProps}
       />
     );
   },
@@ -179,24 +157,15 @@ export const EnglishComposedUncontrolled = {
   args: argsBase,
 
   render: (args: any) => {
-    const inputProps = {
-      dateType: args.dateType,
-      disableDateBefore: args.disableDateBefore,
-      disableDateAfter: args.disableDateAfter,
-    };
 
     return (
       <NepaliDatepickerV2
         name='composed'
         label='Composed And Uncontrolled'
-        disable_date_before={args.disableDateBefore}
-        disable_date_after={args.disableDateAfter}
-        is_dark={args.is_dark}
-        is_nepali={args.is_nepali}
+        {...args}
         onChange={(name: string, value: string) => {
           console.log(value)
         }}
-        {...inputProps}
       >
         <NepaliDatepickerV2.FormControl>
           <Flex gap={2}>

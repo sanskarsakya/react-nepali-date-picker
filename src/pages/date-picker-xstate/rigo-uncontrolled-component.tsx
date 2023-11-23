@@ -26,6 +26,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     // dateType = CALENDAR_MODE.ENGLISH,
     ...contextRest
   }  = context
+
   const handleChange = (value: any) => {
     _onChange?.(name, value);
     onChangeRHF?.(value);
@@ -33,6 +34,7 @@ export const RigoUncontrolledComponent = (props: any) => {
 
   const valueNormalized = rhfValue ?? value;
 
+  console.log({valueNormalized})
   return <DatePickerXState
     isRhfBound={isRhfBound}
     isNepali={false}
