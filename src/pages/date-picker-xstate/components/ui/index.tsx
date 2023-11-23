@@ -49,13 +49,18 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   }, [])
   
   React.useEffect(() => {
-    if (props) {
-      console.log("on_props_change", props)
-      send("on_props_change", {
+    if (props?.date) {
+      send("on_props_date_change", {
         data: props
       })
     }
-  }, [props, send])
+  }, [props.date, send])
+
+  React.useEffect(() => {
+    send("on_props_is_nepali_change", {
+      data: props
+    })
+  }, [props.isNepali, send])
 
   const handleClickOutside = React.useCallback((event: any) => {
     if (nepaliDatePickerWrapper.current &&
