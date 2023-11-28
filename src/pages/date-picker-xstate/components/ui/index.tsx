@@ -47,7 +47,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
       })
     }
   }, [])
-  
+
   React.useEffect(() => {
     if (props?.date) {
       send("on_props_date_change", {
@@ -56,11 +56,23 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     }
   }, [props.date, send])
 
-  React.useEffect(() => {
-    send("on_props_is_nepali_change", {
-      data: props
-    })
-  }, [props.isNepali, send])
+
+
+  // todo: clean up
+  // const firstUpdate = React.useRef(true);
+
+  // React.useEffect(() => {
+  //   // do not execute on first mount
+  //   if (firstUpdate.current) {
+  //     firstUpdate.current = false;
+  //     return;
+  //   }
+
+  //   console.log("$$$$$", "on_props_is_nepali_change")
+  //   send("on_props_is_nepali_change", {
+  //     data: props
+  //   })
+  // }, [props.isNepali]);
 
   const handleClickOutside = React.useCallback((event: any) => {
     if (nepaliDatePickerWrapper.current &&
@@ -100,14 +112,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
   return (
     <>
-
-      {/* <pre>
-        {JSON.stringify({
-        state: state.value,
-        // context: state.context,
-      }, null, 2)}
-      </pre> */}
-      
+    
       <div
         id={'input-wrapper-2'}
         style={{
@@ -116,7 +121,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         }}
         ref={nepaliDatePickerWrapper}
       >
-
+ 
         <DateInput state={state} send={send} onChange={onChange} styles={styles} />
         <When condition={!isRhfBound && state.context.error} >
           <Text>{state.context.error}</Text>

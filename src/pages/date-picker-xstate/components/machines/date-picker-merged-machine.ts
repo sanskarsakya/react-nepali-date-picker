@@ -368,30 +368,50 @@ function isNepali(context: any, event: any) {
 
 // ACTIONS
 function propsIsNepaliChange(context: any) {
-  console.log("propsIsNepaliChange");
+  console.log("props is nepali change");
   if (context.date) {
     context.date = BSToAD(context.date);
   }
+  if (context.disable_date_before) {
+    context.disable_date_before = BSToAD(context.disable_date_before);
+  }
+  if (context.disable_date_after) {
+    context.disable_date_after = BSToAD(context.disable_date_after);
+  }
+  context.isNepali = false;
 }
 function np_propsIsNepaliChange(context: any) {
-  console.log("np_propsIsNepaliChange");
+  console.log("np props is nepali change");
   if (context.date) {
     context.date = ADToBS(context.date);
   }
+  if (context.disable_date_before) {
+    context.disable_date_before = ADToBS(context.disable_date_before);
+  }
+  if (context.disable_date_after) {
+    context.disable_date_after = ADToBS(context.disable_date_after);
+  }
+  context.isNepali = true;
 }
 function propsDateChange(context: any, event: any) {
   console.log("propsDateChange");
 
-  if(event?.data?.date) {
+  if (event?.data?.date) {
     context.date = event?.data?.date;
   }
+  
+
+  // console.log("$$$$", event?.data)
+  // console.log("$$$", context)
 }
+
 function np_propsDateChange(context: any, event: any) {
   console.log("np_propsDateChange");
-  
-  if(event?.data?.date) {
+
+  if (event?.data?.date) {
     context.date = event?.data?.date;
   }
+  
 }
 
 function mountSetup(context: any, event: any) {
@@ -402,6 +422,15 @@ function mountSetup(context: any, event: any) {
 
   if (context.date !== event?.data?.date) {
     newDate = event?.data?.date;
+  }
+  if (event?.data?.disableDateBefore) {
+    context.disable_date_before = event?.data?.disableDateBefore;
+  }
+  if (event?.data?.disableDateAfter) {
+    context.disable_date_after = event?.data?.disableDateAfter;
+  }
+  if (event?.data?.isNepali) {
+    context.isNepali = event?.data?.isNepali;
   }
 
   context.date = newDate;
@@ -415,6 +444,15 @@ function np_mountSetup(context: any, event: any) {
 
   if (context.date !== event?.data?.date) {
     newDate = event?.data?.date;
+  }
+  if (event?.data?.disableDateBefore) {
+    context.disable_date_before = event?.data?.disableDateBefore;
+  }
+  if (event?.data?.disableDateAfter) {
+    context.disable_date_after = event?.data?.disableDateAfter;
+  }
+  if (event?.data?.isNepali) {
+    context.isNepali = event?.data?.isNepali;
   }
 
   context.date = newDate;

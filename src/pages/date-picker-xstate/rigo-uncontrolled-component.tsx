@@ -34,6 +34,8 @@ export const RigoUncontrolledComponent = (props: any) => {
 
   const valueNormalized = rhfValue ?? value;
 
+  console.log("$$",contextRest)
+
   return <DatePickerXState
     isRhfBound={isRhfBound}
     isNepali={false}

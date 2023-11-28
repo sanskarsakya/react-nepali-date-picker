@@ -16,12 +16,11 @@ export const get_base_styles = (is_dark?: boolean) => {
     panel: {
       shadow: "md",
       width: "360px",
-      background: "white",
       zIndex: 100,
       position: "absolute",
       // top: 40,
       left: 0,
-      bg: is_dark ? "gray.800" : "",
+      bg: is_dark ? "gray.800" : "white",
       color: is_dark ? "gray.100" : "gray.900",
     },
     date_picker_body: {
