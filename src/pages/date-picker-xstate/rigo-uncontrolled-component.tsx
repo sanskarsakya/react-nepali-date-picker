@@ -4,6 +4,9 @@ import { useDatePicker } from './use-date-picker';
 import { DatePickerXState } from './components/ui';
 
 export const RigoUncontrolledComponent = (props: any) => {
+
+  // todo: write funciton for back and forth conversion between nepali and english date for proxy rhf value and onChangeRhf function
+  
   const {
     isRhfBound = false,
     onChangeRHF,
@@ -11,7 +14,7 @@ export const RigoUncontrolledComponent = (props: any) => {
     // ...propRest
   } = props;
 
-  const context= useDatePicker();
+  const context = useDatePicker();
 
   const {
     name,
@@ -25,16 +28,19 @@ export const RigoUncontrolledComponent = (props: any) => {
     onChange: _onChange,
     // dateType = CALENDAR_MODE.ENGLISH,
     ...contextRest
-  }  = context
+  } = context
 
   const handleChange = (value: any) => {
+    // contextRest.setData?.((prev: any) => ({
+    //   ...prev,
+    //   isNepali: true,
+    // }))
     _onChange?.(name, value);
     onChangeRHF?.(value);
   };
 
   const valueNormalized = rhfValue ?? value;
 
-  console.log("$$",contextRest)
 
   return <DatePickerXState
     isRhfBound={isRhfBound}

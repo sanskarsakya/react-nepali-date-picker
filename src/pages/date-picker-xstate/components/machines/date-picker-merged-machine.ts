@@ -29,6 +29,7 @@ export const mergedMachine = createMachine(
         month_label: "",
         year_label: "",
       },
+      setData: null,
     },
     states: {
       idle: {
@@ -367,31 +368,63 @@ function isNepali(context: any, event: any) {
 }
 
 // ACTIONS
-function propsIsNepaliChange(context: any) {
+function propsIsNepaliChange(context: any, event: any) {
   console.log("props is nepali change");
   if (context.date) {
     context.date = BSToAD(context.date);
+    event?.data?.onChange?.(context.date);
   }
+
+  let new_disable_date_before = context.disable_date_before
+  let new_disable_date_after = context.disable_date_after
+
   if (context.disable_date_before) {
-    context.disable_date_before = BSToAD(context.disable_date_before);
+    new_disable_date_before = BSToAD(context.disable_date_before);
   }
   if (context.disable_date_after) {
-    context.disable_date_after = BSToAD(context.disable_date_after);
+    new_disable_date_after = BSToAD(context.disable_date_after);
   }
+
+  event?.data?.setData?.((prev: any) => ({
+    ...prev,
+    isNepali: false,
+    disableDateBefore: new_disable_date_before,
+    disableDateAfter: new_disable_date_after,
+  }))
+
   context.isNepali = false;
+  context.disable_date_before = new_disable_date_before;
+  context.disable_date_after = new_disable_date_after;
+  context.grid_months = ENGLISH_MONTHS;
 }
-function np_propsIsNepaliChange(context: any) {
+function np_propsIsNepaliChange(context: any, event: any) {
   console.log("np props is nepali change");
   if (context.date) {
     context.date = ADToBS(context.date);
+    event?.data?.onChange?.(context.date);
   }
+
+  let new_disable_date_before = context.disable_date_before
+  let new_disable_date_after = context.disable_date_after
+
   if (context.disable_date_before) {
-    context.disable_date_before = ADToBS(context.disable_date_before);
+    new_disable_date_before = ADToBS(context.disable_date_before);
   }
   if (context.disable_date_after) {
-    context.disable_date_after = ADToBS(context.disable_date_after);
+    new_disable_date_after = ADToBS(context.disable_date_after);
   }
+
+  event?.data?.setData?.((prev: any) => ({
+    ...prev,
+    isNepali: true,
+    disableDateBefore: new_disable_date_before,
+    disableDateAfter: new_disable_date_after,
+  }))
+
   context.isNepali = true;
+  context.disable_date_before = new_disable_date_before;
+  context.disable_date_after = new_disable_date_after;
+  context.grid_months = months.ne;
 }
 function propsDateChange(context: any, event: any) {
   console.log("propsDateChange");
@@ -399,10 +432,7 @@ function propsDateChange(context: any, event: any) {
   if (event?.data?.date) {
     context.date = event?.data?.date;
   }
-  
 
-  // console.log("$$$$", event?.data)
-  // console.log("$$$", context)
 }
 
 function np_propsDateChange(context: any, event: any) {
@@ -411,7 +441,7 @@ function np_propsDateChange(context: any, event: any) {
   if (event?.data?.date) {
     context.date = event?.data?.date;
   }
-  
+
 }
 
 function mountSetup(context: any, event: any) {
@@ -432,6 +462,9 @@ function mountSetup(context: any, event: any) {
   if (event?.data?.isNepali) {
     context.isNepali = event?.data?.isNepali;
   }
+  // if (event?.data?.setData) {
+  //   context.setData = event?.data?.setData;
+  // }
 
   context.date = newDate;
   context.isNepali = false;
@@ -451,9 +484,14 @@ function np_mountSetup(context: any, event: any) {
   if (event?.data?.disableDateAfter) {
     context.disable_date_after = event?.data?.disableDateAfter;
   }
-  if (event?.data?.isNepali) {
-    context.isNepali = event?.data?.isNepali;
+  // if (event?.data?.isNepali) {
+  //   context.isNepali = event?.data?.isNepali;
+  // }
+
+  if (event?.data?.setData) {
+    context.setData = event?.data?.setData;
   }
+
 
   context.date = newDate;
   context.isNepali = true;

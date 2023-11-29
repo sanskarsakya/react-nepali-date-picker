@@ -6,9 +6,10 @@ interface DateInputProps {
     send: any;
     styles: any;
     onChange?: any;
+    setData?: any;
 
 }
-export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send, onChange }, ref) => {
+export const DateInput = forwardRef<DateInputProps, 'div'>(({ setData, state, send, onChange }, ref) => {
 
     const [value, setValue] = React.useState("")
 
@@ -125,7 +126,9 @@ export const DateInput = forwardRef<DateInputProps, 'div'>(({ state, send, onCha
                     onClick={() => {
                         send("on_props_is_nepali_change", {
                             data: {
-                                isNepali: !state.context.isNepali
+                                isNepali: !state.context.isNepali,
+                                setData,
+                                onChange
                             }
                         })
                     }}

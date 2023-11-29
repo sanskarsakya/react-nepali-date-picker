@@ -15,7 +15,7 @@ import { YearViewMode } from './year-view-mode';
 export const childOf = (childNode: any, parentNode: any): boolean =>
   parentNode.contains(childNode);
 
-interface DatepickerComponentProps {
+interface DatepickerComponentProps extends Record<string, any> {
   onChange?: any
   isRhfBound?: boolean
   isNepali?: boolean
@@ -51,7 +51,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   React.useEffect(() => {
     if (props?.date) {
       send("on_props_date_change", {
-        data: props
+        data: props,
       })
     }
   }, [props.date, send])
@@ -112,7 +112,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
   return (
     <>
-    
+
       <div
         id={'input-wrapper-2'}
         style={{
@@ -121,8 +121,8 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
         }}
         ref={nepaliDatePickerWrapper}
       >
- 
-        <DateInput state={state} send={send} onChange={onChange} styles={styles} />
+
+        <DateInput state={state} send={send} setData={props.setData} onChange={onChange} styles={styles} />
         <When condition={!isRhfBound && state.context.error} >
           <Text>{state.context.error}</Text>
         </When>

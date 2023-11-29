@@ -185,7 +185,7 @@ const argsBaseNepali = {
   value: ADToBS(today),
   disableDateBefore: ADToBS(dayjs(today).subtract(1, "month").format("YYYY-MM-DD")),
   disableDateAfter: ADToBS(dayjs(today).add(1, "month").format("YYYY-MM-DD")),
-  is_nepali: true,
+  isNepali: true,
 }
 
 export const NepaliDefault = {
