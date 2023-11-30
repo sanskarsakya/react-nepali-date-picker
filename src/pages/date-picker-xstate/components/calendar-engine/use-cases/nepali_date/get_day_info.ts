@@ -4,7 +4,7 @@ import { NEPALI_DATE } from ".";
 import { ENGLISH_DATE } from "../english_date";
 import * as fromCalendarEngine from "../../index";
 import { englishToNepaliNumber } from "nepali-number";
-import { check_if_in_range } from "../../../machines/date-picker-machine";
+import { check_if_in_range } from "../../../machines/date-picker-merged-machine";
 
 export const get_day_info = (weekNum: any, weekDayNum: any, date: any, selectedDate?: any, disable_date_before?: any, disable_date_after?: any): fromCalendarEngine.IDayInfo => {
   const firstAdDay = date.firstAdDayInBSMonth.getDay();

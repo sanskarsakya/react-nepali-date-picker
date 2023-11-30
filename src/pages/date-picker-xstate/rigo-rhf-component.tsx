@@ -3,11 +3,11 @@
 import { Controller } from "react-hook-form";
 
 import { BSToAD } from "bikram-sambat-js";
-import { validate } from "./components/machines/date-picker-machine";
-import { validate as NepaliValidator } from "./components/machines/date-picker-nepali-machine";
+import { nepaliValidate as NepaliValidator } from "./components/machines/nepali-validate";
 import { ControlledComponentProps } from "./interface";
 import { RigoUncontrolledComponent } from "./rigo-uncontrolled-component";
 import { useDatePicker } from "./use-date-picker";
+import { validate } from "./components/machines/date-picker-merged-machine";
 
 export const RigoRhfComponent = (props: ControlledComponentProps) => {
 
