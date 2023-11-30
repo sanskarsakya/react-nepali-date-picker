@@ -55,6 +55,7 @@ export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, 
   const converted_nepali_date = primaryYear > 999 && primaryYear < 2042 ? ADToBS(new Date(latest_stiched_date)) : "2099-12-31";
   const splitted_nepali_date = converted_nepali_date.split("-");
   const isToday = is_today(new Date(latest_stiched_date));
+  const isSaturday = weekDayNum === 7;
 
   let isSelected = false;
   if (input_date) {
@@ -72,7 +73,7 @@ export const get_day_info = (weekNum: any, weekDayNum: any, calendar_date: any, 
     isDayBeforeDisabledAfterDate = dayjs(latest_stiched_date).isBefore(disable_date_after, "day");
   }
 
-  const isDisabled = !isCurrentMonth || !isDayAfterDisabledBeforeDate || !isDayBeforeDisabledAfterDate;
+  const isDisabled = !isCurrentMonth || !isDayAfterDisabledBeforeDate || !isDayBeforeDisabledAfterDate || isSaturday;
 
   return {
     workingDay: primaryDay,

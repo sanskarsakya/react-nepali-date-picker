@@ -27,7 +27,6 @@ interface DatepickerComponentProps extends Record<string, any> {
 }
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
-  console.log("props", props)
   const { isRhfBound = false, onChange, isDark = false } = props
 
   const [

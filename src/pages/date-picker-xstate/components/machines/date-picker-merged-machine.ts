@@ -369,7 +369,6 @@ function isNepali(context: any, event: any) {
 
 // ACTIONS
 function propsIsNepaliChange(context: any, event: any) {
-  console.log("props is nepali change");
   if (context.date) {
     context.date = BSToAD(context.date);
     event?.data?.onChange?.(context.date);
@@ -398,7 +397,6 @@ function propsIsNepaliChange(context: any, event: any) {
   context.grid_months = ENGLISH_MONTHS;
 }
 function np_propsIsNepaliChange(context: any, event: any) {
-  console.log("np props is nepali change");
   if (context.date) {
     context.date = ADToBS(context.date);
     event?.data?.onChange?.(context.date);
@@ -427,7 +425,6 @@ function np_propsIsNepaliChange(context: any, event: any) {
   context.grid_months = months.ne;
 }
 function propsDateChange(context: any, event: any) {
-  console.log("propsDateChange");
 
   if (event?.data?.date) {
     context.date = event?.data?.date;
@@ -436,7 +433,6 @@ function propsDateChange(context: any, event: any) {
 }
 
 function np_propsDateChange(context: any, event: any) {
-  console.log("np_propsDateChange");
 
   if (event?.data?.date) {
     context.date = event?.data?.date;
@@ -446,7 +442,6 @@ function np_propsDateChange(context: any, event: any) {
 
 function mountSetup(context: any, event: any) {
   context.grid_months = ENGLISH_MONTHS;
-  console.log("eng mount setup", event?.data);
 
   let newDate = context.date;
 
@@ -470,7 +465,6 @@ function mountSetup(context: any, event: any) {
   context.isNepali = false;
 }
 function np_mountSetup(context: any, event: any) {
-  console.log("np mount setup", event?.data);
   context.grid_months = months.ne;
 
   let newDate = context.date;
@@ -659,7 +653,6 @@ function setIsTodayValid(context: any) {
 }
 
 function en_date_input() {
-  console.log("en_date_input");
 }
 
 // UTILITIES

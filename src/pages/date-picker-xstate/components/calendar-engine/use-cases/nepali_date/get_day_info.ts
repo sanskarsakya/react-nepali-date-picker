@@ -25,6 +25,7 @@ export const get_day_info = (weekNum: any, weekDayNum: any, date: any, selectedD
   }
 
   const today = from_utilities.split_date(ADToBS(new Date()));
+  const isSaturday = weekDayNum === 7;
 
   const isToday = isCurrentMonth ? today.day === primaryDay && today.month === date.bsMonth && today.year === date.bsYear : false;
   let isSelected = false;
@@ -47,7 +48,7 @@ export const get_day_info = (weekNum: any, weekDayNum: any, date: any, selectedD
     eng_disable_date_after
   );
 
-  const isDisabled = !isCurrentMonth || !is_in_range;
+  const isDisabled = !isCurrentMonth || !is_in_range || isSaturday;
 
   return {
     workingDay: primaryDay,
