@@ -145,7 +145,7 @@ export const EnglishDefaultUncontrolled = {
         name='composed'
         label='Default Uncotrolled'
         {...args}
-        onChange={(name: string, value: string) => {
+        onChange={(_: string, value: string) => {
           console.log(value)
         }}
       />
@@ -163,7 +163,7 @@ export const EnglishComposedUncontrolled = {
         name='composed'
         label='Composed And Uncontrolled'
         {...args}
-        onChange={(name: string, value: string) => {
+        onChange={(_: string, value: string) => {
           console.log(value)
         }}
       >
@@ -331,7 +331,7 @@ export const NepaliDefaultUncontrolled = {
         disable_date_after={args.disableDateAfter}
         is_dark={args.is_dark}
         is_nepali={args.is_nepali}
-        onChange={(name: string, value: string) => {
+        onChange={(_: string, value: string) => {
           console.log(value)
         }}
         {...inputProps}
@@ -358,7 +358,7 @@ export const NepaliComposedUncontrolled = {
         disable_date_after={args.disableDateAfter}
         is_dark={args.is_dark}
         is_nepali={args.is_nepali}
-        onChange={(name: string, value: string) => {
+        onChange={(_: string, value: string) => {
           console.log(value)
         }}
         {...inputProps}

@@ -363,7 +363,7 @@ export const mergedMachine = createMachine(
 
 // GUARDS
 
-function isNepali(context: any, event: any) {
+function isNepali(_: any, event: any) {
   return event?.data?.isNepali;
 }
 
