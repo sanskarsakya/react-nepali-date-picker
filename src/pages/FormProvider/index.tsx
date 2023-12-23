@@ -17,7 +17,7 @@ export function FormProvider(props: PzFormProviderProps) {
     <RHFFormProvider {...methods}>
       {/* {showDevTool && <DevTool control={methods.control} />} */}
 
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>{children}</form>
     </RHFFormProvider>
   );
 }

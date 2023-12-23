@@ -18,7 +18,7 @@
     "@emotion/styled": "^11.11.0",
     "@xstate/react": "^3.2.2",
     "bikram-sambat-js": "^1.0.1",
-    "dayjs": "^1.11.10",
+    "dayjs": "1.11.10",
     "framer-motion": "^10.16.4",
     "lodash": "^4.17.21",
     "nepali-number": "^1.0.3",
@@ -28,7 +28,8 @@
     "react-icons": "^4.11.0",
     "react-if": "^4.1.5",
     "react-router-dom": "^6.16.0",
-    "xstate": "^4.38.2"
+    "xstate": "^4.38.2",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.5.2",

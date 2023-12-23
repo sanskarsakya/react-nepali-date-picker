@@ -1,0 +1,2 @@
+import{j as r}from"./jsx-runtime-ffb262ed.js";import{C as t}from"./chunk-QAITB7GG-bc04c750.js";import"./index-76fb7be0.js";import"./_commonjsHelpers-de833af9.js";import"./chunk-5PH6ULNP-0889680a.js";import"./extends-15b115a7.js";import"./index-d3ea75b5.js";const n={decorators:[o=>r.jsx(t,{children:r.jsx(o,{})})],parameters:{actions:{argTypesRegex:"^on[A-Z].*"},controls:{matchers:{color:/(background|color)$/i,date:/Date$/i}}}};export{n as default};
+//# sourceMappingURL=preview-c7ce1f20.js.map
