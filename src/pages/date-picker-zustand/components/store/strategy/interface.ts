@@ -56,4 +56,15 @@ export interface ICalendarStrategy  {
      */
     convertdatesToCurrentContext: (ctx:any, next:Next<any>) => void;
     
+    /**
+     * Basically does same thing as convertdatesToCurrentContext,
+     * but only for napali strategy,
+     * does nothing for english strategy
+     * used on mount setup
+     * @param ctx 
+     * @param next 
+     * @returns 
+     */
+    normalizeDates: (ctx:any, next:Next<any>) => void;
+    
 }

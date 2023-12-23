@@ -226,9 +226,12 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
     sendChanges: function (ctx: any, next: Next<any>): void {
         ctx.next.onChange({
-            date:ctx.next.date,
+            date: ctx.next.date,
             isNepali: ctx.next.isNepali,
         });
+        next();
+    },
+    normalizeDates: function (ctx: any, next: Next<any>): void {
         next();
     },
 }

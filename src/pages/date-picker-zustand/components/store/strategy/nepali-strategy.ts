@@ -244,6 +244,19 @@ export const NepaliStrategy: ICalendarStrategy = {
         next();
     },
 
+    normalizeDates: function (ctx: any, next: Next<any>): void {
+        if(ctx.next.date) {
+            ctx.next.date = ADToBS(ctx.next.date);
+        }
+        if(ctx.next.disableDateBefore) {
+            ctx.next.disableDateBefore = ADToBS(ctx.next.disableDateBefore);
+        }
+        if(ctx.next.disableDateAfter) {
+            ctx.next.disableDateAfter = ADToBS(ctx.next.disableDateAfter);
+        }
+        next();
+    },
+    
     setGridMonths: function (ctx: any, next: Next<any>): void {
         ctx.next.gridMonths = months.ne
         next();
@@ -254,7 +267,7 @@ export const NepaliStrategy: ICalendarStrategy = {
         // ALWAYS RETURN GREGORIAN DATE
         // ctx.next.onChange(ctx.next.date);
         ctx.next.onChange({
-            date:ctx.next.date,
+            date:BSToAD(ctx.next.date),
             isNepali: ctx.next.isNepali,
         });
         // ctx.next.onChange(BSToAD(ctx.next.date));

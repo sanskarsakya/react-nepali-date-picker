@@ -14,14 +14,8 @@ import { YearViewMode } from './year-view-mode';
 export const childOf = (childNode: any, parentNode: any): boolean =>
   parentNode.contains(childNode);
 
-export function useIsMounted(): { current: boolean } {
-  const componentIsMounted = React.useRef(true)
-  React.useEffect(() => () => { componentIsMounted.current = false }, [])
-  return componentIsMounted
-}
 
-
-let co = 0;
+let coo = 0;
 
 interface DatepickerComponentProps extends Record<string, any> {
   onChange?: any
@@ -37,11 +31,10 @@ interface DatepickerComponentProps extends Record<string, any> {
 export const DatepickerComponent = (props: DatepickerComponentProps) => {
 
   // VARIABLES
-  const { isRhfBound = false, disabled, isDark = false, isNepali } = props
+  const { isRhfBound = false, disabled, isDark = false } = props
 
   // HOOKS
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const isMounted = useIsMounted();
 
   const { mountSetup, toggleContext, openCalendar, viewMode, error } = useCalendarStore(state => ({
     mountSetup: state.mountSetup,
@@ -67,16 +60,12 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   }
 
   const handleIsNepaliPropsChange = () => {
-    if (co !== 0) {
+    if (coo !== 0) {
       console.log("is Nepali props change")
       toggleContext(props.isNepali)
     }
-    co++
+    coo++
   };
-
-  // const handleDatePrposChange = () => {
-  //   console.log("is Nepali props change")
-  // };
 
   React.useEffect(handleMountSetup, [])
   // React.useEffect(handleDatePrposChange, [props.date])

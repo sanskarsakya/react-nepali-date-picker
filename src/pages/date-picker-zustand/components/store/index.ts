@@ -16,8 +16,8 @@ export type ICalendarState = {
      * This is used to determine if the calendar
      * context is in nepali or english.
      */
-    isNepali: boolean;
-    
+    isNepali: boolean | null;
+
     /**
      * This is the date that is used to
      * disable dates before this date.
@@ -29,14 +29,6 @@ export type ICalendarState = {
      * disable dates after this date.
      */
     disableDateAfter: string;
-
-    /**
-     * This handles the effect for isNepali
-     * flag being changed from outside the component
-     * @param isNepali 
-     * @returns 
-     */
-    onIsNepaliPropsChange: (isNepali: boolean) => void;
 
     /**
      * This is the date that is used to 
@@ -64,7 +56,7 @@ export type ICalendarState = {
      * month year panel.
      */
     monthYearPanelData: string;
-    
+
     /**
      * This is the data that is shown in the
      * year view mode.
@@ -221,7 +213,7 @@ export type ICalendarState = {
      *
      * Switch between nepali and english context 
      */
-    toggleContext: (context?:boolean) => void,
+    toggleContext: (context?: boolean) => void,
 
     /**
      * This is used to set the week data 
@@ -233,7 +225,7 @@ export type ICalendarState = {
 
 export const useCalendarStore = create<ICalendarState>((set, get) => ({
     date: "",
-    isNepali: false,
+    isNepali: null,
     calendarReferenceDate: dayjs().format("YYYY-MM-DD"),
     gridDates: [],
     viewMode: "CALENDAR_VIEW",
@@ -253,14 +245,6 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
         year: "",
     },
 
-    onIsNepaliPropsChange: (isNepali) => {
-        const cloned = _.cloneDeep(get());
-
-        cloned.isNepali = isNepali;
-
-        set(cloned)
-    },
-
     // ACTIONS
     mountSetup: async (props, onClose) => {
 
@@ -271,10 +255,11 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
         cloned.onClose = onClose
         cloned.onChange = onChange
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.setDate,
+            strategyProvider.normalizeDates,
             strategyProvider.setDisableDateBefore,
             strategyProvider.setDisableDateAfter,
             strategyProvider.setGridMonths,
@@ -296,7 +281,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     openCalendar: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.setViewModeToCalendar,
@@ -314,7 +299,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.incrementMonth,
@@ -329,7 +314,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     previousMonth: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.decrementMonth,
@@ -344,7 +329,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     nextYear: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.incrementYear,
@@ -359,7 +344,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     previousYear: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.decrementYear,
@@ -375,7 +360,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.setDate,
@@ -397,7 +382,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     selectToday: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.checkIfTodayIsValid, // might not need
@@ -416,7 +401,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     goToMonthView: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.setViewModeToMonth,
@@ -429,7 +414,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     goToYearView: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.setViewModeToYear,
@@ -444,7 +429,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     getNextDecadeYearGrid: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.updateGridYearWithNextDecade,
@@ -457,7 +442,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     getPreviousDecadeYearGrid: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.updateGridYearWithPreviousDecade,
@@ -471,7 +456,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.selectYear,
@@ -490,7 +475,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     getNextYear: async () => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.updateMonthViewWithNextYear,
@@ -505,7 +490,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.updateMonthViewWithPreviousYear,
@@ -519,7 +504,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     selectMonth: async (month) => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.selectMonth,
@@ -539,7 +524,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     onDateChange: async (date) => {
         const cloned = _.cloneDeep(get());
 
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.setDate,
@@ -565,9 +550,12 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         // ALWAYS TOGGLE FIRST
         cloned.isNepali = context || !cloned.isNepali;
+        
+        // break the loop toggleCOntext => statechange => useeffect => toggleContext 
+        // set(cloned)
 
         // THEN GET STRATEGY
-        const strategyProvider = getStrategy(cloned.isNepali);
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
 
         const { next } = await Pipeline<any>(
             strategyProvider.convertdatesToCurrentContext,
