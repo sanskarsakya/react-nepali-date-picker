@@ -198,7 +198,7 @@ export const EnglishStrategy: ICalendarStrategy = {
         }
     },
     checkIfDateIsValid: function (ctx, next): void {
-        const validation_result = validate(ctx.params.date, ctx.next.disableDateBefore, ctx.next.disableDateAfter);
+        const validation_result = validate(ctx.next.date, ctx.next.disableDateBefore, ctx.next.disableDateAfter);
 
         if (validation_result.is_valid) {
             ctx.next.error = "";

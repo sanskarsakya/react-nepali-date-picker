@@ -13,7 +13,7 @@ import { ICalendarStrategy } from "./interface";
 const today = dayjs().format("YYYY-MM-DD");
 
 export const NepaliStrategy: ICalendarStrategy = {
-    
+
     setDate: function (ctx: any, next: Next<any>): void {
         // normalize
         ctx.next.date = ctx.params.date;
@@ -47,7 +47,7 @@ export const NepaliStrategy: ICalendarStrategy = {
         }
         next();
     },
-    
+
     setIsTodayValid: function (ctx, next): void {
         const validation_result = validate(today, ctx.next?.disableDateBefore ? BSToAD(ctx.next.disableDateBefore) : "", ctx.next?.disableDateAfter ? BSToAD(ctx.next.disableDateAfter) : "");
         ctx.next.isTodayValid = validation_result.is_valid;
@@ -113,7 +113,7 @@ export const NepaliStrategy: ICalendarStrategy = {
         next();
     },
 
-   
+
 
     setViewModeToMonth: function (ctx: any, next: Next<any>): void {
         ctx.next.viewMode = "MONTH_VIEW";
@@ -221,7 +221,11 @@ export const NepaliStrategy: ICalendarStrategy = {
     },
 
     checkIfDateIsValid: function (ctx: any, next: Next<any>): void {
-        const validation_result = validate(ctx.params.date, ctx.next?.disableDateBefore ? BSToAD(ctx.next.disableDateBefore) : "", ctx.next?.disableDateAfter ? BSToAD(ctx.next.disableDateAfter) : "");
+        const validation_result = validate(
+            ctx.next.date ? BSToAD(ctx.next.date) : "",
+            ctx.next?.disableDateBefore ? BSToAD(ctx.next.disableDateBefore) : "",
+            ctx.next?.disableDateAfter ? BSToAD(ctx.next.disableDateAfter) : ""
+        );
 
         if (validation_result.is_valid) {
             ctx.next.error = "";
@@ -232,42 +236,42 @@ export const NepaliStrategy: ICalendarStrategy = {
     },
 
     convertdatesToCurrentContext: function (ctx: any, next: Next<any>): void {
-        if(ctx.next.date) {
+        if (ctx.next.date) {
             ctx.next.date = ADToBS(ctx.next.date);
         }
-        if(ctx.next.disableDateBefore) {
+        if (ctx.next.disableDateBefore) {
             ctx.next.disableDateBefore = ADToBS(ctx.next.disableDateBefore);
         }
-        if(ctx.next.disableDateAfter) {
+        if (ctx.next.disableDateAfter) {
             ctx.next.disableDateAfter = ADToBS(ctx.next.disableDateAfter);
         }
         next();
     },
 
     normalizeDates: function (ctx: any, next: Next<any>): void {
-        if(ctx.next.date) {
+        if (ctx.next.date) {
             ctx.next.date = ADToBS(ctx.next.date);
         }
-        if(ctx.next.disableDateBefore) {
+        if (ctx.next.disableDateBefore) {
             ctx.next.disableDateBefore = ADToBS(ctx.next.disableDateBefore);
         }
-        if(ctx.next.disableDateAfter) {
+        if (ctx.next.disableDateAfter) {
             ctx.next.disableDateAfter = ADToBS(ctx.next.disableDateAfter);
         }
         next();
     },
-    
+
     setGridMonths: function (ctx: any, next: Next<any>): void {
         ctx.next.gridMonths = months.ne
         next();
     },
 
     sendChanges: function (ctx: any, next: Next<any>): void {
-        
+
         // ALWAYS RETURN GREGORIAN DATE
         // ctx.next.onChange(ctx.next.date);
         ctx.next.onChange({
-            date:BSToAD(ctx.next.date),
+            date: BSToAD(ctx.next.date),
             isNepali: ctx.next.isNepali,
         });
         // ctx.next.onChange(BSToAD(ctx.next.date));

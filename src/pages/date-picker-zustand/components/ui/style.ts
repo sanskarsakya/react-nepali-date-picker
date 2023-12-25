@@ -15,7 +15,7 @@ export const get_base_styles = (is_dark?: boolean) => {
   return {
     panel: {
       shadow: "md",
-      width: "360px",
+      width: "268px",
       zIndex: 100,
       position: "absolute",
       // top: 40,
@@ -31,7 +31,8 @@ export const get_base_styles = (is_dark?: boolean) => {
         color: is_dark ? "gray.100" : textColor,
       },
       weekday: {
-        px: "10px",
+        fontSize: "12px",
+        // px: "10px",
         py: "6px",
         border:"none",
       },
@@ -40,7 +41,7 @@ export const get_base_styles = (is_dark?: boolean) => {
         border:"none",
       },
       day_base: {
-        px:'10px',
+        px:'4px',
         py:'6px',
         border: "none",
         cursor: "pointer",
@@ -83,14 +84,14 @@ export const get_base_styles = (is_dark?: boolean) => {
         opacity: 0.5,
       },
       cell: {
-        gap: "3px",
+        gap: "4px",
       },
       primary_label: {
-        fontSize: "14px",
+        fontSize: "12px",
       },
       secondary_label: {
         pt: "1px",
-        fontSize: "11px",
+        fontSize: "9px",
       },
     },
     month_year_panel: {
@@ -155,22 +156,18 @@ export const get_base_styles = (is_dark?: boolean) => {
 
     calendar_controller: {
       panel: {
-        w: "full",
-        justifyContent: "space-between",
-        p: 1,
-        pt: 3,
         color: is_dark ? "gray.100" : "gray.900",
       },
       year_button: {
         size: "xs",
-        px: 3,
+        px: 1,
         bg: is_dark ? "gray.800" : "",
         color: is_dark ? "gray.100" : "gray.500",
         _hover: { bg: is_dark ? "gray.800" : "gray.100" },
       },
       month_button: {
         size: "xs",
-        px: 3,
+        px: 1,
         bg: is_dark ? "gray.800" : "",
         color: is_dark ? "gray.100" : "gray.500",
         _hover: { bg: is_dark ? "gray.800" : "gray.100" },
@@ -181,9 +178,6 @@ export const get_base_styles = (is_dark?: boolean) => {
 
     month_view_mode: {
       panel: {
-        w: "360px",
-        pt: 3,
-        justifyContent: "space-between",
         bg: is_dark ? "gray.800" : "",
         color: is_dark ? "gray.100" : textColor,
       },
@@ -202,9 +196,6 @@ export const get_base_styles = (is_dark?: boolean) => {
     },
     year_view_mode: {
       panel: {
-        w: "360px",
-        pt: 3,
-        justifyContent: "space-between",
         bg: is_dark ? "gray.800" : "",
         color: is_dark ? "gray.100" : textColor,
       },

@@ -285,6 +285,7 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const { next } = await Pipeline<any>(
             strategyProvider.setViewModeToCalendar,
+            strategyProvider.checkIfDateIsValid,
             strategyProvider.setCalendarReferenceDate,
             strategyProvider.setIsTodayValid,
             strategyProvider.setGridDates,
@@ -528,8 +529,8 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const { next } = await Pipeline<any>(
             strategyProvider.setDate,
-            strategyProvider.sendChanges,
             strategyProvider.checkIfDateIsValid,
+            strategyProvider.sendChanges,
             strategyProvider.setCalendarReferenceDate,
             strategyProvider.setGridDates,
             strategyProvider.setMonthYearPanelData,

@@ -34,7 +34,7 @@ export const RigoUncontrolledComponent = (props: any) => {
 
     console.log("$$$", value)
     _onChange?.(name, value);
-    onChangeRHF?.(value);
+    onChangeRHF?.(value.date);
   };
 
   const valueNormalized = control ?  rhfValue : value;

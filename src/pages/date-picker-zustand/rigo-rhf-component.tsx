@@ -16,6 +16,7 @@ export const RigoRhfComponent = (props: ControlledComponentProps) => {
     control,
     required,
     name,
+    setData,
     ...contextProps
   } = context
 

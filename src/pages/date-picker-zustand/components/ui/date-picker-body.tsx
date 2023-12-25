@@ -5,7 +5,7 @@ import { useCalendarStore } from "../store";
 interface DatepickerBodyProps {
     styles: any
 }
-export const DatePickerBody = ({  styles }: DatepickerBodyProps) => {
+export const DatePickerBody = ({ styles }: DatepickerBodyProps) => {
 
     const { gridDates, selectDay, weeks } = useCalendarStore(state => ({
         gridDates: state.gridDates,
@@ -83,6 +83,7 @@ export const DatePickerBody = ({  styles }: DatepickerBodyProps) => {
                                             }}
                                         >
                                             <Flex
+                                                aria-label="cell"
                                                 id="cell"
                                                 sx={styles.date_picker_body.cell}
                                             >

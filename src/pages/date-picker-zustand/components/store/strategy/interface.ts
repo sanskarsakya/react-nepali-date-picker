@@ -45,6 +45,15 @@ export interface ICalendarStrategy  {
        * @returns 
        */
     checkIfTodayIsValid: (ctx:any, next:Next<any>) => void;
+    
+     /**
+       * check if the date is valid
+       * used while clicking on select day, select today,
+       * on date typing
+       * @param ctx 
+       * @param next 
+       * @returns 
+       */
     checkIfDateIsValid: (ctx:any, next:Next<any>) => void;
     
     /**

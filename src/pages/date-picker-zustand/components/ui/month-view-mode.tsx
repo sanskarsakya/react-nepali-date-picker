@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, IconButton, Text } from "@chakra-ui/react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import { useCalendarStore } from "../store";
 
@@ -19,21 +19,22 @@ export const MonthViewMode = ({ styles }: YearViewModeProp) => {
     return <>
         {/* START MONTH CONTROLLER */}
         <Flex
-            sx={styles.month_view_mode.panel} justifyContent='space-between' p={1} pt={3}>
-            <Button
-                id="previous_year_button"
-                sx={styles.month_view_mode.year_button}
-                size='xs'
-                px={7}
-                _hover={{ bg: 'gray.100' }}
-                variant='link'
-                onClick={() => {
-                    getPreviousYear()
+            w="full"
+            justifyContent="space-between"
+            sx={styles.month_view_mode.panel}
+
+        >
+            <IconButton
+                aria-label='previous_year_button'
+                id='previous_year_button'
+                bg="transparent"
+                _hover={{
+                    bg: "transparent"
                 }}
-            // isDisabled={_selected - 1 < fromCalendarEngine.minADYear}
-            >
-                <AiOutlineDoubleLeft />
-            </Button>
+                icon={<AiOutlineDoubleLeft />}
+                // sx={styles.month_view_mode.year_button}
+                onClick={getPreviousYear}
+            />
 
             <Button
                 variant='unstyled'
@@ -49,20 +50,18 @@ export const MonthViewMode = ({ styles }: YearViewModeProp) => {
                 </Text>
             </Button>
 
-            <Button
-                id="next_year_button"
-                sx={styles.month_view_mode.year_button}
-                size='xs'
-                px={7}
-                _hover={{ bg: 'gray.100' }}
-                variant='link'
-                onClick={() => {
-                    getNextYear()
+            <IconButton
+                aria-label='next-year-button'
+                id='next-year-button'
+                bg="transparent"
+                _hover={{
+                    bg: "transparent"
                 }}
-            // isDisabled={_selected + 1 > fromCalendarEngine.maxADYear}
-            >
-                <AiOutlineDoubleRight />
-            </Button>
+                icon={<AiOutlineDoubleRight />}
+                // sx={styles.month_view_mode.year_button}
+                onClick={getNextYear}
+            />
+
         </Flex>
         {/* END MONTH CONTROLLER */}
         <Flex
