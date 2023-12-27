@@ -18,7 +18,7 @@ export const EnglishStrategy: ICalendarStrategy = {
     },
 
     setCalendarReferenceDate: function (ctx, next): void {
-        ctx.next.calendarReferenceDate = ctx.next.date ?? dayjs().format("YYYY-MM-DD");
+        ctx.next.calendarReferenceDate = ctx.next.date || dayjs().format("YYYY-MM-DD");
         next();
     },
 
