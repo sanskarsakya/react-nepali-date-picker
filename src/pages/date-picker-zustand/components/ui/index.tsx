@@ -1,7 +1,6 @@
 import { Box, Text, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import { When } from 'react-if';
-import { useCalendarStore } from '../store';
 import { CalendarController } from './calendar-controller';
 import { DateInput } from './date-input';
 import { DatePickerBody } from './date-picker-body';
@@ -10,6 +9,7 @@ import { MonthYearPanel } from './month-year-panel';
 import { get_base_styles } from './style';
 import Today from './today';
 import { YearViewMode } from './year-view-mode';
+import { Store, useStore } from '../store/context';
 
 export const childOf = (childNode: any, parentNode: any): boolean =>
   parentNode.contains(childNode);
@@ -36,7 +36,7 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   // HOOKS
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const { mountSetup, toggleContext, openCalendar, viewMode, error } = useCalendarStore(state => ({
+  const { mountSetup, toggleContext, openCalendar, viewMode, error } = useStore((state:any) => ({
     mountSetup: state.mountSetup,
     openCalendar: state.openCalendar,
     viewMode: state.viewMode,
@@ -170,10 +170,14 @@ interface Props extends Record<string, any> {
 }
 export const DatePicker = (props: Props) => {
 
-  return <DatepickerComponent
-    {...props}
-  />
+  return <Store>
+    <DatepickerComponent
+      {...props}
+    />
+  </Store>
 }
+
+
 
 // Rule of thumb
 // mount setup

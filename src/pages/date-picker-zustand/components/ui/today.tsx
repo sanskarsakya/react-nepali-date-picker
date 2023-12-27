@@ -1,12 +1,12 @@
 import { Box, Button } from '@chakra-ui/react'
-import { useCalendarStore } from '../store'
+import { useStore } from '../store/context'
 
 interface TodayProps {
     styles: any
 }
 const Today = ({  styles }: TodayProps) => {
 
-    const { selectToday, isTodayValid } = useCalendarStore(state => ({
+    const { selectToday, isTodayValid } = useStore((state:any) => ({
         selectToday: state.selectToday,
         isTodayValid: state.isTodayValid,
     }))

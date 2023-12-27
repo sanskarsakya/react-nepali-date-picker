@@ -1,6 +1,6 @@
 import { Button, Center, Flex, IconButton, Text } from '@chakra-ui/react';
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import { useCalendarStore } from '../store';
+import { useStore } from '../store/context';
 
 interface CalendarControllerProps {
   styles: any
@@ -39,7 +39,7 @@ export const CalendarController = ({
 };
 
 export const PreviousYearButton = () => {
-  const previousYear = useCalendarStore(state => state.previousYear)
+  const previousYear = useStore((state:any) => state.previousYear)
 
   return <IconButton
     aria-label='previous-year-button'
@@ -55,7 +55,7 @@ export const PreviousYearButton = () => {
 
 
 export const PreviousMonthButton = () => {
-  const previousMonth = useCalendarStore(state => state.previousMonth);
+  const previousMonth = useStore((state:any) => state.previousMonth);
 
   return (
     <IconButton
@@ -73,7 +73,7 @@ export const PreviousMonthButton = () => {
 };
 
 export const NextMonthButton = () => {
-  const nextMonth = useCalendarStore(state => state.nextMonth);
+  const nextMonth = useStore((state:any) => state.nextMonth);
 
   return (
     <IconButton
@@ -92,7 +92,7 @@ export const NextMonthButton = () => {
 
 
 export const NextYearButton = () => {
-  const nextYear = useCalendarStore(state => state.nextYear);
+  const nextYear = useStore((state:any) => state.nextYear);
 
   return (
     <IconButton
@@ -114,7 +114,7 @@ export const MonthButton = () => {
   const {
     controlledLabel,
     goToMonthView,
-  } = useCalendarStore(state => ({
+  } = useStore((state:any) => ({
     controlledLabel: state.controllerLabel,
     goToMonthView: state.goToMonthView,
   }))
@@ -137,7 +137,7 @@ export const YearButton = () => {
   const {
     controlledLabel,
     goToYearView,
-  } = useCalendarStore(state => ({
+  } = useStore((state:any) => ({
     controlledLabel: state.controllerLabel,
     goToYearView: state.goToYearView,
   }))

@@ -16,7 +16,7 @@ export default meta;
 const today = dayjs().format("YYYY-MM-DD");
 
 const argsBase = {
-  value: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
+  value: "",
   isNepali:true,
   disableDateBefore: dayjs(today).subtract(1, "month").format("YYYY-MM-DD"),
   disableDateAfter: dayjs(today).add(1, "month").format("YYYY-MM-DD"),

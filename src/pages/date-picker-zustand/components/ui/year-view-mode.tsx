@@ -1,13 +1,13 @@
 import { Button, Flex, IconButton, Text } from "@chakra-ui/react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
-import { useCalendarStore } from "../store";
+import { useStore } from "../store/context";
 
 interface YearViewModeProp {
     styles?: any
 }
 export const YearViewMode = ({ styles }: YearViewModeProp) => {
 
-    const { selectYear, gridYears, getNextDecadeYearGrid, getPreviousDecadeYearGrid } = useCalendarStore(state => ({
+    const { selectYear, gridYears, getNextDecadeYearGrid, getPreviousDecadeYearGrid } = useStore((state:any) => ({
         gridYears: state.gridYears,
         getNextDecadeYearGrid: state.getNextDecadeYearGrid,
         getPreviousDecadeYearGrid: state.getPreviousDecadeYearGrid,

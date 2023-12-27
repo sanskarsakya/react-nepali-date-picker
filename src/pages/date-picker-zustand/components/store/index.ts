@@ -259,9 +259,9 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
 
         const { next } = await Pipeline<any>(
             strategyProvider.setDate,
-            strategyProvider.normalizeDates,
             strategyProvider.setDisableDateBefore,
             strategyProvider.setDisableDateAfter,
+            strategyProvider.normalizeDates,
             strategyProvider.setGridMonths,
             strategyProvider.setCalendarReferenceDate,
         ).execute({
@@ -547,11 +547,18 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
     },
 
     toggleContext: async (context) => {
+
+        // prevent event trigger state change triggers this function
+        if (context === get().isNepali) {
+            return
+        }
+
         const cloned = _.cloneDeep(get());
 
         // ALWAYS TOGGLE FIRST
         cloned.isNepali = context || !cloned.isNepali;
-        
+
+
         // break the loop toggleCOntext => statechange => useeffect => toggleContext 
         // set(cloned)
 

@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/react";
-import { useCalendarStore } from "../store";
+import { useStore } from "../store/context";
 
 interface MonthYearPanelProps {
   styles: any
 }
 export const MonthYearPanel = ({ styles }: MonthYearPanelProps) => {
 
-  const { monthYearPanelData } = useCalendarStore(state => ({
+  const { monthYearPanelData } = useStore((state:any) => ({
     monthYearPanelData: state.monthYearPanelData
   }))
 

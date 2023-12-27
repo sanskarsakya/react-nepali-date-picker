@@ -17,15 +17,7 @@ export const NepaliStrategy: ICalendarStrategy = {
     setDate: function (ctx: any, next: Next<any>): void {
         // normalize
         ctx.next.date = ctx.params.date;
-        // ctx.next.date =  "";
-        // if(ctx.next.isNepali) {
-        //     ctx.next.date = ADToBS(ctx.params.date);
-        // } 
-        // else {
-        //     if (ctx.params.date) {
-        //         ctx.next.date = ADToBS(ctx.params.date);
-        //     }
-        // }
+      
         next();
     },
 
@@ -36,14 +28,14 @@ export const NepaliStrategy: ICalendarStrategy = {
 
     setDisableDateBefore: function (ctx, next): void {
         if (ctx.params.disableDateBefore) {
-            ctx.next.disableDateBefore = ADToBS(ctx.params.disableDateBefore);
+            ctx.next.disableDateBefore = ctx.params.disableDateBefore;
         }
         next();
     },
 
     setDisableDateAfter: function (ctx, next): void {
         if (ctx.params.disableDateAfter) {
-            ctx.next.disableDateAfter = ADToBS(ctx.params.disableDateAfter);
+            ctx.next.disableDateAfter = ctx.params.disableDateAfter;
         }
         next();
     },

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, IconButton, Input, InputGroup, InputRightElement, forwardRef } from "@chakra-ui/react";
 import React from "react";
-import { useCalendarStore } from "../store";
+
+import { useStore } from "../store/context";
 
 interface DateInputProps {
     styles: any;
@@ -12,7 +13,7 @@ interface DateInputProps {
 export const DateInput = forwardRef<DateInputProps, 'div'>(({ onOpen, disabled }, ref) => {
 
     // HOOKS
-    const { date, onDateChange, toggleContext, isNepali } = useCalendarStore(state => ({
+    const { date, onDateChange, toggleContext, isNepali } = useStore((state:any) => ({
         date: state.date,
         onDateChange: state.onDateChange,
         toggleContext: state.toggleContext,

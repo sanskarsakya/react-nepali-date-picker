@@ -3,6 +3,14 @@ import dayjs from "dayjs";
 export const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
 
 export function validate(val: string, disableDateBefore: string, disableDateAfter: string) {
+
+    if (!val) {
+        return {
+            message: "valid because no date is provided",
+            is_valid: true,
+        };
+    }
+
     const is_date_format_valid = dateFormat.test(val);
     if (!is_date_format_valid) {
         return {

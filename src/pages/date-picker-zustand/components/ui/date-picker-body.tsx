@@ -1,13 +1,13 @@
 import { Flex, Table, Tbody, Td, Text, Thead, Tr } from "@chakra-ui/react";
 import { IDayInfo, zero_pad } from "../calendar-engine";
-import { useCalendarStore } from "../store";
+import { useStore } from "../store/context";
 
 interface DatepickerBodyProps {
     styles: any
 }
 export const DatePickerBody = ({ styles }: DatepickerBodyProps) => {
 
-    const { gridDates, selectDay, weeks } = useCalendarStore(state => ({
+    const { gridDates, selectDay, weeks } = useStore((state:any) => ({
         gridDates: state.gridDates,
         selectDay: state.selectDay,
         weeks: state.weeks,
