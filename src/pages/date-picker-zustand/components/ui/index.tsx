@@ -16,6 +16,7 @@ export const childOf = (childNode: any, parentNode: any): boolean =>
 
 
 let coo = 0;
+let poo = 0;
 
 interface DatepickerComponentProps extends Record<string, any> {
   onChange?: any
@@ -36,12 +37,13 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
   // HOOKS
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const { mountSetup, toggleContext, openCalendar, viewMode, error } = useStore((state:any) => ({
+  const { mountSetup, toggleContext, openCalendar, viewMode, error, propsDateChange } = useStore((state:any) => ({
     mountSetup: state.mountSetup,
     openCalendar: state.openCalendar,
     viewMode: state.viewMode,
     error: state.error,
     toggleContext: state.toggleContext,
+    propsDateChange: state.propsDateChange,
   }))
 
 
@@ -66,10 +68,19 @@ export const DatepickerComponent = (props: DatepickerComponentProps) => {
     }
     coo++
   };
+  
+  const handleDatePropsChange = () => {
+    if (poo !== 0) {
+      console.log("date props change")
+      propsDateChange(props.date)
+    }
+    poo++
+  };
 
   React.useEffect(handleMountSetup, [])
   // React.useEffect(handleDatePrposChange, [props.date])
   React.useEffect(handleIsNepaliPropsChange, [props.isNepali])
+  React.useEffect(handleDatePropsChange, [props.date])
 
 
   const handleClickOutside = React.useCallback((event: any) => {

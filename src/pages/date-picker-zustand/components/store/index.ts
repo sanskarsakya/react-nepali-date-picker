@@ -97,6 +97,11 @@ export type ICalendarState = {
      */
     mountSetup: ((props: any, onClose: any) => void);
 
+     /**
+     * This is used to setup the calendar
+     */
+     propsDateChange: (date: any) => void;
+
     /**
      * This is used to open the calendar body
      * and bind necessary data.
@@ -270,6 +275,29 @@ export const useCalendarStore = create<ICalendarState>((set, get) => ({
                 date,
                 disableDateBefore,
                 disableDateAfter,
+            },
+        })
+
+        set(next)
+
+
+    },
+    
+    propsDateChange: async (date) => {
+
+        const cloned = _.cloneDeep(get());
+
+        const strategyProvider = getStrategy(cloned.isNepali as boolean);
+
+        const { next } = await Pipeline<any>(
+            strategyProvider.setDate,
+            strategyProvider.normalizeDates,
+            strategyProvider.setGridMonths,
+            strategyProvider.setCalendarReferenceDate,
+        ).execute({
+            next: cloned,
+            params: {
+                date,
             },
         })
 

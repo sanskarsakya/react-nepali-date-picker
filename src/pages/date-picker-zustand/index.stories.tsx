@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Flex } from '@chakra-ui/react';
 import type { Meta } from '@storybook/react';
 import NepaliDatepickerV2 from '.';
@@ -16,7 +17,7 @@ export default meta;
 const today = dayjs().format("YYYY-MM-DD");
 
 const argsBase = {
-  value: "",
+  value: today,
   isNepali:false,
   disableDateBefore: dayjs(today).subtract(1, "month").format("YYYY-MM-DD"),
   disableDateAfter: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
@@ -51,6 +52,8 @@ export const EngDefault = {
               trigger,
             };
 
+            const {value, ...argsRest} = args
+
             return (
               <Flex gap={2} direction="column">
                 <pre>{JSON.stringify(errors, null, 2)}</pre>
@@ -59,7 +62,7 @@ export const EngDefault = {
                   name='composed'
                   label='Composed And RHF Controlled'
                   required
-                  {...args}
+                  {...argsRest}
                   {...inputProps}
                 />
 
@@ -183,9 +186,9 @@ export const EnglishComposedUncontrolled = {
 
 const argsBaseNepali = {
   ...argsBase,
-  value: ADToBS(today),
-  disableDateBefore: ADToBS(dayjs(today).subtract(1, "month").format("YYYY-MM-DD")),
-  disableDateAfter: ADToBS(dayjs(today).add(1, "month").format("YYYY-MM-DD")),
+  value: today,
+  disableDateBefore: dayjs(today).subtract(1, "month").format("YYYY-MM-DD"),
+  disableDateAfter: dayjs(today).add(1, "month").format("YYYY-MM-DD"),
   isNepali: true,
 }
 
@@ -352,8 +355,9 @@ export const NepaliComposedUncontrolled = {
     };
 
     return (
+    <>
       <NepaliDatepickerV2
-        name='composed'
+        name='uncontrolled_1'
         label='Composed And Uncontrolled'
         disable_date_before={args.disableDateBefore}
         disable_date_after={args.disableDateAfter}
@@ -373,6 +377,28 @@ export const NepaliComposedUncontrolled = {
           <NepaliDatepickerV2.ErrorLabel />
         </NepaliDatepickerV2.FormControl>
       </NepaliDatepickerV2>
+      <NepaliDatepickerV2
+        name='uncontrolled_2'
+        label='Composed And Uncontrolled Secondary'
+        disable_date_before={args.disableDateBefore}
+        disable_date_after={args.disableDateAfter}
+        is_dark={args.is_dark}
+        is_nepali={args.is_nepali}
+        onChange={(_: string, value: string) => {
+          console.log(value)
+        }}
+        {...inputProps}
+      >
+        <NepaliDatepickerV2.FormControl>
+          <Flex gap={2}>
+            <NepaliDatepickerV2.FormLabel />
+          </Flex>
+          <NepaliDatepickerV2.Component />
+          <NepaliDatepickerV2.HelperText />
+          <NepaliDatepickerV2.ErrorLabel />
+        </NepaliDatepickerV2.FormControl>
+      </NepaliDatepickerV2>
+      </>
     );
   },
 };
